@@ -1,0 +1,34 @@
+
+provable
+========
+
+formula provable?
+
+SYNTAX
+- provable(A) 
+
+PARAMETERS
+- A: formula
+
+RESULT:  true  or  false 
+
+SYNOPSIS
+
+- provable  tests whether the formula  A  is provable in  tk .
+- If  provable  is too slow, you can try to apply one of the following 
+  facts: 
+  If  cpc(A)  is not provable in  cpc , then  A  is not provable in  tk . 
+  If  A  is provable in  cpc , then  A  is provable in  tk . 
+  If  k  is applicable, then  k(A)  is provable in  k  iff  A  is provable 
+  in  tk .
+
+EXAMPLE
+
+> provable(p1 -> H F p1);
+	true
+> provable(G p1 -> H F F p1);
+	false
+
+SEE ALSO
+  satisfiable
+

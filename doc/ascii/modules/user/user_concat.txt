@@ -1,0 +1,29 @@
+
+concat
+======
+
+concatenation of lists or arrays
+
+SYNTAX
+- concat(L1, L2, ...) 
+
+PARAMETERS
+- L1, L2, ...: lists or arrays
+
+RESULT:  list
+
+SYNOPSIS
+
+- concat  concatenates the given lists and arrays  L1 ,  L2 , ... to one 
+  list.
+
+EXAMPLE
+
+> concat([p & q, r v s], [p -> r, p <-> q], [t]);
+	[p & q, r v s, p -> r, p <-> q, t]
+> concat([], [2,3,4]);
+	[2, 3, 4]
+
+SEE ALSO
+  strconcat, union
+

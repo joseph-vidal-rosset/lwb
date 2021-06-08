@@ -1,0 +1,43 @@
+
+Language example
+================
+
+
+Language
+--------
+
+At first we load the module  ktn .
+
+> load(ktn);
+	ktn  user  
+
+Formulas of  kn  are built from the connectives  box0 ,  box1 ,  box2 , ..., 
+dia0 ,  dia1 ,  dia2 , ..., from the connectives of classical propositional 
+logic, namely  &  (conjunction),  v  (disjunction),  ->  (implication),  <-> 
+(equivalence),  ~  (negation), the two constants  true  and  false , and 
+from variables.
+Theories are lists of formulas.
+
+> A := p0 -> (p1 <-> dia2 box3(p2 & box2 true v ~false));
+	p0 -> (p1 <-> dia2 box3 (p2 & box2 true v ~false))
+> B := p5 -> p76;
+	p5 -> p76
+> T := [A, B];
+	[p0 -> (p1 <-> dia2 box3 (p2 & box2 true v ~false)), p5 -> p76]
+> typek(A, "fml");
+	true
+> typek(B[1], "var");
+	true
+> typek(T, "theory");
+	true
+
+You can also use  and ,  or ,  imp ,  eq ,  not  instead of  & ,  v ,  -> ,  
+<-> ,  ~ .
+
+> A1 := p0 & p1 v p2 -> p3 <-> p0; 
+	p0 & p1 v p2 -> p3 <-> p0
+> A2 := p0 and p1 or p2 imp p3 eq p0; 
+	p0 & p1 v p2 -> p3 <-> p0
+> A1 = A2;
+	true
+

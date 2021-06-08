@@ -1,0 +1,35 @@
+
+symmetric
+=========
+
+default theory with many extensions
+
+SYNTAX
+- symmetric(N) 
+- symmetric(N, S) 
+
+PARAMETERS
+- N: integer,  N > 0 
+- S: string
+
+RESULT:  default theory
+
+SYNOPSIS
+
+- symmetric  constructs a default theory that consists of an empty theory  
+  2N  defaults.
+- This default theory has 2 to the  N  extensions.
+
+EXAMPLE
+
+> symmetric(2);
+	[[], [[true, p1, p1], [true, ~p1, ~p1], [true, p2, p2], [true, ~p2, ~p2]]]
+> symmetric(4, "q");
+	[[], [[true, q1, q1], [true, ~q1, ~q1], [true, q2, q2], [true, ~q2, ~q2], 
+[true, q3, q3], [true, ~q3, ~q3], [true, q4, q4], [true, ~q4, ~q4]]]
+> nops(extensions(symmetric(4, "q")));
+	16
+
+SEE ALSO
+  extensions
+

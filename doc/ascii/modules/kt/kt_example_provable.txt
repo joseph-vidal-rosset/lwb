@@ -1,0 +1,25 @@
+
+Typical provable formulas example
+=================================
+
+
+Typical provable formulas
+-------------------------
+
+All formulas that are provable in classical propositional logic are also 
+provable in the modal logic  kt .
+Therefore we concentrate on formulas typical for  kt .
+
+> provable( box(p0 & p1)  <->  box p0 & box p1 );
+	true
+> provable( dia(p0 v p1)  <->  dia p0 v dia p1 );
+	true
+> provable( ~ box ~ p0 <-> dia p0 );
+	true
+> provable( box p0 -> p0 );
+	true
+> fml("t");
+	box p1 -> p1
+> provable(fml("t"));
+	true
+

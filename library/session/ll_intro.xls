@@ -1,0 +1,241 @@
+<TEXT>
+_____________________________________________
+  
+    Introduction to the Linear Logic Module (ll)
+_____________________________________________
+
+</TEXT>
+<INPUT>
+load(cpc,ipc,ll);
+</INPUT>
+<OUTPUT>
+	ll  ipc  cpc  user  
+Entering special mode for linear logic. 
+
+</OUTPUT>
+<DELIMITER>
+
+</DELIMITER
+<TEXT>
+
+The LL Syntax:
+
+</TEXT>
+<DELIMITER>
+
+</DELIMITER
+<TEXT>
+
+First, notice that '&', '+', and '?' have new
+meanings; they are LL operators.
+Verify it using the inputformat command.   
+   
+</TEXT>
+<INPUT>
+inputformat(  a & b,  a + b, ? a );
+</INPUT>
+<OUTPUT>
+	a with b
+	a llplus b
+	qm a
+
+</OUTPUT>
+<TEXT>
+There is a new symbol for linear implication.
+ ('->' has no meaning in LL).   
+</TEXT>
+<INPUT>
+a  -o  b;
+</INPUT>
+<OUTPUT>
+	a -o b
+
+</OUTPUT>
+<TEXT>
+There are two types of conjunction:
+1. multiplicative:  both conjuncts are available and used
+2. additive: only one conjunct is used
+</TEXT>
+<INPUT>
+a  X  b;      #  " a times b ",  multiplicative
+                  #  a and b are available, both are used
+a  &  b;      #  " a with b ",  additive
+                  #  a and b are available, only one is used
+</INPUT>
+<OUTPUT>
+	a × b
+	a & b
+
+</OUTPUT>
+<DELIMITER>
+
+</DELIMITER
+<TEXT>
+ 
+Resource Sensitivity:
+
+Assume, r implies a   and   r implies b:
+</TEXT>
+<INPUT>
+T:==  [  r  -o  a,  r  -o  b ];
+</INPUT>
+<OUTPUT>
+
+</OUTPUT>
+<INPUT>
+provable(  r  -o  a & b , T );
+</INPUT>
+<OUTPUT>
+	true
+
+</OUTPUT>
+<INPUT>
+ provable( r  -o   a X b,  T );
+</INPUT>
+<OUTPUT>
+	false
+
+</OUTPUT>
+<TEXT>
+But given two r's ...
+</TEXT>
+<INPUT>
+provable( r  X  r   -o  a X b,  T );
+</INPUT>
+<OUTPUT>
+ 	true
+
+</OUTPUT>
+<TEXT>
+There are also two types of disjunction:
+</TEXT>
+<INPUT>
+a   |  b;      #  " a  par b ",  multiplicative
+a  +  b;      #  " a  plus b ",  additive
+</INPUT>
+<OUTPUT>
+	a | b
+	a + b
+
+</OUTPUT>
+<TEXT>
+The 'De-Morgan' laws hold for the 
+multiplicative and additive fragments:
+</TEXT>
+<INPUT>
+provable(  ~( a X b )   o-o  (~a | ~b)  );
+provable(  ~( a & b )   o-o  (~a + ~b)  );
+</INPUT>
+<OUTPUT>
+	true
+	true
+
+</OUTPUT>
+<TEXT>
+There are two modalities called 'exponentials':
+</TEXT>
+<INPUT>
+! a;      #  " storage, bang a "
+            #  unlimited availability of a.
+? a;     #  " there is an a ".
+</INPUT>
+<OUTPUT>
+	!a
+	?a
+
+</OUTPUT>
+<TEXT>
+In classical and intuitionistic logic the truth
+of a formula is 'unlimited'.
+</TEXT>
+<INPUT>
+cpc::provable( a  ->  a and a );
+   # ( we must use here the unique 'and' for the    
+   #   classical conjunction )
+</INPUT>
+<OUTPUT>
+	true
+
+</OUTPUT>
+<TEXT>
+In LL, however, formulas on the left are
+deemed resources, which are consumed
+</TEXT>
+<INPUT>
+provable( a  -o  a X a );
+</INPUT>
+<OUTPUT>
+	false
+
+</OUTPUT>
+<TEXT>
+Using the storage operator, indicating an 
+unlimited resources, we can resume the 
+classical meaning
+</TEXT>
+<INPUT>
+provable(  ! a  -o  a X a ); 
+provable(  ! a  -o  a X a X a X a X a );
+</INPUT>
+<OUTPUT>
+	true
+	true
+
+</OUTPUT>
+<TEXT>
+This is exactly how the embedding of 
+the intuitionistic logic works:
+</TEXT>
+<INPUT>
+ipc::ll(  a -> b );
+</INPUT>
+<OUTPUT>
+	!a -o b
+
+</OUTPUT>
+<TEXT>
+Typically, classical formulas, which need
+weakening in order to be proved, are not
+valid in LL: 
+</TEXT>
+<INPUT>
+cpc::provable(  a -> b -> a );   # ( b is 'weakened' )
+provable( a -o b -o a );
+</INPUT>
+<OUTPUT>
+	true
+	false
+
+</OUTPUT>
+<TEXT>
+In other cases contraction is involved:
+</TEXT>
+<INPUT>
+sc:==  (a and b -> c) and (a -> b)    ->  (a -> c);
+sll:== ( a   X   b -o c)   X   (a -o b)    -o  (a -o c);
+cpc::provable( sc );    # (the right a is contracted)
+provable( sll );
+</INPUT>
+<OUTPUT>
+	true
+	false
+
+</OUTPUT>
+<TEXT>
+And again, if enough resources are supplied,
+the formula gets provable again:
+</TEXT>
+<INPUT>
+sll2:== (a  X  b -o c)  X  (a -o b)  -o  (a X a -o c);
+provable( sll2 );
+</INPUT>
+<OUTPUT>
+	true
+
+</OUTPUT>
+<INPUT>
+ 
+</INPUT>
+<OUTPUT>
+ 
+</OUTPUT>

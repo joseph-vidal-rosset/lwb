@@ -1,0 +1,32 @@
+
+remove
+======
+
+remove superfluous connectives and subformulas
+
+SYNTAX
+- remove(A) 
+- remove(T) 
+
+PARAMETERS
+- A: formula
+- T: theory
+
+RESULT:  formula resp. theory
+
+SYNOPSIS
+
+- remove  removes  false  and  true  in the formula  A  resp. in the theory  
+  T  (as far as possible without introducing new variables).
+- The result is equivalent to  A  resp. to  T .
+
+EXAMPLE
+
+> remove((G p0 v p1 v F ~p0) & (p2 <-> false) & true);
+	(G p0 v p1 v F ~p0) & ~p2
+> remove((X false) B p1);
+	G ~p1
+
+SEE ALSO
+  provable
+

@@ -1,0 +1,39 @@
+
+less
+====
+
+ordering of formulas
+
+SYNTAX
+- less(A, B) 
+
+PARAMETERS
+- A, B: formulas
+
+RESULT:  true  or  false 
+
+SYNOPSIS
+
+- less  tests whether the formula  A  is less than the formula  B  in  kn .
+- At first we look at the main connective of the formulas:  false   <   true 
+  <  variables  <  box formulas  <  diamond formulas  <  negations  <  
+  conjunctions  <  disjunctions  <  implications  <  equivalencies. Box and 
+  diamond formulas are ordered according to the indizes of the modal 
+  connectives. If  A  and  B  have the same main connective, we compare the 
+  first operands with  less , and if these are equal we compare the second 
+  operands with  less .
+- To compare variable symbols we use a lexicographic ordering that treats 
+  successive digits as one number.
+
+EXAMPLE
+
+> less((p2 -> dia2 p1) & (box0 p2 v p3), p0 v true);
+	true
+> less((p2 v p1) <-> dia4 p2, (p1 v p1) <-> dia4 p2);
+	false
+> less(p7, p61);
+	true
+
+SEE ALSO
+  sort
+

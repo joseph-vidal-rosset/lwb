@@ -1,0 +1,151 @@
+#
+#  pltl_init.lwb  -  init file for the module pltl (automatically parsed)
+#
+#    Author:   S. Schwendimann
+#
+#
+
+
+# ---- display of a model as a timeline  -------------------------------------
+
+# (requires a fixed-width font)
+
+proc: pltl::display( model, [mvars] )
+local modlen,line,i,x,lasthigh,lastlow,s,s0,lineoffset,emptylinestart;
+
+  proc getmvars(model)      # extract and sort the variables of the model
+  local res,state;
+  begin
+    res:= [];
+    foreach state in model do
+      res:= union(res,vars(state[1]));
+    return sort(res);
+  end;
+
+  proc maxvarlen(mvars)     # determine the maximum length of the variables
+  local res, va, len;
+  begin
+    res:= 0;
+    foreach va in mvars do begin
+      len:= strlen( string(va) );
+      if len > res then
+        res:= len;
+    end;
+    return res;
+  end;
+
+begin
+  if not typek(model,"model") then   # check the arguments
+    raiseerror("invalid argument 1");
+  if isnull(mvars) then
+    mvars:= getmvars(model);
+  else if type(mvars) <> LIST then
+    raiseerror("invalid argument 2");
+  else begin
+    foreach x in mvars do
+      if not typek(x,"var") then
+        raiseerror("invalid argument 2");
+  end;
+    
+  lineoffset:= maxvarlen(mvars)+2;  # column number at which the  data starts
+  emptylinestart:= "";
+  for i:= 1 to lineoffset do
+    emptylinestart:= strconcat(emptylinestart," ");
+
+  print();                      # print the top line '1   2   3 .. '
+  modlen:= nops(model);
+  line:= strconcat(emptylinestart, "0");
+  for i:= 1 to modlen-1 do
+    if i <= 10 then
+      line:= strconcat( line, "   ", string(i) );
+    else
+      line:= strconcat( line, "  ", string(i) );
+  line:= strconcat( line,   "   (R ", string(model[modlen][2][1]-1), ")" );
+  print(line);
+
+  s0:= pop(model);
+  foreach x in mvars do begin
+    lasthigh:= false; lastlow:= false;
+
+    #--------   print `high line' (i.e. x = 1)   -------------------------
+    line:= emptylinestart;
+    if member(x,s0[1]) then begin    # high
+      line:= strconcat(line,"___");  
+      lasthigh:= true;
+      end;
+    else                             # low (or neither)
+      line:= strconcat(line,"   ");  
+
+    foreach s in model do
+      if member(x,s[1]) then begin   # high
+        if lasthigh then
+          line:= strconcat(line,"____");
+        else 
+          line:= strconcat(line," ___");
+        lasthigh:= true;
+        end;
+      else begin                     # low (or neither)
+        line:= strconcat(line,"    ");
+        lasthigh:= false;
+      end;
+    print(line);
+
+    #--------   print  `low line' (i.e. x = 0)      -----------------------
+    line:= string(x);                # (print the name of the var)
+    for i:= 1 to lineoffset-strlen(line) do
+      line:= strconcat(line," ");
+    if member(~x,s0[1]) then begin
+      line:= strconcat(line,"___");  # low
+      lastlow:= true;
+      end;
+    else if member(x,s0[1]) then begin
+      line:= strconcat(line,"   ");  # high
+      lasthigh:= true;
+      end;
+    else begin
+      # we interpret a non-occurrence as false
+      # (before : line:= strconcat(line,"---"); lastlow:= false)
+      line:= strconcat(line,"___");  # neither
+      lastlow:= true;  
+    end;
+
+    foreach s in model do
+      if member(~x,s[1]) then begin  # low
+        if lastlow then 
+          line:= strconcat(line,"____");  
+        else if lasthigh then        # going down
+          line:= strconcat(line,"|___");
+        else  # (obsolete)
+          line:= strconcat(line,"-___"); # down from neither
+        lastlow:= true; lasthigh:= false;
+        end;
+      else if member(x,s[1]) then begin
+        if lastlow then
+          line:= strconcat(line,"|   "); # going up
+        else if lasthigh then
+          line:= strconcat(line,"    "); # staying high
+        else # (obsolete)
+          line:= strconcat(line,"-   "); # up from neither
+        lasthigh:= true; lastlow:= false;
+        end;
+      else begin  # case `neither' (treated as case `low')
+        if lastlow then 
+          line:= strconcat(line,"____");  
+        else if lasthigh then        # going down
+          line:= strconcat(line,"|___");
+        lastlow:= true; lasthigh:= false;
+        # (before :
+        # line:= strconcat(line,"----");
+        # lasthigh:= false; lastlow:= false;
+      end;
+    print(line);
+
+  end; # for each x in mvars 
+    
+end;  # proc display
+
+
+
+# ---------------------------------------------------------
+
+protect( pltl::display );

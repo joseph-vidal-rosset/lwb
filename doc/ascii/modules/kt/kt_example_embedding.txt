@@ -1,0 +1,40 @@
+
+Embedding example
+=================
+
+
+Embedding
+---------
+
+The formula  dia(~p0 v p0)  is not provable in in  k , but it is provable in 
+kt . If we embed it in  k , then the result is provable in  k .
+
+> A := dia(p0 v ~p0);
+	dia (p0 v ~p0)
+> k::provable(A);  kt::provable(A);
+	false
+	true
+> B := kt::k(A);
+	dia (p0 v ~p0) v (p0 v ~p0)
+> k::provable(B);
+	true
+
+The result of the function  kt::k  can be very long even for simple 
+formulas, as the following example shows.
+
+> for i := 1 to 10 do
+  begin
+    A :== p0; for j := 1 to i do A :== dia A;
+    print(A, ":", length(A), ":", length(kt::k(A)));
+  end;
+	dia p0:2:4
+	dia dia p0:3:10
+	dia dia dia p0:4:22
+	dia dia dia dia p0:5:46
+	dia dia dia dia dia p0:6:94
+	dia dia dia dia dia dia p0:7:190
+	dia dia dia dia dia dia dia p0:8:382
+	dia dia dia dia dia dia dia dia p0:9:766
+	dia dia dia dia dia dia dia dia dia p0:10:1534
+	dia dia dia dia dia dia dia dia dia dia p0:11:3070
+

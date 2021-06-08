@@ -1,0 +1,77 @@
+
+provable
+========
+
+formula provable?
+formula provable in theory?
+
+SYNTAX
+- provable(A) 
+- provable(A, T) 
+
+PARAMETERS
+- A: formula
+- T: theory
+
+RESULT:  true  or  false 
+
+SYNOPSIS
+
+- One argument:  provable  tests whether the formula  A  is provable in  kn .
+- Two arguments:  provable  tests whether the formula  A  is provable in  kn 
+  plus the theory  T .
+- If  provable  is too slow, you can try to apply one of the following 
+  facts: 
+  If  cpc(A)  is not provable in  cpc , then  A  is not provable in  kn . 
+  If  A  is provable in  cpc , then  A  is provable in  kn .
+- Choose an appropriate infolevel for additional information during the 
+  execution (e.g.  set("infolevel",3) ). Displayed sequents have the form  
+  [LV],[L1],[L2],[L3]=>[RV],[R1],[R2],[R3] . The parts of the sequent 
+  contain the following formulas:  LV  and  RV : variables,  L1 :  v ,  -> , 
+  <->  formulas,  R1 :  & ,  ->  formulas,  L2  and  R2 :  box  formulas,  
+  L3  and  R3 :  dia  formulas.
+
+EXAMPLE
+
+> provable(box3(p0 -> p1) & box3 p0 -> box3 p1);
+	true
+> set("infolevel", 4);
+	true
+> provable(box3(p0 -> p1) & box3 p0 -> box3 p1);
+kn::provable( A = box3 (p0 -> p1) & box3 p0 -> box3 p1 )
+(r ->)
+(l &)
+[],[],[box3 (p0 -> p1), box3 p0],[]==>[],[],[box3 p1],[]
+(r box) with main formula box3 p1
+1.[p0],[p0 -> p1],[],[]==>[p1],[],[],[]
+(l ->)
+1.1.[p0],[],[],[]==>[p0, p1],[],[],[]
+axiom (id)
+1.2.[p1, p0],[],[],[]==>[p1],[],[],[]
+axiom (id)
+Result of kn::provable: true.
+	true
+> provable(box3 p0, [p1, box4 p1 -> p0]);
+kn::provable( A = box3 p0, T = [p1, box4 p1 -> p0] )
+[p1],[box4 p1 -> p0],[],[]==>[],[],[box3 p0],[]
+(l ->)
+1.[p1],[],[],[]==>[],[],[box4 p1, box3 p0],[]
+(r box) with main formula box4 p1
+1.1.[p1],[box4 p1 -> p0],[],[]==>[p1],[],[],[]
+axiom (id)
+2.[p0, p1],[],[],[]==>[],[],[box3 p0],[]
+(r box) with main formula box3 p0
+2.1.[p1],[box4 p1 -> p0],[],[]==>[p0],[],[],[]
+(l ->)
+2.1.1.[p1],[],[],[]==>[p0],[],[box4 p1],[]
+(r box) with main formula box4 p1
+2.1.1.1.[p1],[box4 p1 -> p0],[],[]==>[p1],[],[],[]
+axiom (id)
+2.1.2.[p0, p1],[],[],[]==>[p0],[],[],[]
+axiom (id)
+Result of kn::provable: true.
+	true
+
+SEE ALSO
+  consistent, satisfiable
+

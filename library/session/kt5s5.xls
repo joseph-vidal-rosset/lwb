@@ -1,0 +1,68 @@
+<TEXT>
+______________________________________
+
+   Equivalence of  KT5 and S5
+______________________________________
+
+</TEXT>
+<INPUT>
+load(kt);
+</INPUT>
+<OUTPUT>
+	kt  user  
+
+</OUTPUT>
+<DELIMITER>
+
+</DELIMITER
+<TEXT>
+KT5 is the logic KT plus all instances of 5, S5 is the logic KT plus all instances 4 and 5.
+</TEXT>
+<INPUT>
+axiom4 := fml("4", "x");
+axiom5 := fml("5", "x");
+</INPUT>
+<OUTPUT>
+	box x1 -> box box x1
+	¬box x1 -> box ¬box x1
+
+</OUTPUT>
+<TEXT>
+In order to show the equivalence of these two logics, it is enough to show that 4 is provable in KT5.
+Since we have no prover for KT5, we have to find a finite number of instances of 5 such that 4 is provable in KT plus these instances. 
+</TEXT>
+<DELIMITER>
+
+</DELIMITER
+<TEXT>
+The first attempt fails, the second one succeeds.
+</TEXT>
+<INPUT>
+kt::provable( axiom4{p/x1},
+                       [axiom5{p/x1}] );
+</INPUT>
+<OUTPUT>
+	false
+
+</OUTPUT>
+<INPUT>
+kt::provable( axiom4{p/x1},
+                       [axiom5{p/x1}, axiom5{dia ~p/x1}] );
+</INPUT>
+<OUTPUT>
+	true
+	true
+
+</OUTPUT>
+<TEXT>
+Thus the same formulas are provable in KT5 amd S5.
+</TEXT>
+<DELIMITER>
+
+</DELIMITER
+<INPUT>
+ 
+</INPUT>
+<OUTPUT>
+ 
+</OUTPUT>

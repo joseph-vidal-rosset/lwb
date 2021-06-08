@@ -1,0 +1,36 @@
+
+limitstart
+==========
+
+start time limit
+
+SYNTAX
+- limitstart(M) 
+
+PARAMETERS
+- $M$: natural number
+
+RESULT:  null expression
+
+SYNOPSIS
+
+- limitstart  starts limiting subsequent LWB calls. The value given with  A  
+  sets the maximal amount of time in 1/100 seconds that may pass till the 
+  next  limitstop  is encountered. If the commands between the  limitstart  
+  and  limitstop  use more time than given, an error is raised and execution 
+  is terminated. This error can be caught by  catcherror .
+
+EXAMPLE
+
+> limitstart(10); provable(pigeonhole(3)); limitstop(); 
+	true
+	true
+	true
+> limitstart(10); provable(pigeonhole(6)); limitstop();
+	true
+	true
+> unload(cpc);
+
+SEE ALSO
+  clockticks, limitstop, timestart, timestop
+

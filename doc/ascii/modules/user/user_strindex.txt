@@ -1,0 +1,44 @@
+
+strindex
+========
+
+occurrence of string in string
+
+SYNTAX
+- strindex(S1, S2) 
+- strindex(S1, S2, N) 
+
+PARAMETERS
+- S1, S2: strings
+- N: natural number,  N >= 1 
+
+RESULT:  natural number
+
+SYNOPSIS
+
+- strindex  returns the index of the first occurrence of the string  S2  in  
+  S1 .
+- If a third argument is given, then the index of the first occurrence of  
+  S2  in  S1  beginning at the index  N  in  S1 .
+- If there is no occurrence, then the result is  0 .
+
+EXAMPLE
+
+> strindex("abcdefgh", "c");
+	3
+> strindex("abcdefch", "c");
+	3
+> strindex("abcdefch", "c", 3);
+	3
+> strindex("abcdefch", "c", 4);
+	7
+> strindex("cedcedcdecedcde", "cde");
+	7
+> strindex("abcdefgh", "x");
+	0
+> strindex("abcd", "");
+	1
+
+SEE ALSO
+  strleft, strlen, strmid, strright
+

@@ -1,0 +1,139 @@
+
+tk example
+==========
+
+
+Language
+--------
+
+At first we load the module  tk .
+
+> load(tk);
+	tk  user  
+Entering special mode for tense & temporal logics. 
+Additional operators for tense & temporal logics: 
+new operators       : H, P, G, F, X, U, B
+
+Formulas of  tk  are built from the two constants  true  and  false , from 
+the connectives  H ,  P ,  G , and  F , from the connectives of classical 
+propositional logic, namely  &  (conjunction),  v  (disjunction),  ->  
+(implication),  <->  (equivalence),  ~  (negation), and from variables.
+Theories are lists of formulas.
+
+> a1 := (F q -> G H ~r v false) <-> P P(s & true);
+	F q -> G H ~r v false <-> P P (s & true)
+> a2 := qq -> r112;
+	qq -> r112
+> t := [a1, a2];
+	[F q -> G H ~r v false <-> P P (s & true), qq -> r112]
+> typek(a1, "fml");
+	true
+> typek(a2[1], "var");
+	true
+> typek(t, "theory");
+	true
+
+tH ,  tP ,  tG ,  tF ,  not ,  and ,  or ,  imp ,  eq  may be used instead 
+of  H ,  P ,  G ,  F ,  ~ ,  & ,  v ,  -> ,  <-> .
+
+> b1 := F q & r v G s -> H P q <-> r; 
+	F q & r v G s -> H P q <-> r
+> b2 := tF q and r or tG s imp tH tP q eq r; 
+	F q & r v G s -> H P q <-> r
+> b1 = b2;
+	true
+
+In the corresponding Kripke model semantics
+ - H q  means: in all accessible worlds in the past  q  is true
+ - P q  means: there is an accessible world in the past where  q  is true
+ - G q  means: in all accessible worlds in the future  q  is true
+ - F q  means: there is an accessible world in the future where  q  is true
+
+
+Normal forms
+------------
+
+In the tense logic  tk  there exists a negation normal form.
+
+> c1 := F(q & r v q) -> ~ H H ~r;
+	F (q & r v q) -> ~H H ~r
+> nnf(c1);
+	G ((~q v ~r) & ~q) v P P r
+
+This normal forms is not unique as the following example shows.
+
+> c2 := G ~q v P P r;
+	G ~q v P P r
+> nnfp(c2);
+	true
+> provable(c1 <-> c2);
+	true
+
+If a formula contains equivalencies, the result of  nnf  can be very long 
+compared to the original formula.
+
+> d := F q0 <-> F q1 <-> F q2 <-> F q3 <-> F q4 <-> F q5 <-> F q6;
+	F q0 <-> F q1 <-> F q2 <-> F q3 <-> F q4 <-> F q5 <-> F q6
+> length(d);
+	20
+> length(nnf(d));
+	664
+
+
+Typical provable formulas
+-------------------------
+
+All formulas that are provable in classical propositional logic are also 
+provable in the tense logic  tk .
+Therefore we concentrate on formulas typical for  tk .
+
+> provable( ~ H ~ q <-> P q );
+	true
+> provable( ~ G ~ q <-> F q );
+	true
+> provable( P G q -> q );
+	true
+> provable( F H q -> q );
+	true
+> provable( H G P ~ q v P q );
+	true
+> provable( G H F ~ q v F q );
+	true
+> provable( H(q & r) <-> H q & H r );
+	true
+> provable( G(q & r) <-> G q & G r );
+	true
+> provable( P(q v r) <-> P q v P r );
+	true
+> provable( F(q v r) <-> F q v F r );
+	true
+> provable( H(q -> r) -> H q -> H r );
+	true
+> provable( G(q -> r) -> G q -> G r );
+	true
+
+
+Typical non-provable formulas
+-----------------------------
+
+> provable( H q -> q );
+	false
+> provable( G q -> q );
+	false
+> provable( H q -> H H q );
+	false
+> provable( G q -> G G q );
+	false
+> provable( G P q -> q );
+	false
+> provable( H F q -> q );
+	false
+> provable( H(q v r) <-> H q v H r );
+	false
+> provable( G(q v r) <-> G q v G r );
+	false
+> provable( P(q & r) <-> P q & P r );
+	false
+> provable( F(q & r) <-> F q & F r );
+	false
+

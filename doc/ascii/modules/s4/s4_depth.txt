@@ -1,0 +1,29 @@
+
+depth
+=====
+
+depth of a formula
+
+SYNTAX
+- depth(A) 
+
+PARAMETERS
+- A: formula
+
+RESULT:  integer,  >= 0 
+
+SYNOPSIS
+
+- depth  computes the depth of the formula  A  in  s4 .
+- Variables,  true  and  false  have depth  0 .
+
+EXAMPLE
+
+> depth(dia(p0 v ~p1) <-> box(p1 v p3));
+	4
+> depth(p2);
+	0
+
+SEE ALSO
+  length
+

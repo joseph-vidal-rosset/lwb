@@ -1,0 +1,29 @@
+
+Typical non-provable formulas example
+=====================================
+
+
+Typical non-provable formulas
+-----------------------------
+
+> provable( H p1 -> p1 );
+	false
+> provable( G p1 -> p1 );
+	false
+> provable( H p1 -> H H p1 );
+	false
+> provable( G p1 -> G G p1 );
+	false
+> provable( G P p1 -> p1 );
+	false
+> provable( H F p1 -> p1 );
+	false
+> provable( H(p1 v p2) <-> H p1 v H p2 );
+	false
+> provable( G(p1 v p2) <-> G p1 v G p2 );
+	false
+> provable( P(p1 & p2) <-> P p1 & P p2 );
+	false
+> provable( F(p1 & p2) <-> F p1 & F p2 );
+	false
+

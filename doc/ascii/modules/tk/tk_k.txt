@@ -1,0 +1,31 @@
+
+k
+=
+
+embedding in  k 
+
+SYNTAX
+- k(A) 
+
+PARAMETERS
+- A: formula, contains no  H ,  P  or no  G ,  F 
+
+RESULT:  formula of  k 
+
+SYNOPSIS
+
+- k  embeds the formula  A  in  k . If  A  contains no  H  and no  P , then  
+  G  is replaced by  box  and  F  is replaced by  dia . If  A  contains no  
+  G  and no  F , then  H  is replaced by  box  and  P  is replaced by  dia .
+- k(A)  is provable in  k  if and only if  A  is provable in  tk .
+
+EXAMPLE
+
+> k(F p0 & G ~(p1 -> p2));
+	dia p0 & box ~(p1 -> p2)
+> k(P ~ P p0);
+	dia ~dia p0
+
+SEE ALSO
+  provable, provable
+

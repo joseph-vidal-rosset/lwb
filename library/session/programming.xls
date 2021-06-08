@@ -1,0 +1,156 @@
+<TEXT>
+__________________________________________________
+
+    Programming in the Logics Workbench
+__________________________________________________
+
+</TEXT>
+<DELIMITER>
+
+</DELIMITER
+<TEXT>
+
+Procedures:
+
+</TEXT>
+<INPUT>
+proc stability( x ) begin
+    return ~~x -> x;
+end;   
+   
+stability( a ) and stability( b );
+</INPUT>
+<OUTPUT>
+	
+proc stability(x) begin
+  return ~~x -> x;
+end
+	(¬¬a -> a) & (¬¬b -> b)
+
+</OUTPUT>
+<TEXT>
+Call by reference :
+</TEXT>
+<INPUT>
+proc: ass( var x, y ) begin
+    # (the colon suppresses the display)
+    x:= y;
+end;
+   
+ass( aa, bb );  aa; 
+</INPUT>
+<OUTPUT>
+	bb
+
+</OUTPUT>
+<TEXT>
+Local variables and local procedures :
+</TEXT>
+<INPUT>
+proc: f( x ) 
+local y;
+    proc f1() begin
+       return y & x;       # local y, parameter x
+    end;    
+begin
+    y:= c;                       # local y, global c
+    return f1();
+end;
+   
+f( b );
+</INPUT>
+<OUTPUT>
+	c & b
+
+</OUTPUT>
+<DELIMITER>
+
+</DELIMITER
+<TEXT>
+If - then - else:
+</TEXT>
+<INPUT>
+if  a = b then m; else n;
+</INPUT>
+<OUTPUT>
+	n
+
+</OUTPUT>
+<DELIMITER>
+
+</DELIMITER
+<TEXT>
+Loops:
+</TEXT>
+<INPUT>
+s:== a <-> b;   
+L:== [a -> b, a v ~a, ~b ]; 
+</INPUT>
+<OUTPUT>
+
+</OUTPUT>
+<INPUT>
+for i:= 1 to 2 do 
+    s[i] eq s[i];
+</INPUT>
+<OUTPUT>
+	a <-> a
+	b <-> b
+
+</OUTPUT>
+<INPUT>
+foreach i in L do 
+   print( i, " has type ", type(i) );
+</INPUT>
+<OUTPUT>
+	a -> b has type IMP
+	a v ¬a has type OR
+	¬b has type NOT
+
+</OUTPUT>
+<INPUT>
+i:= 1;
+while  type(L[i]) <> OR do 
+    inc(i); 
+</INPUT>
+<OUTPUT>
+	1
+	2
+
+</OUTPUT>
+<DELIMITER>
+
+</DELIMITER
+<TEXT>
+Data structures:
+</TEXT>
+<INPUT>
+L:= [ a, b, c ];                    # linked lists
+A:= array( a, b, c );           # arrays
+A2:== convert2array( L );  # (user module fn)
+</INPUT>
+<OUTPUT>
+	[a, b, c]
+	[a, b, c]
+
+</OUTPUT>
+<INPUT>
+append(L, d1);
+append(A, d2);
+L[ 2..3 ]; 
+</INPUT>
+<OUTPUT>
+	[a, b, c, d1]
+	[a, b, c, d2]
+	[b, c]
+
+</OUTPUT>
+<TEXT>
+Other list/array functions: push,pop,concat
+</TEXT>
+<INPUT>
+ 
+</INPUT>
+<OUTPUT>
+ 
+</OUTPUT>

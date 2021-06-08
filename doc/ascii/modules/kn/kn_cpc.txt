@@ -1,0 +1,29 @@
+
+cpc
+===
+
+delete modal connectives
+
+SYNTAX
+- cpc(A) 
+
+PARAMETERS
+- A: formula
+
+RESULT:  formula of  cpc 
+
+SYNOPSIS
+
+- cpc  deletes the modal connectives occurring in the formula  A .
+- If the result is not provable in  cpc , then  A  is not provable in  kn .
+
+EXAMPLE
+
+> cpc(box3 p0 & dia5 ~(p1 -> p2));
+	p0 & ~(p1 -> p2)
+> cpc(dia0 ~ box11 p0);
+	~p0
+
+SEE ALSO
+  provable, provable
+

@@ -1,0 +1,31 @@
+
+fml
+===
+
+special formulas
+
+SYNTAX
+- fml(Name1) 
+- fml(Name1, S) 
+
+PARAMETERS
+- Name1: one of  "mints1" ,  "mints2" ,  "peirce" ,  "tatsuta" 
+- S: string
+
+RESULT:  formula
+
+SYNOPSIS
+
+- fml  constructs special formulas.
+- The variables occurring in the constructed formulas begin with the string  
+  S . The default value for  S  is  "p" .
+- All of these formulas are provable in  cpc .
+
+EXAMPLE
+
+> fml("mints2", "r");
+	((((r1 -> r2) -> r1) -> r1) -> r3) -> r3
+
+SEE ALSO
+  provable
+

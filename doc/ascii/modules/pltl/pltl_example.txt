@@ -1,0 +1,154 @@
+
+pltl example
+============
+
+
+Language
+--------
+
+At first we load the module  pltl .
+
+> load(pltl);
+	pltl  user  
+Entering special mode for tense & temporal logics. 
+Additional operators for tense & temporal logics: 
+new operators       : H, P, G, F, X, U, B
+
+Formulas of  pltl  are built from the two constants  true  and  false , from 
+the connectives  X ,  G ,  F ,  U  and  B , from the connectives of 
+classical propositional logic, namely  &  (conjunction),  v  (disjunction),  
+->  (implication),  <->  (equivalence),  ~  (negation), and from variables.
+Theories are lists of formulas.
+
+> a1 := (F q -> G X ~r v false) <-> G X (s U true);
+	F q -> G X ~r v false <-> G X (s U true)
+> a2 := qq -> r112;
+	qq -> r112
+> t := [a1, a2];
+	[F q -> G X ~r v false <-> G X (s U true), qq -> r112]
+> typek(a1, "fml");
+	true
+> typek(a2[1], "var");
+	true
+> typek(t, "theory");
+	true
+
+tX ,  tG ,  tF ,  tU ,  tB ,  not ,  and ,  or ,  imp ,  eq  may be used 
+instead of  X ,  G ,  F ,  U ,  B ,  ~ ,  & ,  v ,  -> ,  <-> .
+
+> b1 := F q & r v G s -> G F q <-> r; 
+	F q & r v G s -> G F q <-> r
+> b2 := tF q and r or tG s imp tG tF q eq r; 
+	F q & r v G s -> G F q <-> r
+> b1 = b2;
+	true
+
+The meaning of the temporal connectives is as follows:
+ - X q  means: `neXttime'  q  (is true).
+ - G q  means: `always'  q , or `henceforth'  q .
+ - F q  means: `sometimes'  q .
+ - p U q  means:  p  `until'  q , where  q  must eventually be true (strong 
+   until).
+ - p B q  means:  p  `before'  q  (if  q  is never true there is no need for 
+   p  to be true either).
+In most temporal logics, including  pltl , the time is discrete. The 
+connectives are evaluated as true or false of  points  in time.
+
+
+Normal forms
+------------
+
+In the linear time logic  pltl  there exists a negation normal form.
+
+> c1 := F(q & r v q) -> ~ X X ~r;
+	F (q & r v q) -> ~X X ~r
+> nnf(c1);
+	G ((~q v ~r) & ~q) v X X r
+
+This normal forms is not unique as the following example shows.
+
+> c2 := G ~q v X X r;
+	G ~q v X X r
+> nnfp(c2);
+	true
+> provable(c1 <-> c2);
+	true
+
+If a formula contains equivalencies, the result of  nnf  can be very long 
+compared to the original formula.
+
+> d := F q0 <-> F q1 <-> F q2 <-> F q3 <-> F q4 <-> F q5 <-> F q6;
+	F q0 <-> F q1 <-> F q2 <-> F q3 <-> F q4 <-> F q5 <-> F q6
+> length(d);
+	20
+> length(nnf(d));
+	664
+
+
+Typical provable formulas
+-------------------------
+
+All formulas that are provable in classical propositional logic are also 
+provable in the linear time logic  pltl .
+Therefore we concentrate on formulas typical for  pltl .
+
+> provable( X ~p <-> ~X p );
+	true
+> provable( X G p <-> G X p );
+	true
+> provable( ~ G ~ q <-> F q );
+	true
+> provable( p & G(p -> X p) -> G p );
+	true
+> provable( G(q & r) <-> G q & G r );
+	true
+> provable( G q -> G G q );
+	true
+> provable( G(q -> r) -> G q -> G r );
+	true
+> provable( p U q  <->  q v (p & X(p U q)) );
+	true
+> provable( p U q  <->  ~(~p B q) );  
+	true
+> provable( p U q -> F q );
+	true
+> provable( F p  <->  true U p );
+	true
+> provable( F(q v r) <-> F q v F r );
+	true
+> provable( F p <-> p v X F p );
+	true
+
+
+Typical non-provable formulas
+-----------------------------
+
+> provable( X q -> q );
+	false
+> provable( F q -> X q );
+	false
+> provable( X q -> X X q );
+	false
+> provable( G(q v r) <-> G q v G r );
+	false
+> provable( F(q & r) <-> F q & F r );
+	false
+> provable( (p U r) v (q U r) <-> ((p v q) U r) );
+	false
+
+If a formula is not provable, there must exist a countermodel (which 
+falsifies the formula).
+
+> model( ~(X q -> q) );
+	[[[~q], [2]], [[q], [2]]]
+> model( ~(F q -> X q) );
+	[[[q], [2]], [[~q], [2]]]
+> model( ~(X q -> X X q) );
+	[[[], [2]], [[q], [3]], [[~q], [3]]]
+> model( ~(G(q v r) <-> G q v G r) );
+	[[[q, ~r], [2]], [[r, ~q], [3]], [[q], [3]]]
+> model( ~(F(q & r) <-> F q & F r) );
+	[[[q, ~r], [2]], [[r, ~q], [3]], [[~q], [3]]]
+> model( ~((p U r) v (q U r) <-> ((p v q) U r)) );
+	[[[p, ~q, ~r], [2]], [[q, ~p, ~r], [3]], [[r], [3]]]
+

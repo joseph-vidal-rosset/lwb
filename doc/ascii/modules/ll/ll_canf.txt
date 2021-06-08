@@ -1,0 +1,39 @@
+
+canf
+====
+
+`commutative-associative normal form'
+
+SYNTAX
+- canf(A) 
+
+PARAMETERS
+- A: formula in negation normal form
+
+RESULT:  formula
+
+SYNOPSIS
+
+- canf  computes a `commutative-associative normal form' of the formula  A , 
+  which is supposed to be in negation normal form. The routine is designed 
+  to preprocess a formula for a subsequent call to  provable . The operands 
+  of equal neighbouring connectives for which the commutativity and 
+  associativity laws hold are sorted and reassembled.
+- Primitive simplifications (e.g. elimination of neutral elements) are 
+  performed. In the result the right subformula of a binary connective is 
+  simpler than the left subformula.
+- The resulting formula  canf(A)  is equivalent to  A , i.e.  A o-o canf(A)  
+  is provable in  ll .
+
+EXAMPLE
+
+> canf(p0 & (p1 + p2) | p3);
+	(p2 + p1) & p0 | p3
+> canf(p1 | p0 X p1 | (p1 + p0) | p1 & p0 | ~p0 | ~p1);
+	p1 X p0 | (p1 + p0) | p1 & p0 | ~p1 | p1 | ~p0
+> canf( ( p0 | (p0 & p1 & top) | bot ) | ( ~p0 | (p0 X p1) ) );
+	p1 X p0 | p1 & p0 | ~p0 | p0
+
+SEE ALSO
+  provable
+

@@ -1,0 +1,120 @@
+
+k example
+=========
+
+
+Language
+--------
+
+At first we load the module  k .
+
+> load(k);
+	k  user  
+
+Formulas of  k  are built from the connectives  box  and  dia , from the 
+connectives of classical propositional logic, namely  &  (conjunction),  v  
+(disjunction),  ->  (implication),  <->  (equivalence),  ~  (negation), the 
+two constants  true  and  false , and from variables.
+Theories are lists of formulas.
+
+> a := (box p -> q) <-> dia(q2 & true v ~false);
+	box p -> q <-> dia (q2 & true v ~false)
+> b := qq -> p112;
+	qq -> p112
+> t := [a, b];
+	[box p -> q <-> dia (q2 & true v ~false), qq -> p112]
+> typek(a, "fml");
+	true
+> typek(b[1], "var");
+	true
+> typek(t, "theory");
+	true
+
+You can also use  and ,  or ,  imp ,  eq ,  not  instead of  & ,  v ,  -> ,  
+<-> ,  ~ .
+
+> a1 := p & q v r -> s <-> p; 
+	p & q v r -> s <-> p
+> a2 := p and q or r imp s eq p; 
+	p & q v r -> s <-> p
+> a1 = a2;
+	true
+
+In the possible world semantics,  box p  means that  p  is true in all 
+accessible worlds, and  dia p  means that there is an accessible world where 
+p  is true.
+
+
+Normal forms
+------------
+
+In the modal logic  k  there exists a negation normal form.
+
+> a := box(p & q v p) -> ~ dia dia ~q;
+	box (p & q v p) -> ~dia dia ~q
+> nnf(a);
+	dia ((~p v ~q) & ~p) v box box q
+
+This normal forms is not unique as the following example shows.
+
+> b := dia ~p v box box q;
+	dia ~p v box box q
+> nnfp(b);
+	true
+> provable(a <-> b);
+	true
+
+If a formula contains equivalencies, the result of  nnf  can be very long 
+compared to the original formula.
+
+> c := dia p0 <-> dia p1 <-> dia p2 <-> dia p3 <-> dia p4 <-> dia p5;
+	dia p0 <-> dia p1 <-> dia p2 <-> dia p3 <-> dia p4 <-> dia p5
+> length(c);
+	17
+> length(nnf(c));
+	328
+
+
+Typical provable formulas
+-------------------------
+
+All formulas that are provable in classical propositional logic are also 
+provable in the modal logic  k .
+Therefore we concentrate on formulas typical for  k .
+
+> provable( box(p & q)  <->  box p & box q );
+	true
+> provable( dia(p v q)  <->  dia p v dia q );
+	true
+> provable( ~ box ~ p  <-> dia p );
+	true
+> provable( box(p -> q) -> box p -> box q );
+	true
+
+Although the formula  dia(p v ~p)  is not provable, it is provable in  k  
+plus the theory with  dia q  as its only element. The formula  dia q  
+guarantees that there exists an accessible world, and as soon as such a 
+world exists  dia(p v ~p)  is true.
+
+> provable(dia(p v ~p), [dia q]);
+	true
+
+
+Typical non-provable formulas
+-----------------------------
+
+None of the following axioms of  s5  is provable in  k .
+
+> fml("t");
+	box p1 -> p1
+> provable(fml("t"));
+	false
+> fml("4");
+	box p1 -> box box p1
+> provable(fml("4"));
+	false
+> fml("5");
+	~box p1 -> box ~box p1
+> provable(fml("5"));
+	false
+

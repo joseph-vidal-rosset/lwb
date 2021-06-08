@@ -1,0 +1,30 @@
+
+circ
+====
+
+circumscription theory
+
+SYNTAX
+- circ(T, Lp) 
+- circ(T, Lp, Lq) 
+
+PARAMETERS
+- T: theory
+- Lp, Lq: disjunct lists of variables
+
+RESULT:  theory
+
+SYNOPSIS
+
+- One argument:  circ  computes the circumscription theory of the theory  T .
+  The variables in  Lp  are minimized.
+- Two arguments:  circ  computes the circumscription theory of the theory  T .
+  The variables in  Lp  are minimized, the variables in  Lq  are varied.
+
+EXAMPLE
+
+> circ([p0, p1 v p2], [p1]);
+	[p0, p1 v p2, ~p1 -> p2, p1 -> ~p2]
+> circ([p0, p1 v p2], [p1], [p2]);
+	[p0, p1 v p2, ~p1]
+

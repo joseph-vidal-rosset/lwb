@@ -1,0 +1,22 @@
+
+Using  set("percents", X)  example
+==================================
+
+
+Using  set("percents", X) 
+--------------------------
+
+set("percents", X)  you can turn the percents information or slider on and 
+off.
+
+> load(cpc);
+	cpc  cwa  user  
+> set("percents", true);
+	\top
+> cpc::provable(pigeonhole(4));
+	\top
+> set("percents", false);
+	\top
+> cpc::provable(pigeonhole(4));
+	\top
+

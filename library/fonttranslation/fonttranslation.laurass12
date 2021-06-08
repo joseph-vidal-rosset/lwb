@@ -1,0 +1,62 @@
+
+
+operator	dez   
+(operator in inputformat)
+=========================
+
+# ---- START OF TABLE ----
+
+and		133
+v		141
+->		137
+<->		131
+
+llplus 		199
+times 		207
+~		198
+dia  		172
+box		197
+
+true		160
+false		168
+alpha   	216
+beta		217
+gamma		218
+delta		219
+epsilon		220
+zeta		221
+eta		222
+theta		223
+iota		224
+kappa		225
+lambda		226
+mu		227
+nu		228
+xi		229
+pi		230
+rho		231
+sigma		232
+tau		233
+upsilon		234
+phi		235
+chi		236
+psi		237
+omega		238
+Gamma		239
+Delta		240
+Theta		241
+Lambda		242
+Xi		243
+Pi		244
+Sigma		245
+Upsilon		246
+Phi		247
+Psi		248
+Omega		249
+varepsilon	250
+vartheta	251
+varpi		252
+varrho		253
+varsigma	254
+varphi		255
+

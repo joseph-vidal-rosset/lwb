@@ -1,0 +1,121 @@
+
+ll example
+==========
+
+
+Language
+--------
+
+First we load the module  ll .
+
+> load(ll);
+	ll  user  
+Entering special mode for linear logic. 
+Additional operators for linear logic: 
+new operator        : X (times)
+redefined operators : & (with), + (llplus), ? (qm)
+(before: and,      plus,       help)
+
+Formulas of  ll  are built from the symbols for conjunctions ( & ,  X ), 
+disjunctions ( + ,  |  ), implication ( -o ), equivalence ( o-o ), negation 
+( ~ ), modalities ( ? ,  ! ), the four constants  top ,  1 ,  bot  and  0 , 
+and variables.
+Theories are lists of formulas.
+
+> a := (p -o bot) o-o ~(q & 1 | p);
+	p -o bot o-o ~(q & 1 | p)
+> b := ?c -o !a;
+	?c -o !(p -o bot o-o ~(q & 1 | p))
+> t := [a, b];
+	[p -o bot o-o ~(q & 1 | p), ?c -o !(p -o bot o-o ~(q & 1 | p))]
+> typek(a, "fml");
+	true
+> typek(b[1], "var");
+	false
+> typek(t, "theory");
+	true
+
+You can also use  with ,  times ,  par ,  llplus ,  llimp ,  lleq ,  not ,  
+qm  instead of  & ,  X ,  | ,  + ,  -o ,  o-o ,  ~ ,  ? .
+
+
+Normal forms
+------------
+
+In  ll  we have a negation normal form ( nnf ) and a 
+`commutative-associative normal form' ( canf ). The latter rearranges a 
+formula (which must be in negation normal form).
+
+> m := ~?!?!( ~(a + b) X (~(a & b & a)) & c);
+	~?!?!(~(a + b) X ~(a & b & a) & c)
+> n:= nnf(m);
+	!?!?(a + b | a & b & a + ~c)
+> canf(n);
+	!?!(?(b + a | b & a) | ?~c)
+
+
+Typical provable formulas
+-------------------------
+
+Each binary connectvie has its neutral element.
+
+> provable( a | bot  o-o  a);  
+	true
+> provable( a X 1    o-o  a );
+	true
+> provable( a + 0    o-o  a);  
+	true
+> provable( a & top  o-o  a );
+	true
+
+For each binary connective the commutativity and associativity laws hold.
+
+> provable( a | b  o-o  b | a );
+	true
+> provable( (a | b) | c  o-o  a | (b | c) );  
+	true
+> provable( a X b  o-o  b X a );
+	true
+> provable( (a X b) X c  o-o  a X (b X c) );
+	true
+
+Various 'De-Morgan-like' laws hold.
+
+> provable( ~(a | b)  o-o  (~a X ~b) );
+	true
+> provable( ~(a X b)  o-o  (~a | ~b) );
+	true
+> provable( ~(a + b)  o-o  (~a & ~b) );
+	true
+> provable( ~(a & b)  o-o  (~a + ~b) );
+	true
+
+Valid formulae involving modalities.
+
+> provable( !(a & b)  o-o  !a X !b );
+	true
+> provable( ?(a + b)  o-o  ?a | ?b );
+	true
+> provable( ?top o-o top );
+	true
+> provable( !(a & 1)  o-o !a );
+	true
+
+
+Typical non-provable formulas
+-----------------------------
+
+> provable( p | ~p | q );  
+	false
+> provable( a -o a X a );
+	false
+
+but,
+
+> provable( p | ~p );
+	true
+> provable( !a -o a X a ); 
+	true
+> provable( !a -o a X a X a X a X a );
+	true
+

@@ -1,0 +1,172 @@
+<TEXT>
+________________________________________
+
+   Typical Properties of Non-Monotonic Systems
+________________________________________
+
+</TEXT>
+<DELIMITER>
+
+</DELIMITER
+<TEXT>
+Let T be the following theory that consists of the following three statement:
+- `The ball or the cube is red.'
+- `The ball is either red or blue.'
+- `The cube is either red or blue.'
+
+</TEXT>
+<INPUT>
+ T := [ red(ball) v red(cube), 
+          red(ball) <-> ~blue(ball),
+          red(cube) <-> ~blue(cube) ];  
+</INPUT>
+<OUTPUT>
+	[red(ball) v red(cube), red(ball) <-> ¬blue(ball), red(cube) <-> ¬blue(cube)]
+
+</OUTPUT>
+<TEXT>
+We try to minimize the number of red objects in the following three conmonotonic logics:
+   a) Closed world assumption (cwa).
+   b) Circumscription (circ).
+   c) Default logic (default).
+</TEXT>
+<DELIMITER>
+
+</DELIMITER
+<TEXT>
+In cwa, this leads to an inconsistency.
+</TEXT>
+<INPUT>
+load(cwa);
+</INPUT>
+<OUTPUT>
+	cwa  user  
+
+</OUTPUT>
+<INPUT>
+cwa::consistent( T, [red(ball), red(cube)]);
+</INPUT>
+<OUTPUT>
+	false
+
+</OUTPUT>
+<INPUT>
+cwa::cwa( T, [red(ball), red(cube)] );
+</INPUT>
+<OUTPUT>
+	[red(ball) v red(cube), red(ball) <-> ¬blue(ball), red(cube) <-> ¬blue(cube), ¬red(ball), ¬red(cube)]
+
+</OUTPUT>
+<DELIMITER>
+
+</DELIMITER
+<TEXT>
+In circumscription, we can only conclude that the ball is not red if we minimize  red(ball)  and vary the remaining variables.
+</TEXT>
+<INPUT>
+ load(circ);
+</INPUT>
+<OUTPUT>
+	circ  cwa  user  
+
+</OUTPUT>
+<INPUT>
+ circ::provable( ~red(ball), T,
+                           [red(ball),red(cube)] );
+</INPUT>
+<OUTPUT>
+	false
+
+</OUTPUT>
+<INPUT>
+ circ::provable( ~red(ball), T,
+                           [red(ball)]);
+</INPUT>
+<OUTPUT>
+	false
+
+</OUTPUT>
+<INPUT>
+ circ::provable( ~red(ball), T,
+                           [red(ball)],
+                           [red(cube),blue(ball),blue(cube)] );
+</INPUT>
+<OUTPUT>
+	true
+
+</OUTPUT>
+<DELIMITER>
+
+</DELIMITER
+<TEXT>
+In default logic, we construct a default theory  td that consists of the theory T and two rules.
+The first rule says:
+`If we can add the fact that the ball is not red without obtaining an inconsistency, then we do so.'
+The second rule says the same thing for the cube.
+</TEXT>
+<INPUT>
+ load(default);  
+</INPUT>
+<OUTPUT>
+	default  circ  cwa  user  
+
+</OUTPUT>
+<INPUT>
+Delta := [ [true,~red(ball),~red(ball)],
+                [true,~red(cube),~red(cube)] ];
+</INPUT>
+<OUTPUT>
+	[[true, ¬red(ball), ¬red(ball)], [true, ¬red(cube), ¬red(cube)]]
+
+</OUTPUT>
+<INPUT>
+ td := [T, Delta];
+</INPUT>
+<OUTPUT>
+	[[red(ball) v red(cube), red(ball) <-> ¬blue(ball), red(cube) <-> ¬blue(cube)], [[true, ¬red(ball), ¬red(ball)], [true, ¬red(cube), ¬red(cube)]]]
+
+</OUTPUT>
+<TEXT>
+We obtain two extensions.
+In one extension, the ball is not red, in the other extension the cube is not  read.
+</TEXT>
+<INPUT>
+default::provable(~red(ball), td, "all");
+</INPUT>
+<OUTPUT>
+	false
+
+</OUTPUT>
+<INPUT>
+default::provable(~red(ball), td, "one");
+</INPUT>
+<OUTPUT>
+	true
+
+</OUTPUT>
+<INPUT>
+default::extensions(td);
+</INPUT>
+<OUTPUT>
+	[[red(ball) v red(cube), red(ball) <-> ¬blue(ball), red(cube) <-> ¬blue(cube), ¬red(ball)], [red(ball) v red(cube), red(ball) <-> ¬blue(ball), red(cube) <-> ¬blue(cube), ¬red(cube)]]
+
+</OUTPUT>
+<TEXT>
+The theory obtained in cwa is not an extension.
+</TEXT>
+<INPUT>
+default::extensionp( cwa(T), td );
+</INPUT>
+<OUTPUT>
+	false
+
+</OUTPUT>
+<DELIMITER>
+
+</DELIMITER
+<INPUT>
+ 
+</INPUT>
+<OUTPUT>
+ 
+</OUTPUT>

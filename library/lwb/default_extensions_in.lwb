@@ -1,0 +1,372 @@
+# extensions_in.lwb
+
+######################################################################
+
+# Computes the extensions of a default theory  td  using the algorithm
+# in [Niemela ijcai95].
+# The result should be equivalent to the one of the function
+# default::extensions.
+#
+# Written by Ilkka Niemela (Ilkka.Niemela@hut.fi) 27.11.96,
+# minor changes by Alain Heuerding.
+#
+# Example:
+# 
+# > extensions_in([ [p0], [[p0,p1,p1],[p0,~p1,~p1],[p1,p2,p2]] ]);
+#	[[p0, p1, p2], [p0, ~p1]]
+#
+# > extensions_in([ [p1 v p3], [[true,~p1,~p1],[true,~p3,~p3]] ]);
+#	[[p1 v p3, ~p1], [p1 v p3, ~p3]]
+
+######################################################################
+######################################################################
+
+load(cpc);
+
+######################################################################
+
+# Removes all occurrences of the formula  a form the list of formulas  l .
+# The result is returned in the second argument.
+
+proc : remove_fml_from_list(a, var l)
+
+local l2, b;
+
+begin
+
+  l2 := [];
+  foreach b in l do if a <> b then append(l2, b);
+  l := l2; 
+ 
+end; # remove_fml_from_list
+
+######################################################################
+
+# Returns the (sorted) list of justifications of the list of defaults 
+# Delta .
+# Each formula occurs at most once.
+#
+# Example:
+# The result of
+#   get_justifications(
+#      [[q,~r,~r],[s,[~r,~t],~r],[r & s,[r v p,r v q],t -> r]] );
+# is
+#   [~r,~t,r v p,r v q]
+
+proc : get_justifications(Delta)
+
+local r, d, jus, a;
+
+begin
+
+  r := [];
+
+  foreach d in Delta                     # foreach default  d
+  do begin
+
+    jus := d[2];                         # the justification(s)
+
+    # jus  is either a list of formulas or a formula
+    if type(jus) <> LIST
+    then begin if not member(jus, r) then append(r, jus); end;
+    else begin
+      foreach a in jus
+      do if not member(a, r) then append(r, a);
+    end;
+
+  end;
+
+  return r;
+
+end; # get_justifications
+
+######################################################################
+
+# Computes the deductive closure of the theory  t  and the monotonic
+# rules in  monotonic_rules .
+# Formulas that are already in  t  are not added to  t ,
+# and formulas are added at most once to  t .
+#
+# Example:
+# The result of
+#   dcl( [p,q v r,s], [[s,p],[q,t],[s,~r]] );
+# is
+#   [p,q v r,s,~r,t]
+
+proc : dcl(t, monotonic_rules)
+
+local changes_flag, d, monotonic_rules2;
+
+begin
+
+  changes_flag := true;
+
+  while changes_flag   # while something was added to  t  in the previous loop
+  do begin
+
+    changes_flag := false;
+    monotonic_rules2 := monotonic_rules;
+    monotonic_rules := [];
+
+    foreach d in monotonic_rules2
+    do begin
+
+      if not member(d[2], t)   # remove the elements with consequence in  t
+      then begin
+        if cpc::provable(d[1], t)
+        then begin append(t, d[2]); changes_flag := true; end;
+        else append(monotonic_rules, d);
+      end;
+
+    end;
+
+  end; # while
+
+  return t;
+
+end; # dcl
+
+######################################################################
+
+# Example:
+# The result of
+#   lower_bound(
+#      [ [x,q], [ [q,[q,r],r], [p v q,s,s], [p v q,s2,s2], [q,[q,x],y] ] ],
+#      [nb(~q),nb(~s),nb(~r)],
+#      [] )
+# is
+#   dcl([ [x,q], [ [q,r],[p v q,s] ] ])
+# i.e.
+#   [x,q,r,s]
+
+proc : lower_bound(td, B, F)
+
+local monotonic_rules, d, jus, all_nb_in_B, a;
+
+begin
+
+  monotonic_rules := [];
+
+  foreach d in td[2]
+  do begin
+
+    # jus  is a list of formulas or a single formula.
+    jus := d[2];
+
+    if type(jus) <> LIST
+    then all_nb_in_B := member(nb(~jus), B);
+    else begin
+      all_nb_in_B := true;
+      while ( nops(jus) > 0 ) and all_nb_in_B
+      do begin
+        a := pop(jus);
+        all_nb_in_B := member(nb(~a), B);
+      end;
+    end;
+    if all_nb_in_B then append(monotonic_rules, [d[1],d[3]]);
+
+  end; # foreach
+
+  return dcl(td[1], monotonic_rules);
+
+end; # lower_bound
+
+######################################################################
+
+# Example:
+# The result of
+#   upper_bound(
+#      [ [x,q], [ [q,[q,r],r], [p v q,s,s], [p v q,s2,s2], [q,[q,x],y] ] ],
+#      [~x],
+#      [~s2] );
+# is
+#   dcl([ [x,q], [ [q,r],[p v q,s] ] ])
+# i.e.
+#   [x,q,r,s]
+
+proc : upper_bound(td, B, F)
+
+local monotonic_rules, d, jus, all_not_member, a;
+
+begin
+
+  monotonic_rules := [];
+
+  foreach d in td[2]
+  do begin
+
+    # jus  is a list of formulas or a single formula.
+    jus := d[2];
+
+    if type(jus) <> LIST
+    then all_not_members := not member(~jus, B) and not member(~jus, F);
+    else begin
+      all_not_members := true;
+      while ( nops(jus) > 0 ) and all_not_members
+      do begin
+        a := pop(jus);
+        all_not_members := not member(~a, B) and not member(~a, F);
+      end;
+    end;
+    if all_not_members then append(monotonic_rules, [d[1],d[3]]);
+
+  end; # foreach
+
+  return dcl(td[1], monotonic_rules);
+
+end; # upper_bound
+
+######################################################################
+
+# Removes one element from the list of formulas  jus_list  and returns
+# this formula. 
+
+proc : select(var jus_list)
+
+begin
+
+  return pop(jus_list);
+
+end; # select
+
+######################################################################
+
+# Computes the extension that corresponds to the full set  B .
+
+proc : fullset2extension(td, B)
+
+begin
+
+  return lower_bound(td, B, []);
+
+end; # fullset2extension
+
+######################################################################
+
+proc : conflict(td, B, F, lower_b, upper_b)
+
+local a, conflict_flag;
+
+begin
+
+  conflict_flag := false;
+
+  while ( ( B <> [] ) and not conflict_flag ) do begin
+    a := pop(B);
+    if ( a[0] = nb )
+    then conflict_flag := cpc::provable(a[1], lower_b);
+  end;
+
+  while ( ( F <> [] ) and not conflict_flag ) do begin
+    a := pop(F);
+    if not cpc::provable(a, upper_b)
+    then conflict_flag := true;
+  end;
+
+  return conflict_flag;
+
+end; # conflict
+
+######################################################################
+
+# jus_list  is shortened,  b  and  F  are lengthened.
+# upper_bound  and  lower_bound  are output parameters.
+# No result.
+
+proc : expand(td,
+              var jus_list, var B, var F)
+
+local changes_flag, jus, jus_list2;
+
+begin
+
+  changes_flag := true;
+
+  while changes_flag   # while formulas were moved from  jus_list  to  B
+  do begin             # in the previos loop
+
+    changes_flag := false;
+    lower_b := lower_bound(td, B, F);
+    jus_list2 := jus_list;
+
+    foreach jus in jus_list2 do
+    begin
+      if cpc::provable(~jus, lower_b)
+      then begin
+        append(B, ~jus);
+        remove_fml_from_list(jus, jus_list);
+        changes_flag := true;
+      end;
+    end; # foreach
+
+    upper_b := upper_bound(td, B, F);
+    jus_list2 := jus_list;
+
+    foreach jus in jus_list2 do
+    begin
+      if not cpc::provable(~jus, upper_b)
+      then begin
+        append(B, nb(~jus));
+        remove_fml_from_list(jus, jus_list);
+        changes_flag := true;
+      end;
+    end; # foreach
+
+  end; # while
+
+end; # expand
+
+######################################################################
+
+# main procedure
+
+proc : extensions_in(td)
+
+local jus_list, B, F, exts;
+
+##########
+
+# No result.
+
+proc extensions_in2(td, jus_list, B, F, var exts)
+
+local a, F2, B2, lower_b, upper_b;
+
+begin
+
+  expand(td, jus_list, B, F);
+
+  lower_b := lower_bound(td, B, F);
+  upper_b := upper_bound(td, B, F);
+  if conflict(td, B, F, lower_b, upper_b) then return false;
+
+  if jus_list = []
+  then begin
+    append(exts, fullset2extension(td, B));
+    return;
+  end;
+
+  a := select(jus_list);
+  B2 := B; F2 := F;
+  append(B2, nb(~a));
+  extensions_in2(td, jus_list, B2, F, exts);
+  append(F2, ~a);
+  return extensions_in2(td, jus_list, B, F2, exts); 
+
+end; # extensions_in2
+
+##########
+
+begin
+
+  exts := [];
+  jus_list := get_justifications(td[2]);
+
+  extensions_in2(td, jus_list, [], [], exts);
+
+  return exts;
+
+end; # extensions_in
+
+######################################################################
+######################################################################

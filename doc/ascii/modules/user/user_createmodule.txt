@@ -1,0 +1,48 @@
+
+createmodule
+============
+
+create your own module
+
+SYNTAX
+- createmodule(name) 
+
+PARAMETERS
+- name: symbol or string
+
+RESULT:  true  or  fail 
+
+SYNOPSIS
+
+- createmodule  creates a new module  name . This allows you to write your 
+  own modules in the LWB programming language. After creation, the new 
+  module can be loaded and unloaded as any other module. Use the module 
+  selection operator ` :: ' to store LWB procedures and formulae in the new 
+  module.
+- If a module  name  already exists,  createmodule  returns  fail .
+- Note that you can also move the contents of the new module to the file  
+  homedir/library/init/name_init.lwb , which is automatically parsed when  
+  name  is loaded. However, do not forget to prefix the procedure and 
+  formula names with ` name:: '. Otherwise, the symbols will be stored in 
+  the user module. Use the function  get()  to determine  homedir .
+
+EXAMPLE
+
+> createmodule( private );
+  availmod;
+  load( private );
+  proc: private::foo() begin print("Hello world!"); end;
+  which(foo);
+  foo();
+  unload( private );
+	true
+private  cpc  ipc  k  kt  s4  s5  g  kn  ktn  s4n  pltl  tk  ll  ael  circ  
+cwa  default  user  
+	private  user  
+	private
+	Hello world!
+	user  
+
+SEE ALSO
+  get
+

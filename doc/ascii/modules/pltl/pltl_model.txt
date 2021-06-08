@@ -1,0 +1,42 @@
+
+model
+=====
+
+search for a model
+
+SYNTAX
+- model(A) 
+
+PARAMETERS
+- A: formula
+
+RESULT:  model of  A  if one was found,  false  otherwise
+
+SYNOPSIS
+
+- model  searches for a model of  A .
+- A model is a list of states, where a state is again a list with two 
+  entries; the first is a list of literals, where positive literals are 
+  meant to be true and negative ones to be false, and the second is a list 
+  of integers, indicating the successor states (in linear time logic there 
+  is only one successor). Note that shorter models may exist.
+- The implementation of  pltl::model  is based on the calculus described in 
+  \html{ Stefan Schwendimann.
+  <A HREF="http://iamwww.unibe.ch/~lwb/publications/pltl_onepasscalc.ps.Z"> 
+  A New One-Pass Tableau Calculus for PLTL.</A>
+  In Harrie de Swart, editor, <EM>Tableaux 98.</EM> LNAI 1397, 277-291, 
+  1998. }
+- In general, the function  satisfiable  is faster.
+
+EXAMPLE
+
+> model( p0 & G(p1 -> ~p0) & X p1 & X F p0 );
+	[[[p0, ~p1], [2]], [[p1, ~p0], [3]], [[p0, ~p1], [4]], [[~p1], [4]]]
+> model( G F (p0 & (p1 U ~p0))   &  G F (p0 & (~p1 U ~p0)) );
+	[[[p1, p0], [2]], [[~p0], [3]], [[p0, ~p1], [4]], [[~p0], [1]]]
+> model( F p0 & G ~p0 );
+	false
+
+SEE ALSO
+  display, provable, satisfiable
+

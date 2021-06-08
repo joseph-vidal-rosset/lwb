@@ -1,0 +1,31 @@
+
+typek
+=====
+
+type test
+
+SYNTAX
+- typek(X, S) 
+
+PARAMETERS
+- X: expression
+- S: one of  "fml" ,  "theory" ,  "var" 
+
+RESULT:  true  or  false 
+
+SYNOPSIS
+
+- S  is  "fml" :  typek  tests whether  X  is a formula in  tk .
+- S  is  "theory" :  typek  tests whether  X  is a theory in  tk . A theory 
+  is a list of formulas.
+- S  is  "var" :  typek  tests whether  X  is a variable in  tk .
+
+EXAMPLE
+
+> typek(p1 & F p2 -> true v ~ G H(p3 <-> P false), "fml");
+	true
+> typek([p2 v H H p3, p5, P(p1 -> p2) v ~false], "theory");
+	true
+> typek(p2, "var");
+	true
+

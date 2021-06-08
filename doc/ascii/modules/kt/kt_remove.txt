@@ -1,0 +1,44 @@
+
+remove
+======
+
+remove superfluous connectives and subformulas
+
+SYNTAX
+- remove(A) 
+- remove(A, "provable") 
+- remove(A, "unary") 
+- remove(T) 
+- remove(T, "provable") 
+- remove(T, "unary") 
+
+PARAMETERS
+- A: formula
+- T: theory
+
+RESULT:  formula resp. theory
+
+SYNOPSIS
+
+- One argument:  remove  removes  false  and  true  in the formula  A  resp. 
+  in the theory  T  (as far as possible without introducing new variables).
+- Option  "provable" :  remove  removes subformulas in  A  resp. in  T  that 
+  are equivalent to  true  or to  false  (as far as possible without 
+  introducing new variables).
+- Option  "unary" :  remove  removes superfluous negation symbols, i.e.  ~ 
+  ~A  is converted to  A , and in equivalences at most one  ~  occurs. No 
+  other connectives are changed.
+- The result is equivalent to  A  resp. to  T .
+
+EXAMPLE
+
+> remove(true & p0 -> (dia(~ box false & p1)));
+	p0 -> dia (~box false & p1)
+> remove(p2 <-> ~box(p2 & p3) v p2, "provable");
+	p2 <-> ~box (p2 & p3) v p2
+> remove([dia true, box(p0 <-> ~(~p1 <-> ~p2)), dia ~ ~ ~p1], "unary");
+	[dia true, box (p0 <-> (p1 <-> ~p2)), dia ~p1]
+
+SEE ALSO
+  provable
+

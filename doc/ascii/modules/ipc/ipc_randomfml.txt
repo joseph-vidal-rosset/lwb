@@ -1,0 +1,30 @@
+
+randomfml
+=========
+
+random formula
+
+SYNTAX
+- randomfml(Depth, Vars) 
+
+PARAMETERS
+- Depth: integer,  0 <  Depth
+- Vars: list of variables
+
+RESULT:  formula
+
+SYNOPSIS
+
+- The constructed formula written in tree-shape has at most depth  Depth .
+- Only elements of  Vars  occur as variables in the result.
+
+EXAMPLE
+
+> randomfml(3, [p0,p1,p2,p3]);
+	~(false <-> p1) -> (p1 <-> p0) & (p1 v p3)
+> randomfml(3, [p0,p1,p2,p3]);
+	p2 & (p1 <-> p0 <-> p2 -> false)
+
+SEE ALSO
+  depth, typek, vars
+

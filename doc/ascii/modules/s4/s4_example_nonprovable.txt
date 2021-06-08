@@ -1,0 +1,23 @@
+
+Typical non-provable formulas example
+=====================================
+
+
+Typical non-provable formulas
+-----------------------------
+
+The axiom that causes the difference between  s4  and  s5  is naturally not 
+provable in  s4 .
+
+> fml("5");
+	~box p1 -> box ~box p1
+> provable(fml("5"));
+	false
+
+We cannot move  box  and  dia  inwards and outwards in all cases.
+
+> provable( dia p0 & dia p1  ->  dia(p0 & p1) );
+	false
+> provable( box(p0 v p1)  ->  box p0 v box p1 );
+	false
+

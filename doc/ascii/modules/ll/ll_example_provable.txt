@@ -1,0 +1,52 @@
+
+Typical provable formulas example
+=================================
+
+
+Typical provable formulas
+-------------------------
+
+Each binary connectvie has its neutral element.
+
+> provable( p0 | bot  o-o  p0 );  
+	true
+> provable( p0 X 1  o-o  p0 );
+	true
+> provable( p0 + 0  o-o  p0 );  
+	true
+> provable( p0 & top  o-o  p0 );
+	true
+
+For each binary connective the commutativity and associativity laws hold.
+
+> provable( p0 | p1  o-o  p1 | p0 );
+	true
+> provable( (p0 | p1) | p2  o-o  p0 | (p1 | p2) );  
+	true
+> provable( p0 X p1  o-o  p1 X p0 );
+	true
+> provable( (p0 X p1) X c  o-o  p0 X (p1 X c) );
+	true
+
+Various 'De-Morgan-like' laws hold.
+
+> provable( ~(p0 | p1)  o-o  (~p0 X ~p1) );
+	true
+> provaple( ~(p0 X p1)  o-o  (~p0 | ~p1) );
+	provaple(~(p0 X p1) o-o ~p0 | ~p1)
+> provable( ~(p0 + p1)  o-o  (~p0 & ~p1) );
+	true
+> provable( ~(p0 & p1)  o-o  (~p0 + ~p1) );
+	true
+
+Valid formulae involving modalities.
+
+> provable( !(p0 & p1)  o-o  ! p0 X ! p1 );
+	true
+> provable( ?(p0 + p1)  o-o  ? p0 | ? p1 );
+	true
+> provable( ? top o-o top );
+	true
+> provable( !(p0 & 1)  o-o ! p0 );
+	true
+

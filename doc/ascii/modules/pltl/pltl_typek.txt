@@ -1,0 +1,39 @@
+
+typek
+=====
+
+type test
+
+SYNTAX
+- typek(Y, S) 
+
+PARAMETERS
+- Y: expression
+- S: one of  "fml" ,  "model" ,  "theory" ,  "var" 
+
+RESULT:  true  or  false 
+
+SYNOPSIS
+
+- S  is  "fml" :  typek  tests whether  Y  is a formula in  pltl .
+- S  is  "model" :  typek  tests whether  Y  is a model in  pltl . A model 
+  is a list of states, where a state is again a list with two entries; the 
+  first is a list of literals, where positive literals are meant to be true 
+  and negative ones to be false, and the second is a list of integers, 
+  indicating the successor states (in linear time logic there is only one 
+  successor).
+- S  is  "theory" :  typek  tests whether  Y  is a theory in  pltl . A 
+  theory is a list of formulas.
+- S  is  "var" :  typek  tests whether  Y  is a variable in  pltl .
+
+EXAMPLE
+
+> typek(p1 & F r -> true v ~ G X(p2 B false), "fml");
+	true
+> typek( [ [[p,q,r], [2]], [[~p,r], [3]], [[~p,~r], [1]]] , "model");
+	true
+> typek([p2 v F X p3, p5, G(p1 -> p2) v ~false], "theory");
+	true
+> typek(p2, "var");
+	true
+

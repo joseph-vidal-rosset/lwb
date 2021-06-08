@@ -1,0 +1,36 @@
+
+less
+====
+
+ordering of expressions
+
+SYNTAX
+- less(A, B) 
+
+PARAMETERS
+- A, B: expressions
+
+RESULT:  true  or  false 
+
+SYNOPSIS
+
+- less  tests whether the expression  A  is less than the expression  B .
+- less  uses a lexicographic ordering with the following properties: There 
+  is an arbitrary but fixed linear ordering on the types. If the type of  A  
+  is less than the type of  B , then  A  is less than  B . If  A  and  B  
+  have the same type, we compare the first operands with  less , and if 
+  these are equal, we compare the second operands with  less .
+- To compare variable symbols or strings, we use the  strcmp  ordering of  C .
+
+EXAMPLE
+
+> less(f(a),f(b));
+	true
+> less((p v q1) <-> r, (p v q2) <-> r);
+	true
+> less(a v b,[a,b]);
+	true
+
+SEE ALSO
+  sort
+

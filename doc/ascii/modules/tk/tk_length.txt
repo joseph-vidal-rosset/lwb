@@ -1,0 +1,29 @@
+
+length
+======
+
+length of a formula
+
+SYNTAX
+- length(A) 
+
+PARAMETERS
+- A: formula
+
+RESULT:  integer,  >= 0 
+
+SYNOPSIS
+
+- length  computes the length of the formula  A  in  tk .
+- Variables and connectives have length  1 . Brackets are not counted.
+
+EXAMPLE
+
+> length(F(p1 & ~p2) -> H p3);
+	8
+> length(p1);
+	1
+
+SEE ALSO
+  depth
+

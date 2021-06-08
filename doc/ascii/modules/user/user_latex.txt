@@ -1,0 +1,33 @@
+
+latex
+=====
+
+print a sequence of expressions
+
+SYNTAX
+- latex(E1, E2, ...) 
+
+PARAMETERS
+- E1, E2, ...: expressions
+
+RESULT:  null expression
+
+SYNOPSIS
+
+- latex  displays the sequence of expressions  E1 ,  E2 , ... in LaTeX 
+  format.
+- Each expression is written on one line.
+
+EXAMPLE
+
+> B :== p1 -> p2 & p3;
+> latex(B);
+	\mathit{p1} \to \mathit{p2} \land \mathit{p3}
+> latex(p1 & p2, p3 <-> p4, p5);
+	\mathit{p1} \land \mathit{p2}
+	\mathit{p3} \leftrightarrow \mathit{p4}
+	\mathit{p5}
+
+SEE ALSO
+  ascii, inputformat, pretty, set
+

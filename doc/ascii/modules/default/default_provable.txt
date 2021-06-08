@@ -1,0 +1,37 @@
+
+provable
+========
+
+provable in default theory ?
+
+SYNTAX
+- provable(A, Td, Mode) 
+
+PARAMETERS
+- A: formula
+- Td: theory
+- Mode: one of  "one" ,  "all" 
+
+RESULT:  true  or  false 
+
+SYNOPSIS
+
+- Third argument is  "one" :  provable  tests whether the formula  A  is 
+  provable in at least one extension of the default theory  Td .
+- Third argument is  "all" :  provable  tests whether the formula  A  is 
+  provable in all extensions of the default theory  Td .
+- Attention: The required space is exponential in the number of defaults in  
+  Td . We recommend to use at most 20 defaults.
+- Choose an appropriate infolevel for additional information during the 
+  execution (e.g.  set("infolevel", 5); ).
+
+EXAMPLE
+
+> provable(p2, [ [p0], [[p0,p2,p2],[p0,~p2,~p2]] ], "one");
+	true
+> provable(r, [ [p0], [[p0,p2,p2],[p0,~p2,~p2]] ], "all");
+	false
+
+SEE ALSO
+  extensions
+

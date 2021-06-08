@@ -1,0 +1,45 @@
+
+vars
+====
+
+occurring variables
+
+SYNTAX
+- vars(A) 
+- vars(T) 
+- vars(A, S) 
+- vars(T, S) 
+
+PARAMETERS
+- A: formula
+- T: theory
+- S: one of  "pos" ,  "neg" 
+
+RESULT:  list of variables
+
+SYNOPSIS
+
+- vars  computes the list of variables of  kn  occurring in the formula  A  
+  resp. in the theory  T .
+- The resulting list is sorted according to the ordering given by  less , 
+  and no elements occur twice in the list.
+- If the second argument is  "pos" , then only the positive occurrences are 
+  listed. If the second argument is  "neg" , then only the negative 
+  occurrences are listed.
+
+EXAMPLE
+
+> vars(dia2(p0 & ~p2) v dia1 p0 v ~p0);
+	[p0, p2]
+> vars(dia2(p0 & ~p2) v dia1 p0 v ~p0, "pos");
+	[p0]
+> vars(dia2(p0 & ~p2) v dia1 p0 v ~p0, "neg");
+	[p0, p2]
+> vars(true);
+	[]
+> vars([p1, box0(dia10 p0 v q0), p0 <-> ~ dia0 p0]);
+	[p0, p1, q0]
+
+SEE ALSO
+  less, sort, subfmls, typek
+

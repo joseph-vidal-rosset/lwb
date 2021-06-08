@@ -1,0 +1,44 @@
+
+Provability and circumscription theory example
+==============================================
+
+
+Provability and circumscription theory
+--------------------------------------
+
+We look at an example that shows the effect of varied variables.
+
+> T := [p0 v p1, p2];
+	[p0 v p1, p2]
+
+If we only minimize  p0 , we can prove that not both  p0  and  p1  are true, 
+but we cannot prove that  p0  is false.
+
+> provable(~(p0 & p1), T, [p0]);
+	true
+> provable(~p0, T, [p0]);
+	false
+
+The corresponding circumscription theory is:
+
+> circ(T, [p0]);
+	[p0 v p1, p2, ~p0 -> p1, p0 -> ~p1]
+
+If we vary the variable  p1 , then  ~p0  becomes provable, and thus  p1  
+must be true.
+
+> provable(~p0, T, [p0], [p1]);
+	true
+> provable(p1, T, [p0], [p1]);
+	true
+
+The corresponding circumscription theory is:
+
+> circ(T, [p0], [p1]);
+	[p0 v p1, p2, ~p0]
+
+We can simplify this to:
+
+> simplify(circ(T, [p0], [p1]));
+	[p2, ~p0, p1]
+

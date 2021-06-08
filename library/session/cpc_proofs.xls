@@ -1,0 +1,101 @@
+<TEXT>
+_____________________________________________________________
+    
+     Demo for Simple Classical Proofs
+_____________________________________________________________
+ 
+</TEXT>
+<INPUT>
+ load(cpc);
+</INPUT>
+<OUTPUT>
+	cpc  user  
+
+</OUTPUT>
+<INPUT>
+p1:= proof( a & b  -> b );
+</INPUT>
+<OUTPUT>
+	
+
+</OUTPUT>
+<INPUT>
+p2:= proof( (a & b v c) & (a v d) -> a v d );  # A -> A
+</INPUT>
+<OUTPUT>
+	
+
+</OUTPUT>
+<INPUT>
+proofoptions(["branchings_only"]); 
+p2;
+proofoptions(["all"]); 
+</INPUT>
+<OUTPUT>
+	true
+	
+	true
+
+</OUTPUT>
+<INPUT>
+p3:= proof( b & ~b  v  (a v ~a) );   # 'false v true'
+</INPUT>
+<OUTPUT>
+	
+
+</OUTPUT>
+<INPUT>
+p4:= proof( b & c  v  ~(b & c) );   #  A v ~A
+</INPUT>
+<OUTPUT>
+	
+
+</OUTPUT>
+<INPUT>
+p5:=  proof( a -> b  <->  ~a v b );  # implication as disjunction
+</INPUT>
+<OUTPUT>
+	
+
+</OUTPUT>
+<INPUT>
+p6:= proof( (a & b -> c) & (a -> b) -> a -> c );
+</INPUT>
+<OUTPUT>
+	
+
+</OUTPUT>
+<INPUT>
+p7:= proof( (a -> b-> c) -> (a -> b) -> a -> c );  # as p6
+</INPUT>
+<OUTPUT>
+	
+
+</OUTPUT>
+<INPUT>
+p8:= proof( a & (b & c)  <-> (a & b) & c );  # assoc. of '&' 
+</INPUT>
+<OUTPUT>
+	
+
+</OUTPUT>
+<INPUT>
+p9:= proof( ~(a v b) -> ~a & ~b );  # 'De Morgan'
+</INPUT>
+<OUTPUT>
+	
+
+</OUTPUT>
+<INPUT>
+p10:= proof( ~~~a <-> ~a );
+</INPUT>
+<OUTPUT>
+	
+
+</OUTPUT>
+<INPUT>
+
+</INPUT>
+<OUTPUT>
+
+</OUTPUT>

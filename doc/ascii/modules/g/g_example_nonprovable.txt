@@ -1,0 +1,15 @@
+
+Typical non-provable formulas example
+=====================================
+
+
+Typical non-provable formulas
+-----------------------------
+
+Two axioms of the modal logic  s5  are not provable in  g .
+
+> provable( box p0 -> p0 );
+	false
+> provable( ~ box p0 -> box ~ box p0 );
+	false
+

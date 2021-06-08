@@ -1,0 +1,35 @@
+
+cwa
+===
+
+closed world assumption theory
+
+SYNTAX
+- cwa(T) 
+- cwa(T, Vars) 
+
+PARAMETERS
+- T: theory
+- Vars: list of variables
+
+RESULT:  theory
+
+SYNOPSIS
+
+- One argument:  cwa  computes the closed world assumption theory restricted 
+  on the variables in  T  of the theory  T .
+- Two arguments:  cwa  computes the closed world assumption theory 
+  restricted on the variables in  Vars  of the theory  T .
+- Attention: Also in the first case there is a restriction on a list of 
+  variables. If you intend to use the result of  cwa  for provability or 
+  consistency tests, then you should use  provable  resp.  consistent .
+- Choose an appropriate infolevel for additional information during the 
+  execution (e.g.  set("infolevel", 3); ).
+
+EXAMPLE
+
+> cwa([p0 & p1, p0 v p2]);
+	[p0 & p1, p0 v p2, ~p2]
+> cwa([p0 v p1 v p2], [p1, p2, p3]);
+	[p0 v p1 v p2, ~p1, ~p2, ~p3]
+

@@ -1,0 +1,30 @@
+
+ll
+==
+
+embedding in  ll 
+
+SYNTAX
+- ll(A) 
+
+PARAMETERS
+- A: formula
+
+RESULT:  formula
+
+SYNOPSIS
+
+- ll  embeds the formula  A  in  ll .
+- The result is provable in  ll  iff the original formula is provable in  s4 
+  (if the variables of  A  in  s4  are also variables in  ll ).
+
+EXAMPLE
+
+> ll(box p0 v box p1 -> box(p0 v p1));
+	!(p0 | 0) + !(p1 | 0) -o !(p0 | p1) X top
+> ll(box p1 imp box box p1);
+	!(p1 | 0) -o !(!p1 X top) X top
+
+SEE ALSO
+  provable, provable
+

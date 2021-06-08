@@ -1,0 +1,30 @@
+
+satisfiable
+===========
+
+formula satisfiable ?
+
+SYNTAX
+- satisfiable(A) 
+
+PARAMETERS
+- A: formula
+
+RESULT:  true  or  false 
+
+SYNOPSIS
+
+- satisfiable  tests whether the formula  A  is satisfiable in  k .
+- Choose an appropriate infolevel for additional information during the 
+  execution (e.g.  set("infolevel", 3); ). See  k::provable  for details.
+
+EXAMPLE
+
+> satisfiable(box p0 & ~ box box p0);
+	true
+> satisfiable(box(p0 & p1) & dia ~p1);
+	false
+
+SEE ALSO
+  consistent, provable
+

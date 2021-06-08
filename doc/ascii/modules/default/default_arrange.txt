@@ -1,0 +1,51 @@
+
+arrange
+=======
+
+arrange formula, theory, or default theory
+
+SYNTAX
+- arrange(A) 
+- arrange(A, "sort") 
+- arrange(T) 
+- arrange(T, "sort") 
+- arrange(Td) 
+- arrange(Td, "sort") 
+
+PARAMETERS
+- A: formula
+- T: theory
+- Td: theory
+
+RESULT:  formula resp. theory resp. default theory
+
+SYNOPSIS
+
+- First argument  A :  arrange  arranges the formula  A . It converts  A & 
+  (B & C)  into  A & B & C  (same for  v ,  <-> ). 
+  The option  "sort"  additionally converts  B & A  into  A & B  if  A  is 
+  less than  B  (same for  v ,  <-> ), and converts  B -> A -> C  into  A -> 
+  B -> C  if  A  is less than  B . The result is equivalent (in  cpc ) to  A .
+- First argument  T : The theory is converted into a conjunction. This 
+  conjunction is arranged as described above. Then the conjunction is 
+  converted back into a theory. The result is equivalent (in  cpc ) to  T .
+- First argument  Td :  arrange  is applied on the parts of the default 
+  theory  Td . The order of defaults in  Td[2]  is not changed. The set of 
+  extensions of the result is equivalent to the set of extensions of  Td .
+
+EXAMPLE
+
+> arrange((p3 v p2) v (p1 v p4));
+	p3 v p2 v p1 v p4
+> arrange((p3 v p2) v (p1 v p4), "sort");
+	p1 v p2 v p3 v p4
+> arrange(p0 & (p2 -> p1 -> p5), "sort");
+	p0 & (p1 -> p2 -> p5)
+> arrange([p4 v p2 & p6, p0 & p1, ~p4 & p3]);
+	[p4 v p2 & p6, p0, p1, ~p4, p3]
+> arrange([ [~p4 & p5, p2 v (p1 v p3)], [[p1 v p0,p3,p3], [p4,[p1,p2],p3]] ], "sort");
+	[[p5, ~p4, p1 v p2 v p3], [[p0 v p1, p3, p3], [p4, [p1, p2], p3]]]
+
+SEE ALSO
+  sort
+

@@ -1,0 +1,74 @@
+
+simplify
+========
+
+simplify formula
+
+SYNTAX
+- simplify(A) 
+- simplify(A, S) 
+- simplify(A, S, N) 
+- simplify(T) 
+- simplify(T, S) 
+- simplify(T, S, N) 
+- simplify(Td) 
+- simplify(Td, S) 
+- simplify(Td, S, N) 
+
+PARAMETERS
+- A: formula
+- T: theory
+- Td: default theory
+- S: one of  "synt" ,  "sort" ,  "provable" 
+- N: natural number,  N >= 1 
+
+RESULT:  formula resp. theory resp. default theory
+
+SYNOPSIS
+
+- One argument:  simplify  simplifies the formula  A  resp. the theory  T  
+  resp. the default theory  Td . Parts that cannot be simplified remain 
+  unchanged.
+- The simplification relies on the search for `equivalent' subformulas. This 
+  search can be influenced by the second and the third argument.
+- Second argument: Determines when two subformulas are `equivalent': 
+  "synt" : Syntactically equivalent.  true  and  false  are removed. Often 
+  faster than  "sort"  and  "provable" . 
+  "sort" : Syntactically equivalent modulo ordering.  true  and  false  are 
+  removed. 
+  "provable" : Provably equivalent. Subformulas that are equivalent to  true 
+  or  false  are removed. More powerful than  "synt"  and  "sort" . 
+  Default:  "sort" .
+- Third argument: Only subformulas with at most  N  alternations of binary 
+  connectives in between are compared. 
+  Default: infinite. Often a small  N  (e.g. 1 or 2) makes the 
+  simplification process faster.
+- The result is equivalent to  A  resp. to  T  (in  cpc ), resp. the set of 
+  extensions of the result is equivalent to the set of extensions of  Td .
+- Sometimes a succeeding application of  convert  or  remove  can improve 
+  the result.
+- With  set("infolevel", 3)  you obtain additional information during the 
+  simplification process.
+
+EXAMPLE
+
+> simplify((p2 -> p3) & p0 -> q1 & p0 -> ~p4);
+	(p2 -> p3) -> q1 & p0 -> ~p4
+> simplify((p2 -> p3) & p0 -> p1 & p0 -> ~p3);
+	p1 & p0 -> ~p3
+> simplify([p0 v p1, p2 -> (p1 v p0), p2 <-> ~p1], "sort", 1);
+	[p0 v p1, p2 -> p1 v p0, p2 <-> ~p1]
+> simplify([p0 v p1, p2 -> (p1 v p0), p3 <-> ~p1]);
+	[p1 v p0, p3 <-> ~p1]
+> simplify([ [p0,p1],
+             [[p0,p3 v p2,p3 v p2],[p2 -> p3,[p0 & p1,~(p0 -> ~p1),p5],p5]] ]);
+	[[p0, p1], [[p0, p3 v p2, p3 v p2], [p2 -> p3, [p0 & p1, ~(p0 -> ~p1), p5], 
+p5]]]
+> simplify([ [p0,p1],
+             [[p0,p3 v p2,p3 v p2],[p2 -> p3,[p0 & p1,~(p0 -> ~p1),p5],p5]] ],
+           "provable");
+	[[p0, p1], [[true, p3 v p2, p3 v p2], [p2 -> p3, [~(p0 -> ~p1), p5], p5]]]
+
+SEE ALSO
+  convert, remove
+

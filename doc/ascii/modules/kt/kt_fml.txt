@@ -1,0 +1,46 @@
+
+fml
+===
+
+special formulas
+
+SYNTAX
+- fml(Name) 
+- fml(Name, S) 
+
+PARAMETERS
+- Name: string, see below
+- S: string
+
+RESULT:  formula
+
+SYNOPSIS
+
+- fml  constructs special formulas. The variables occurring in the 
+  constructed formulas begin with the string  S . The default value for  S  
+  is  "p" .
+- "b" : not provable in  kt  
+  "d" : provable in  kt  
+  "dum" : not provable in  kt  
+  "grz" : not provable in  kt  
+  "k" : provable in  kt  
+  "m" : not provable in  kt  
+  "t" : provable in  kt  
+  "w" : not provable in  kt  
+  "4" : not provable in  kt  
+  "5" : not provable in  kt 
+
+EXAMPLE
+
+> fml("k");
+	box p1 & box (p1 -> p2) -> box p2
+> fml("d");
+	box p1 -> dia p1
+> fml("4");
+	box p1 -> box box p1
+> fml("m", "pq");
+	box dia pq1 -> dia box pq1
+
+SEE ALSO
+  provable
+

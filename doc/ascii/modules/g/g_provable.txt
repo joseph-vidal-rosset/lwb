@@ -1,0 +1,40 @@
+
+provable
+========
+
+formula provable?
+
+SYNTAX
+- provable(A) 
+
+PARAMETERS
+- A: formula
+
+RESULT:  true  or  false 
+
+SYNOPSIS
+
+- provable  tests whether the formula  A  is provable in  g .
+- Choose an appropriate infolevel for additional information during the 
+  execution. The diplayed rules are those of the calculus G _G .
+  set("infolevel",3) : The percentage of the search tree already done is 
+  displayed. 
+  set("infolevel",4) : The name of every rule applied during the search is 
+  displayed. 
+  set("infolevel",5) : The full search tree is displayed. Branching nodes 
+  are displayed with their branching index and the respective sequent. 
+  Displayed sequents have the form  [LV],[L1],[L2],[L3]=>[RV],[R1],[R2],[R3] .
+  The parts of the sequent contain the following formulas:  LV  and  RV : 
+  variables,  L1 :  v ,  -> ,  <->  formulas,  R1 :  & ,  <->  formulas,  L2 
+  and  R2 :  box  formulas,  L3  and  R3 :  dia  formulas.
+
+EXAMPLE
+
+> provable(box p0 -> box box p0);
+	true
+> provable(dia p0 <-> box p0);
+	false
+
+SEE ALSO
+  satisfiable
+

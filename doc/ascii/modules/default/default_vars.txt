@@ -1,0 +1,47 @@
+
+vars
+====
+
+occurring variables
+
+SYNTAX
+- vars(A) 
+- vars(T) 
+- vars(Td) 
+- vars(A, S) 
+- vars(T, S) 
+- vars(Td, S) 
+
+PARAMETERS
+- A: formula
+- T: theory
+- Td: default theory
+- S: one of  "pos" ,  "neg" 
+
+RESULT:  list of variables
+
+SYNOPSIS
+
+- vars  computes the list of variables occurring in the formula  A  resp. in 
+  the theory  T  resp. in the default  Td  resp. in the default theory  Td .
+- The resulting list is sorted and no elements occur twice in it.
+- If the second argument is  "pos" , then only the positive occurrences are 
+  listed. If the second argument is  "neg" , then only the negative 
+  occurrences are listed.
+
+EXAMPLE
+
+> vars((p v ~q) -> p v ~p);
+	[p, q]
+> vars([a <-> b, b -> c v d]);
+	[a, b, c, d]
+> vars([ [~a,b], [[a -> b,d,d],[a,c,c],[a,~c,~c]] ]);
+	[a, b, c, d]
+> vars([ [~a,b], [[a -> b,d,d],[a,c,c],[a,~c,~c]] ], "pos");
+	[a, b, c, d]
+> vars([ [~a,b], [[a -> b,d,d],[a,c,c],[a,~c,~c]] ], "neg");
+	[a, c]
+
+SEE ALSO
+  less, sort, subfmls, typek
+

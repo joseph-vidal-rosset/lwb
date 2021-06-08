@@ -1,0 +1,30 @@
+
+consistent
+==========
+
+theory consistent ?
+
+SYNTAX
+- consistent(T) 
+
+PARAMETERS
+- T: theory
+
+RESULT:  true  or  false 
+
+SYNOPSIS
+
+- consistent  tests whether the theory  T  is consistent in  kn .
+- Choose an appropriate infolevel for additional information during the 
+  execution (e.g.  set("infolevel", 3); ).
+
+EXAMPLE
+
+> consistent([p0, box2 p1, dia2 ~p2]);
+	true
+> consistent([p0, box2 p1, dia2 ~p1]);
+	false
+
+SEE ALSO
+  provable, satisfiable
+

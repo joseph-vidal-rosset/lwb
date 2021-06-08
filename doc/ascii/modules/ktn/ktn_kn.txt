@@ -1,0 +1,27 @@
+
+kn
+==
+
+embedding in  kn 
+
+SYNTAX
+- kn(A) 
+
+PARAMETERS
+- A: formula
+
+RESULT:  formula
+
+SYNOPSIS
+
+- kn  embeds the formula  A  in  kn .
+- A  is provable in  ktn  iff  kn(A)  is provable in  kn .
+
+EXAMPLE
+
+> kn(p0 v dia2 p1);
+	p0 v (dia2 p1 v p1)
+
+SEE ALSO
+  provable, provable
+

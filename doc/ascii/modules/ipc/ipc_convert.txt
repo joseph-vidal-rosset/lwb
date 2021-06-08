@@ -1,0 +1,53 @@
+
+convert
+=======
+
+convert connectives
+
+SYNTAX
+- convert(A, S1) 
+- convert(A, "imp", S2) 
+- convert(T, S1) 
+- convert(T, "imp", S2) 
+
+PARAMETERS
+- A: formula
+- T: theory
+- S1: one of  "andimp" ,  "eq" ,  "impfalse" ,  "impimp" ,  "not" 
+- S2: one of  "eq" ,  "or" 
+
+RESULT:  formula resp. theory
+
+SYNOPSIS
+
+- convert  converts certain occurrences of connectives in the formula  A  
+  resp. in the theory  T . The result is equivalent to  A  resp. to  T .
+- Two arguments: 
+  S1  is  "andimp" : Converts  B & C -> D  into  B -> C -> D . 
+  S1  is  "eq" : Converts  B <-> C  into  (B -> C) & (C -> B) . 
+  S1  is  "impfalse" : Converts  B -> false  into  ~B . 
+  S1  is  "impimp" : Converts  B -> C -> D  into  B & C -> D . 
+  S1  is  "not" : Converts  ~B  into  B -> false .
+- Three arguments: 
+  S2  is  "eq" : Converts subformulas like  (B -> C) & (B -> C)  or  (B <-> 
+  C) & (B -> C)  into  B <-> C . Conjunctions in  A  resp. the theory  T  is 
+  arranged if conversions are possible. 
+  S2  is  "or" : Converts (only in the scope of a negation)  ~B -> C  into  
+  B v C , and  B -> C  into  ~B v C .
+
+EXAMPLE
+
+> convert((p1 v p2) & (p3 v p4) & p5 -> p6, "andimp");
+	p1 v p2 -> p3 v p4 -> p5 -> p6
+> convert((p0 -> false) & ((p1 v p2) & (p3 -> p0) -> false), "impfalse");
+	~p0 & ~((p1 v p2) & (p3 -> p0))
+> convert([p0 -> p1 v p2 -> false, ~p3, p4 & (p1 v p2 -> false)], "impfalse");
+	[p0 -> ~(p1 v p2), ~p3, p4 & ~(p1 v p2)]
+> convert(p0 & (p1 -> p0) v ~(~(p1 -> p2) v p2), "imp", "or");
+	p0 & (p1 -> p0) v ~(~(~p1 v p2) v p2)
+> convert([p1 -> p2, (p2 v ~(~p1 -> p2)) -> false], "imp", "or");
+	[p1 -> p2, p2 v ~(p1 v p2) -> false]
+
+SEE ALSO
+  remove
+

@@ -1,0 +1,121 @@
+
+cwa example
+===========
+
+
+Language
+--------
+
+At first we load the module  cwa .
+
+> load(cwa);
+	cwa  user  
+
+The formulas of  cwa  are the formulas of  cpc , i.e. they are built from 
+the symbols for conjunction ( & ), disjunction ( v ), implication ( -> ), 
+equivalence ( <-> ), negation ( ~ ), the two constants  true  and  false , 
+and variables.
+Theories are list of formulas.
+
+> a := (p v false) -> (r & true <-> ~ ~p2);
+	p v false -> (r & true <-> ~~p2)
+> b := p -> (q -> p);
+	p -> q -> p
+> t := [a, b, r v s];
+	[p v false -> (r & true <-> ~~p2), p -> q -> p, r v s]
+> typek(a, "fml");
+	true
+> typek(b[2][1], "var");
+	true
+> typek(t, "theory");
+	true
+> unassign(a, b);
+
+You can also use  and ,  or ,  imp ,  eq ,  not  instead of  & ,  v ,  -> ,  
+<-> ,  ~ .
+
+> c1 := p & (q v p) -> r <-> p; 
+	p & (q v p) -> r <-> p
+> c2 := p and (q or p) imp r eq p; 
+	p & (q v p) -> r <-> p
+> c1 = c2;
+	true
+
+
+Closed world assumption theory
+------------------------------
+
+If we compute the Closed World Assumption theory of a theory  t , then for 
+every variable that occurs in  t  and is not provable in  t  we add its 
+negation.
+
+> t := [a -> b, b, c & d];
+	[a -> b, b, c & d]
+> cwa(t);
+	[a -> b, b, c & d, ~a]
+
+The resulting theory can be inconsistent. The simplest consistent theory 
+with a non-consistent closed world assumption theory is the theory  p v q . 
+Neither  p  nor  q  are provable in this theory, thus the closed world 
+assumptions contains the negations of both of these variables.
+
+> load(cpc); topmod(cwa);
+	cpc  cwa  user  
+cwa  cpc  user  
+> cpc::consistent([p v q]);
+	true
+> cwa([p v q]);
+	[p v q, ~p, ~q]
+> consistent([p v q]);
+	false
+
+If we use a restriction on a list of variables that contains at most one of  
+p  or  q , then the closed world assumption is consistent.
+Attention: If no restriction is given, the list of the variables occurring 
+in the theory is taken as restriction. We must use this implicit restriction 
+because the closed world assumption theory of every finite consistent theory 
+is infinite.
+
+> cwa([p v q], [p]);
+	[p v q, ~p]
+> consistent([p v q], [p]);
+	true
+> cwa([p v q], [q,r,s]);
+	[p v q, ~q, ~r, ~s]
+> consistent([p v q], [q,r,s]);
+	true
+> cwa([p v q], [r1,r2,r3]);
+	[p v q, ~r1, ~r2, ~r3]
+> consistent([p v q], [r1,r2,r3]);
+	true
+
+
+Provability
+-----------
+
+If we want to test whether a formula  a  is provable in the closed world 
+assumption theory of a theory  t , in general we cannot just compute  cwa(t) 
+and apply  cpc::provable  afterwards. The reason is the implicit restriction 
+already mentioned above. We have to use the list of the variables occurring 
+in  a  or in  t  as restriction for  cwa  and afterwards we can call  
+cpc::provable .
+
+> a := p1 -> p2; t := [q, r, ~s];
+	p1 -> p2
+	[q, r, ~s]
+> cwa(t);
+	[q, r, ~s, ~s]
+> cpc::provable(a, cwa(t));
+	false
+> provable(a, t);
+	true
+> cwa(t, [q,r,s,p1,p2]);
+	[q, r, ~s, ~s, ~p1, ~p2]
+> cpc::provable(a, cwa(t, [q,r,s,p1,p2]));
+	true
+> provable(a, t, [q,r,s,p1,p2]);
+	true
+
+Naturally, if all variables of the formula  a  occur in the theory  t , then 
+these precautions are not needed.
+

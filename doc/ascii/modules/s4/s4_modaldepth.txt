@@ -1,0 +1,29 @@
+
+modaldepth
+==========
+
+modal depth of a formula
+
+SYNTAX
+- modaldepth(A) 
+
+PARAMETERS
+- A: formula
+
+RESULT:  integer,  >= 0 
+
+SYNOPSIS
+
+- modaldepth  computes the modal depth of the formula  A  in  s4 .
+- Formulas without  box  and without  dia  have modal depth  0 .
+
+EXAMPLE
+
+> modaldepth(dia(dia p0 -> box(p1 <-> dia p0)));
+	3
+> modaldepth(p0 v ~(p1 -> p0));
+	0
+
+SEE ALSO
+  depth
+

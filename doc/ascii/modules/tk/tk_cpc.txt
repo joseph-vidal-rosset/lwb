@@ -1,0 +1,29 @@
+
+cpc
+===
+
+delete tense connectives
+
+SYNTAX
+- cpc(A) 
+
+PARAMETERS
+- A: formula
+
+RESULT:  formula of  cpc 
+
+SYNOPSIS
+
+- cpc  deletes the tense connectives occurring in the formula  A .
+- If the result is not provable in  cpc , then  A  is not provable in  tk .
+
+EXAMPLE
+
+> cpc(F p0 & H ~(p1 -> p2));
+	p0 & ~(p1 -> p2)
+> cpc(P ~ P p0);
+	~p0
+
+SEE ALSO
+  provable, provable
+

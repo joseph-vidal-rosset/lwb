@@ -1,0 +1,57 @@
+
+removeweak
+==========
+
+remove weakening from a proof
+
+SYNTAX
+- removeweak(GP) 
+
+PARAMETERS
+- P: proof in Gentzen style
+
+RESULT:  proof in Gentzen style
+
+SYNOPSIS
+
+- removeweak  eliminates the applications of the weakening rule in the proof 
+  GP .
+- The structure of the proof does not change as far as branchings are 
+  concerned. In general the result is less deep, but broader than  GP .
+
+EXAMPLE
+
+> proofoptions("indent", ["no_emphasizing"]);
+> gp := proof((p0 v p1 -> p1 v p0) v p3);
+	Proof of:  ==> (p0 v p1 -> p1 v p0) v p3
+Module: cpc
+Steps: 5, Depth: 5
+Branchings: 1, Branchingdepth: 1
+Axioms: 2
+Formulae: 15
+Output option(s): no_emphasizing
+(r v)		==> (p0 v p1 -> p1 v p0) v p3
+(w)		==> p0 v p1 -> p1 v p0, p3
+(r ->)		==> p0 v p1 -> p1 v p0
+(r v)		p0 v p1 ==> p1 v p0
+(l v)		p0 v p1 ==> p1, p0  [1.1,1.2]
+(id)	1.1	  p0 ==> p1, p0
+(id)	1.2	  p1 ==> p1, p0
+> removeweak(gp);
+	Proof of:  ==> (p0 v p1 -> p1 v p0) v p3
+Module: cpc
+Steps: 4, Depth: 4
+Branchings: 1, Branchingdepth: 1
+Axioms: 2
+Formulae: 18
+Output option(s): no_emphasizing
+(r v)		==> (p0 v p1 -> p1 v p0) v p3
+(r ->)		==> p0 v p1 -> p1 v p0, p3
+(r v)		p0 v p1 ==> p1 v p0, p3
+(l v)		p0 v p1 ==> p1, p0, p3  [1.1,1.2]
+(id)	1.1	  p0 ==> p1, p0, p3
+(id)	1.2	  p1 ==> p1, p0, p3
+
+SEE ALSO
+  proof, proofinfo, weakenings
+

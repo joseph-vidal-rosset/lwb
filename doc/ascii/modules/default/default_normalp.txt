@@ -1,0 +1,35 @@
+
+normalp
+=======
+
+normal default ? normal default theory ?
+
+SYNTAX
+- normalp(D) 
+- normalp(Td) 
+
+PARAMETERS
+- D: default
+- Td: default theory
+
+RESULT:  true  or  false 
+
+SYNOPSIS
+
+- normalp  tests whether  D  is a normal default resp. whether  Td  is a 
+  normal default theory.
+- A normal default is a list of three formulas. The second and the third 
+  formula must be identical.
+- A normal default theory is a pair of a theory and a list of normal 
+  defaults.
+
+EXAMPLE
+
+> normalp([p0, p1, p1]);
+	true
+> normalp([ [p1 v p2,p3 & p4], [[p1,p5,p5],[p3,p6,p6]] ]);
+	true
+
+SEE ALSO
+  typek
+

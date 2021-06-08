@@ -1,0 +1,34 @@
+
+boxnr
+=====
+
+add a box with an index
+
+SYNTAX
+- boxnr(n, A) 
+
+PARAMETERS
+- A: formula
+
+RESULT:  formula
+
+SYNOPSIS
+
+- boxnr  adds a box connective with index  N  in front of  A . You can also 
+  type  boxN   A .
+- In order to get  A  back from the result  B , use  index(B) .
+
+EXAMPLE
+
+> boxnr(3, p0 & p1);
+	box3 (p0 & p1)
+> B := boxnr(17, box2 dia1 true);
+	box17 box2 dia1 true
+> B = box17 box2 dia1 true;
+	true
+> index(B);
+	17
+
+SEE ALSO
+  dianr, index
+

@@ -1,0 +1,37 @@
+
+model
+=====
+
+model of a formula
+
+SYNTAX
+- model(A) 
+
+PARAMETERS
+- A: formula
+
+RESULT:  sorted list of variables or  fail 
+
+SYNOPSIS
+
+- model  computes a model  M  in  cpc  such that  cpc::value(A,M)  is  true .
+  If there exists no model, i.e. if the formula  A  is not satisfiable, then 
+  the result is  fail .
+- If the formula is too hard for  cpc::model , then you can try to use  
+  cpc::bddsat  in order to find out whether or not the formula is 
+  satisfiable.
+- Choose an appropriate infolevel for additional information during the 
+  execution (e.g.  set("infolevel", 3); ).
+
+EXAMPLE
+
+> model(p2 & p1 & p3);
+	[p1, p2, p3]
+> model((p0 & ~p1 & p2 & p3 v ~p0 & p1) & p0);
+	[p0, p2, p3]
+> model(p0 & p1 & ~(p0 v p2));
+	fail
+
+SEE ALSO
+  bddsat, satisfiable, value
+

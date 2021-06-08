@@ -1,0 +1,33 @@
+
+nnf
+===
+
+negation normal form
+
+SYNTAX
+- nnf(A) 
+- nnf(A, "sat") 
+
+PARAMETERS
+- A: formula
+
+RESULT:  formula
+
+SYNOPSIS
+
+- nnf  computes a negation normal form of the formula  A .
+- The result is equivalent to  A , i.e.  nnf(A) <-> A  is provable in  pltl .
+- If the option  "sat"  is given, a similar normal form is computed, which 
+  is more appropriate for the satisfiability check (the `before' connective 
+  and the equivalence are treated differently).
+
+EXAMPLE
+
+> nnf(p1 -> (G p2 v ~ (p3 B p4)));
+	~p1 v (G p2 v (~p3 U p4))
+> nnf(~p1 v X F p2);
+	~p1 v X F p2
+
+SEE ALSO
+  nnfp
+

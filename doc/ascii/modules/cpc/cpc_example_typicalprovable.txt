@@ -1,0 +1,75 @@
+
+Typical provable formulas example
+=================================
+
+
+Typical provable formulas
+-------------------------
+
+The connectives  & ,  v ,  <->  are associative and commutative, and for  &  
+and  v  the distributivity law holds.
+
+> provable( p0 & (p1 & p2)  <->  (p0 & p1) & p2 );
+	true
+> provable( p0 v (p1 v p2)  <->  (p0 v p1) v p2 );
+	true
+> provable( (p0 <-> (p1 <-> p2))  <->  ((p0 <-> p1) <-> p2) );
+	true
+> provable( p0 & p1  <->  p1 & p0 );
+	true
+> provable( p0 v p1  <->  p1 v p0 );
+	true
+> provable( (p0 <-> p1)  <->  (p1 <-> p0) );
+	true
+> provable( p0 & (p1 v p2)  <->  p0 & p1 v p0 & p2 );
+	true
+> provable( p0 v p1 & p2  <->  (p0 v p1) & (p0 v p2) );
+	true
+
+A -> B  is equivalent to  ~A v B , and  A <-> B  is equivalent to  (A -> B) 
+& (B -> A) .
+
+> provable( (p0 -> p1)  <->  (~p0 v p1) );
+	true
+> provable( (p0 <-> p1)  <->  ((p0 -> p1) & (p1 -> p0)) );
+	true
+
+The pigeonhole formula and the formula of Peirce are two examples of 
+well-known formulas that are provable in classical propositional logic.
+
+> A := pigeonhole(2);
+	(p11 v p12) & (p21 v p22) & (p31 v p32) -> p11 & p21 v p11 & p31 v p21 & 
+p31 v p12 & p22 v p12 & p32 v p22 & p32
+> provable(A);
+	true
+> provable(fml("peirce"));
+	true
+
+If a formula is provable, then there must be only  true  in the last 
+column.
+
+> tt := truthtable(fml("peirce"));
+	[[[p1, p2], ((p1 -> p2) -> p1) -> p1], [[[false, false], true], [[false, 
+true], true], [[true, false], true], [[true, true], true]]]
+
+With the function  display  you obtain a more readable output:
+
+> display(tt);
+------------------------------------------
+| p1    p2    | ((p1 -> p2) -> p1) -> p1 |
+------------------------------------------
+| false false | true                     |
+| false true  | true                     |
+| true  false | true                     |
+| true  true  | true                     |
+------------------------------------------
+> display(tt, "0", "1", "peirce");
+------------------
+| p1 p2 | peirce |
+------------------
+| 0  0  | 1      |
+| 0  1  | 1      |
+| 1  0  | 1      |
+| 1  1  | 1      |
+------------------
+

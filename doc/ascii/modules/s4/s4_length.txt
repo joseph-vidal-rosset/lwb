@@ -1,0 +1,29 @@
+
+length
+======
+
+length of a formula
+
+SYNTAX
+- length(A) 
+
+PARAMETERS
+- A: formula
+
+RESULT:  integer,  >= 0 
+
+SYNOPSIS
+
+- length  computes the length of the formula  A  in  s4 .
+- Variables and connectives have length  1 . Brackets are not counted.
+
+EXAMPLE
+
+> length(dia(p1 v ~p0) <-> box ~p3);
+	9
+> length(p1);
+	1
+
+SEE ALSO
+  depth
+

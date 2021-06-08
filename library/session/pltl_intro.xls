@@ -1,0 +1,191 @@
+<TEXT>
+ 
+__________________________________________________
+
+  Introduction to
+            Propositional Linear Time Logic  (PLTL)
+__________________________________________________
+
+</TEXT>
+<INPUT>
+load(pltl);
+</INPUT>
+<OUTPUT>
+	pltl  user  
+Entering special mode for tense & temporal logics. 
+
+</OUTPUT>
+<TEXT>
+PLTL Syntax
+    Besides the classical operators we have the 
+    temporal operators:
+
+</TEXT>
+<INPUT>
+X p;   #  neXttime p
+G p;   #  always p, p is Going to be
+F p;    # sometimes p,  there is a Future where p
+    
+p U q;    #  p until q   ('strong' until, q must eventually hold)
+p B q;    #  p  before q
+</INPUT>
+<OUTPUT>
+	X p
+	G p
+	F p
+	p U q
+	p B q
+
+</OUTPUT>
+<DELIMITER>
+
+</DELIMITER
+<TEXT>
+neXttime properties:
+
+</TEXT>
+<INPUT>
+provable( X ~p <-> ~X p );
+provable( X (p v q) <-> X p v X q );
+provable( X (p & q) <-> X p & X q );
+</INPUT>
+<OUTPUT>
+	true
+	true
+	true
+
+</OUTPUT>
+<TEXT>
+Relation  neXttime  <~> always,sometimes :
+
+</TEXT>
+<INPUT>
+provable( X G p <-> G X p );
+provable( X F p <-> F X p );
+    
+provable( X p -> F p );
+provable( G p -> X p );
+</INPUT>
+<OUTPUT>
+ 	true
+	true
+	true
+	true
+
+</OUTPUT>
+<TEXT>
+The converse of the above implications do not hold:
+</TEXT>
+<INPUT>
+provable( X p -> G p );
+</INPUT>
+<OUTPUT>
+	false
+
+</OUTPUT>
+<TEXT>
+We can get a countermodel, which 'explains' why the implication does not hold:
+
+</TEXT>
+<INPUT>
+proc: countermodel(A)
+begin
+    return model(~A);
+end;
+</INPUT>
+<OUTPUT>
+
+</OUTPUT>
+<INPUT>
+countermodel( X p -> G p );
+
+</INPUT>
+<OUTPUT>
+ 	[[[~p], [2]], [[p], [2]]]
+
+</OUTPUT>
+<TEXT>
+(a list of states is returned, where the number indicate the 
+  index of the successor state)
+</TEXT>
+<DELIMITER>
+
+</DELIMITER
+<TEXT>
+Until/Before - properties:
+
+</TEXT>
+<INPUT>
+provable( (p & q) U r  <->  (p U r) & (q U r) );
+provable( p U (q v r)  <->  (p U q) v (p U r) );
+
+provable( p U q  <->  ~(~p B q) );
+</INPUT>
+<OUTPUT>
+	true
+	true
+	true
+
+</OUTPUT>
+<TEXT>
+There is a fixpoint characterization of  until/before:
+</TEXT>
+<INPUT>
+eu:=  expand( p U q );
+eb:=  expand( p B q );
+   
+   provable( eu  <-> p U q );
+   provable( eb  <-> p B q );
+</INPUT>
+<OUTPUT>
+	q v p & X (p U q)
+	~q & (p v X (p B q))
+	true
+	true
+
+</OUTPUT>
+<DELIMITER>
+
+</DELIMITER
+<TEXT>
+Sometimes/Always - properties:
+
+</TEXT>
+<INPUT>
+provable(  F p  <->  true U p );
+provable(  F (p v q)  <->  F p v F q );
+provable(  G (p & q)  <->  G p & G q );
+   
+provable( p & G(p -> X p) -> G p );
+provable( G p <-> ~F~p );
+</INPUT>
+<OUTPUT>
+	true
+	true
+	true
+	true
+	true
+
+</OUTPUT>
+<DELIMITER>
+
+</DELIMITER
+<TEXT>
+A more complex equivalence:
+2 formulas describing  :    p  -  ~p  -  p  -  ~p  ...
+</TEXT>
+<INPUT>
+a1:== p & X~p  &   G ( (p & X~p) v (~p & X p) ) ;
+a2:== p & X~p  &   G (p -> X X p) & G (~p -> X X ~p);
+provable( a1 <-> a2 );
+</INPUT>
+<OUTPUT>
+	true
+
+</OUTPUT>
+<INPUT>
+
+</INPUT>
+<OUTPUT>
+
+</OUTPUT>

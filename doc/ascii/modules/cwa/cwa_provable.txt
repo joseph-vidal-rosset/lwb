@@ -1,0 +1,40 @@
+
+provable
+========
+
+provable in closed world assumption
+
+SYNTAX
+- provable(A, T) 
+- provable(A, T, Vars) 
+
+PARAMETERS
+- A: formula
+- T: theory
+- Vars: list of variables
+
+RESULT:  true  or  false 
+
+SYNOPSIS
+
+- Two arguments:  provable  tests whether the formula  A  is provable in the 
+  closed world assumption theory of the theory  T  (no restriction of 
+  variables).
+- Three arguments:  provable  tests whether the formula  A  is provable in 
+  the closed world assumption theory restricted on the variables in  Vars  
+  of the theory  T .
+- Choose an appropriate infolevel for additional information during the 
+  execution (e.g.  set("infolevel", 3); ).
+
+EXAMPLE
+
+> provable(p1 & ~p2, [p0, p0 -> p1]);
+	true
+> provable(~p3 & ~p4, [p0, p1], [p1, p3]);
+	false
+> provable(~p3 & ~p4, [p0, p1], [p1, p3, p4]);
+	true
+
+SEE ALSO
+  consistent
+

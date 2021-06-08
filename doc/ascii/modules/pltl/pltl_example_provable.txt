@@ -1,0 +1,45 @@
+
+Typical provable formulas example
+=================================
+
+
+Typical provable formulas
+-------------------------
+
+All formulas that are provable in classical propositional logic are also 
+provable in the linear time logic  pltl .
+Therefore we concentrate on formulas typical for  pltl .
+
+> provable( X ~p0 <-> ~X p0 );
+	true
+> provable( X G p0 <-> G X p0 );
+	true
+> provable( ~ G ~ p1 <-> F p1 );
+	true
+> provable( p0 & G(p0 -> X p0) -> G p0 );
+	true
+> provable( G(p1 & p2) <-> G p1 & G p2 );
+	true
+> provable( G p1 -> G G p1 );
+	true
+> provable( G(p1 -> p2) -> G p1 -> G p2 );
+	true
+> provable( p0 U p1  <->  p1 v (p0 & X(p0 U p1)) );
+	true
+> provable( p0 W p1  <->  p1 v (p0 & X(p0 W p1)) );
+	true
+> provable( p0 U p1  <->  ~(~p0 B p1) );  
+	true
+> provable( p0 W p1  <->  p1 B (~p1 & ~p0) );
+	true
+> provable( p0 U p1 -> F p1 );
+	true
+> provable( F p0  <->  true U p0 );
+	true
+> provable( G p0  <->  p0 W false );
+	true
+> provable( F(p1 v p2) <-> F p1 v F p2 );
+	true
+> provable( F p0 <-> p0 v X F p0 );
+	true
+

@@ -1,0 +1,53 @@
+
+Autoepistemic extensions example
+================================
+
+
+Autoepistemic extensions
+------------------------
+
+There are theories with no extensions.
+
+> T := [box p0];
+	[box p0]
+> extensionsnr(T);
+	0
+
+Therefore no formula is provable in one or more extensions, and any formula 
+is provable in all extensions.
+
+> provable(true, T, "one");
+	false
+> provable(p0, T, "all");
+	true
+
+The following theory has exactely one extension. Therefore there is no 
+difference between the two provability modes.
+
+> T := [p0 -> box p0];
+	[p0 -> box p0]
+> extensionsnr(T);
+	1
+> provable(~p0, T, "one");
+	true
+> provable(~p0, T, "all");
+	true
+
+There are also theories with many extensions.
+
+> T2 := [box p1 -> p1, box p2 -> p2];
+	[box p1 -> p1, box p2 -> p2]
+> extensionsnr(T2);
+	4
+> T3 := [box p1 -> p1, box p2 -> p2, box p3 -> p3];
+	[box p1 -> p1, box p2 -> p2, box p3 -> p3]
+> extensionsnr(T3);
+	8
+
+Now there is again a difference between the two provability modes.
+
+> provable(~ box p1, T2, "all");
+	false
+> provable(~ box p1, T2, "one");
+	true
+

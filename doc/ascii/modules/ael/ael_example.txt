@@ -1,0 +1,92 @@
+
+ael example
+===========
+
+
+Language
+--------
+
+At first we load the module  ael .
+
+> load(ael);
+	ael  user  
+
+The formulas of  ael  are the formulas of  cpc , i.e. they are built from 
+the symbols for conjunction ( & ), disjunction ( v ), implication ( -> ), 
+equivalence ( <-> ), negation ( ~ ), the two constants  true  and  false , 
+and variables.
+Theories are list of formulas.
+
+> a := (p v false) -> (r & true <-> ~ ~p2);
+	p v false -> (r & true <-> ~~p2)
+> b := p -> (q -> p);
+	p -> q -> p
+> t := [a, b, r v s];
+	[p v false -> (r & true <-> ~~p2), p -> q -> p, r v s]
+> typek(a, "fml");
+	true
+> typek(b[2][1], "var");
+	true
+> typek(t, "theory");
+	true
+> unassign(a, b);
+
+You can also use  and ,  or ,  imp ,  eq ,  not  instead of  & ,  v ,  -> ,  
+<-> ,  ~ .
+
+> c1 := p & (q v p) -> r <-> p; 
+	p & (q v p) -> r <-> p
+> c2 := p and (q or p) imp r eq p; 
+	p & (q v p) -> r <-> p
+> c1 = c2;
+	true
+
+
+Autoepistemic extensions
+------------------------
+
+There are theories with no extensions.
+
+> t := [box p];
+	[box p]
+> extensionsnr(t);
+	0
+
+Therefore no formula is provable in one or more extensions, and any formula 
+is provable in all extensions.
+
+> provable(true, t, "one");
+	false
+> provable(q, t, "all");
+	true
+
+The following theory has exactely one extension. Therefore there is no 
+difference between the two provability modes.
+
+> t := [p -> box p];
+	[p -> box p]
+> extensionsnr(t);
+	1
+> provable(~p, t, "one");
+	true
+> provable(~p, t, "all");
+	true
+
+There are also theories with many extensions.
+
+> t2 := [box p1 -> p1, box p2 -> p2];
+	[box p1 -> p1, box p2 -> p2]
+> extensionsnr(t2);
+	4
+> t3 := [box p1 -> p1, box p2 -> p2, box p3 -> p3];
+	[box p1 -> p1, box p2 -> p2, box p3 -> p3]
+> extensionsnr(t3);
+	8
+
+Now there is again a difference between the two provability modes.
+
+> provable(~ box p1, t2, "all");
+	false
+> provable(~ box p1, t2, "one");
+	true
+

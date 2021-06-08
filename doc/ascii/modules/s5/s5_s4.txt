@@ -1,0 +1,26 @@
+
+s4
+==
+
+embedding in  s4 
+
+SYNTAX
+- s4(A) 
+
+PARAMETERS
+- A: formula
+
+RESULT:  formula
+
+SYNOPSIS
+
+- The result is provable in  s4  iff  A  is provable in  s5 .
+
+EXAMPLE
+
+> s4(p v box q);
+	dia box (p v box q)
+
+SEE ALSO
+  provable, provable
+

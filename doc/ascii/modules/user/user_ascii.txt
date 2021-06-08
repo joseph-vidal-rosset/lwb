@@ -1,0 +1,33 @@
+
+ascii
+=====
+
+print a sequence of expressions
+
+SYNTAX
+- ascii(E1, E2, ...) 
+
+PARAMETERS
+- E1, E2, ...: expressions
+
+RESULT:  null expression
+
+SYNOPSIS
+
+- ascii  displays the sequence of expressions  E1 ,  E2 , ... in ASCII 
+  format.
+- Each expression is written on one line.
+
+EXAMPLE
+
+> B :== p1 -> p2 & p3;
+> ascii(B);
+	p1 -> p2 & p3
+> ascii(p1 & p2, p3 <-> p4, p5);
+	p1 & p2
+	p3 <-> p4
+	p5
+
+SEE ALSO
+  inputformat, latex, pretty, set
+

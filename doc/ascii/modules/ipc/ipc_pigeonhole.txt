@@ -1,0 +1,37 @@
+
+pigeonhole
+==========
+
+pigeonhole formula
+
+SYNTAX
+- pigeonhole(N) 
+- pigeonhole(N, S) 
+
+PARAMETERS
+- N: integer,  N > 0 
+- S: string
+
+RESULT:  formula
+
+SYNOPSIS
+
+- pigeonhole  constructs the pigeonhole formula for  N + 1  pigeons and  N  
+  holes. The meaning of the formula is: If  N + 1  pigeons are in  N  holes, 
+  then there is a hole where there are two pigeons.
+- The formulas are provable in  ipc .
+- The variables occurring in the constructed formulas begin with the string  
+  S . The default value for  S  is  "p" .
+
+EXAMPLE
+
+> pigeonhole(2);
+	(p11 v p12) & (p21 v p22) & (p31 v p32) -> p11 & p21 v p11 & p31 v p21 & 
+p31 v p12 & p22 v p12 & p32 v p22 & p32
+> pigeonhole(2, "q");
+	(q11 v q12) & (q21 v q22) & (q31 v q32) -> q11 & q21 v q11 & q31 v q21 & 
+q31 v q12 & q22 v q12 & q32 v q22 & q32
+
+SEE ALSO
+  provable
+

@@ -1,0 +1,28 @@
+
+nnfp
+====
+
+in negation normal form?
+
+SYNTAX
+- nnfp(A) 
+
+PARAMETERS
+- A: formula
+
+RESULT:  true  or  false 
+
+SYNOPSIS
+
+- nnfp  tests whether the formula  A  is in negation normal form.
+
+EXAMPLE
+
+> nnfp(~p1 & (P p2 v H p3));
+	true
+> nnfp(p1 -> F F p2);
+	false
+
+SEE ALSO
+  nnf
+

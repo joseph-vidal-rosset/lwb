@@ -1,0 +1,33 @@
+
+proofinfo
+=========
+
+statistics of a proof structure
+
+SYNTAX
+- proofinfo(P) 
+
+PARAMETERS
+- P: proof
+
+RESULT:  string
+
+SYNOPSIS
+
+- proofinfo  displays the statistics of  P  (e.g. depth, number of steps, 
+  etc.).
+
+EXAMPLE
+
+> load(cpc);
+  proofinfo( proof( (~p0 v p1) <-> (p0 -> p1) ) );
+	cpc  user  
+	"Module: cpc
+Steps: 8, Depth: 5
+Branchings: 3, Branchingdepth: 2
+Axioms: 4
+Formulae: 30"
+
+SEE ALSO
+  proofoptions, proof
+

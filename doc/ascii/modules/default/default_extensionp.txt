@@ -1,0 +1,31 @@
+
+extensionp
+==========
+
+extension of a default theory?
+
+SYNTAX
+- extensionp(E, Td) 
+
+PARAMETERS
+- E: theory
+- Td: default theory
+
+RESULT:  true  or  false 
+
+SYNOPSIS
+
+- extensionp  tests whether  E  is an extension of the default theory  Td .
+- Choose an appropriate infolevel for additional information during the 
+  execution (e.g.  set("infolevel", 5); ).
+
+EXAMPLE
+
+> extensionp([p0,p1,p2,p3], [ [p0,p1], [[p0,p2,p2],[p0 v ~p1,~p2,~p2],[p2,p3,p3]] ]);
+	true
+> extensionp([p0,p1,~p2,p3], [ [p0,p1], [[p0,p2,p2],[p0 v ~p1,~p2,~p2],[p2,p3,p3]] ]);
+	false
+
+SEE ALSO
+  extensions
+

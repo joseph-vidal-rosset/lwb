@@ -1,0 +1,34 @@
+
+strmid
+======
+
+extract a substring
+
+SYNTAX
+- strmid(S, M, N) 
+
+PARAMETERS
+- S: strings
+- M, N: natural numbers,  0 < M <=   length of  S ,  M <= N 
+
+RESULT:  natural number
+
+SYNOPSIS
+
+- strmid  extracts a substring from the string  S . The substring begins at 
+  index  M  of  S  and ends with the index  N  in  S .
+
+EXAMPLE
+
+> strmid("abcdefgh", 3, 6);
+	"cdef"
+> strmid("abcdefgh", 1, 5);
+	"abcde"
+> strmid("cde", 2, 2);
+	"d"
+> strmid("cde", 2, 6);
+	"de"
+
+SEE ALSO
+  strindex, strleft, strlen, strright
+

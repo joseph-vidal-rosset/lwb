@@ -1,0 +1,29 @@
+
+sort
+====
+
+sort a list of formulas
+
+SYNTAX
+- sort(L) 
+
+PARAMETERS
+- L: list of formula
+
+RESULT:  list of formulas
+
+SYNOPSIS
+
+- sort  sorts the list of formulas  L  according to the ordering given by  
+  less .
+
+EXAMPLE
+
+> sort([p0 <-> p1, box2(p0 -> p1), p0, p0 & p1, dia0 false]);
+	[p0, box2 (p0 -> p1), dia0 false, p0 & p1, p0 <-> p1]
+> sort([p31, (p1 v p2) -> dia4 p2, (p1 v p2) -> dia10 p2, box4 p3, true]);
+	[true, p31, box4 p3, p1 v p2 -> dia4 p2, p1 v p2 -> dia10 p2]
+
+SEE ALSO
+  less
+

@@ -1,0 +1,28 @@
+
+s4
+==
+
+embedding in  s4 
+
+SYNTAX
+- s4(A) 
+
+PARAMETERS
+- A: formula
+
+RESULT:  formula of  s4 
+
+SYNOPSIS
+
+- s4  embeds the formula  A  in  s4 .
+- A  is provable in  ipc  iff the result of  s4  is provable in  s4  (if the 
+  variables of  A  in  ipc  are also variables in  s4 ).
+
+EXAMPLE
+
+> s4(p0 & ~(p1 -> p2));
+	box p0 & box ~box (box p1 -> box p2)
+
+SEE ALSO
+  provable, provable
+

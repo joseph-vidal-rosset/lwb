@@ -1,0 +1,27 @@
+
+LWB - The Logics Workbench 1.1
+==============================
+
+WWW:   http://www.lwb.unibe.ch/
+email: lwb@iam.unibe.ch
+
+
+You can use the command  help  (or  ? ) in the following ways:
+
+
+ help basic;              basic syntax 
+
+ help prog;               programming language 
+
+ help sample;             sample session 
+
+ help modules;            list of the modules
+
+Or for arbitrary functions and modules:
+
+ help ipc::provable;      function  provable  in the module  ipc
+ help provable;           function  provable  in the current module 
+
+ help ipc::example;       example for the module  ipc
+ help ipc::contents;      list of functions of the module  ipc   
+

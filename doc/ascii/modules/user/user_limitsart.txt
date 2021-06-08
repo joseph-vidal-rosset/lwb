@@ -1,0 +1,30 @@
+
+limitsart
+=========
+
+stop time limit
+
+SYNTAX
+- limitstop() 
+
+RESULT:  nothing
+
+SYNOPSIS
+
+- limitstart  stops limiting LWB calls. After this command, the time limit 
+  given with  limitstart  is removed and the commands can now again use as 
+  much time as required.
+
+EXAMPLE
+
+> limitstart(100); provable(pigeonhole(3); limitstop(); 
+	true
+	true
+> limitstart(10); provable(pigeonhole(3); limitstop();
+	true
+	true
+> unload(cpc);
+
+SEE ALSO
+  limitstart
+

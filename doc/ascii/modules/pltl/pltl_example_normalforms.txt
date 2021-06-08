@@ -1,0 +1,34 @@
+
+Normal forms example
+====================
+
+
+Normal forms
+------------
+
+In the linear time logic  pltl  there exists a negation normal form.
+
+> C1 := F(p1 & p2 v p1) -> ~ X X ~p3;
+	F (p1 & p2 v p1) -> ~X X ~p3
+> nnf(C1);
+	G ((~p1 v ~p2) & ~p1) v X X p3
+
+This normal forms is not unique as the following example shows.
+
+> C2 := G ~p1 v X X p2;
+	G ~p1 v X X p2
+> nnfp(C2);
+	true
+> provable(C1 <-> C2);
+	false
+
+If a formula contains equivalencies, the result of  nnf  can be very long 
+compared to the original formula.
+
+> D := F p0 <-> F p1 <-> F p2 <-> F p3 <-> F p4 <-> F p5 <-> F p6;
+	F p0 <-> F p1 <-> F p2 <-> F p3 <-> F p4 <-> F p5 <-> F p6
+> length(D);
+	20
+> length(nnf(D));
+	664
+

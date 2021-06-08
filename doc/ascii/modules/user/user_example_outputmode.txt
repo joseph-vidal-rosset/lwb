@@ -1,0 +1,29 @@
+
+Using  set("outputmode", S)  example
+====================================
+
+
+Using  set("outputmode", S) 
+----------------------------
+
+set("outputmode", S)  changes the format of the output.
+
+> A :== p1 <-> p3 & p2;
+> set("outputmode", "ascii");
+	true
+> A;
+	(p1 <-> (p3 & p2))
+> set("outputmode", "inputformat");
+	true
+> A;
+	(p1 <-> (p3 and p2))
+> set("outputmode", "latex");
+	\top
+> A;
+	(\mathit{p1} \leftrightarrow (\mathit{p3} \land \mathit{p2}))
+
+We cannot demonstrate  set("outputmode", "pretty")  here. If you load a font 
+with special symbols e.g. for connectives and set the outputmode to  
+"pretty" , then these special symbols are used. For more information see the 
+WWW page on the graphical user interface (e.g. XLWB, MacLWB) you are using.
+

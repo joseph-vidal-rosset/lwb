@@ -1,0 +1,30 @@
+
+consistent
+==========
+
+theory consistent ?
+
+SYNTAX
+- consistent(T) 
+
+PARAMETERS
+- T: theory
+
+RESULT:  true  or  false 
+
+SYNOPSIS
+
+- consistent  tests whether the theory  T  is consistent in  s4n .
+- Choose an appropriate infolevel for additional information during the 
+  execution (e.g.  set("infolevel", 4); ).
+
+EXAMPLE
+
+> consistent([p0, p1 v p2, box2 ~p2]);
+	true
+> consistent([p0, p1, p2, ~ box3 p0 v dia2 p2]);
+	true
+
+SEE ALSO
+  provable, satisfiable
+

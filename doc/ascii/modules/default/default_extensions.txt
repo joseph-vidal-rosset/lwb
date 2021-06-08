@@ -1,0 +1,35 @@
+
+extensions
+==========
+
+extensions of a default theory
+
+SYNTAX
+- extensions(Td) 
+
+PARAMETERS
+- Td: default theory
+
+RESULT:  list of theories
+
+SYNOPSIS
+
+- extensions  computes the list of the extensions of the default theory Td .
+- If  Td  is a normal default theory, there exists at least one extension.
+- Attention: The required space is exponential in the number of defaults in  
+  Td . We recommend to use at most 20 defaults.
+- Choose an appropriate infolevel for additional information during the 
+  execution (e.g.  set("infolevel", 3); ).
+
+EXAMPLE
+
+> extensions([ [p0,p1 -> p2], [[p0,p1,p1],[p0,~p3,~p3]] ]);
+	[[p0, p1 -> p2, p1, ~p3]]
+> extensions([ [p1,p2], [[p1,[p3,p4 v p5],p3 v p4],[~p2,p3,p3]] ]);
+	[[p1, p2, p3 v p4]]
+> extensions([ [], [[true,p0,~p0]] ]);
+	[]
+
+SEE ALSO
+  extensionp
+

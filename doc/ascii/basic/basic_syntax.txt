@@ -1,0 +1,280 @@
+basic syntax
+============
+
+
+Quit or reset the LWB
+- - - - - - - - - - - 
+
+With reset the values of all variables (and ...) are reset.
+
+> reset;
+
+You can quit the LWB both with  quit  and  bye  .
+
+> quit;
+> bye;
+
+
+Help
+- - 
+
+> help; 
+> help funcname;
+> help modname::funcname;
+> help "specialstring";
+
+Remark (help):
+ - The question mark  ?  can be used instead of  help .
+ - Special characters and lexical tokens must be enclosed by  " , e.g.  help 
+   "and"; 
+ - Special characters which have a regexp-meaning need to be escaped by  \ , 
+   e.g.  help "\["; 
+
+
+Simple expressions
+- - - - - - - - - 
+
+Symbols: Alphanumeric strings (underscores allowed).
+
+> my_symbol_1;
+
+Strings: String of arbitrary characters embraced by double quotation marks.
+
+> "my special str@&*()+";
+
+Integers: Arbitrary positive integer within machine range.
+
+> 123;
+
+
+Composed expressions
+- - - - - - - - - - 
+
+Classical connectives:
+
+> p0 & p1;  p0 v p1;  p0 -> p1;  p0 <-> p1;  ~p0;
+> p0 and p1;  p0 v p1;  p0 -> p1;  p0 <-> p1;  ~p0; # input format
+> p0 and p1;  p0 or p1;  p0 imp p1;  p0 eq p1;  not p0; # all in letters
+
+Modal connectives:
+
+> box p0; dia p1;
+
+Multimodal connectives (see also  kn::boxnr  and  kn::dianr ):
+
+> box2 p0; dia3 p1;
+
+Temporal connectives:
+
+> load(tk);
+> p0 U p1; p0 W p1;  p0 B p1;  X p0;  G p0;  F p0;  H p0;  P p0; # mode for temporal logics
+> p0 tU p1; p0 tW p1;  p0 tB p1;  tX p0;  tG p0;  tF p0;  tH p0;  tP p0; # input format
+> unload(tk);
+
+Linear logic connectives:
+
+> load(ll);
+>  # mode for linear logic
+  p0 & p1; p0 X p1; p0 + p1; p0 | p1; p0 -o p1; p0 o-o p1; !p0; ?p0;
+>  # unique input format
+  p0 with p1; p0 times p1; p0 llplus p1; p0 | p1; p0 -o p1; p0 o-o p1; ! p0; qm p0;
+>  # all in letters
+  p0 with p1; p0 times p1; p0 llplus p1; p0 par p1; p0 llimp p1; p0 lleq p1; qm p0;
+> unload(ll);
+
+Functional expressions:
+
+> f(e1);  g(e1, e2);  h(e1, e2, e3);
+
+Lists and arrays:
+
+> [];  [e1];  [e1, e2];  [e1, e2, e3];
+  array(); array(e1); array(e1,e2,e3);
+  array[2,3];  # empty array of dimension 2x3
+
+Remark (composed expressions):
+ - If the functor  f  of a functional expression represents an executable 
+   function (type  FUNCDESCR ), the function will be called with the 
+   evaluated list of arguments. The result is always an expression again 
+   (possibly the empty  NULL  expression).
+ - Arrays are internally implemented as 1-dimensional arrays that may again 
+   have 1-dimensional arrays as entries. For convenience the same operations 
+   can be applied to arrays as well as to lists. However, size affecting 
+   operations are more costly when using arrays.
+
+
+Operations on expressions
+- - - - - - - - - - - - - 
+
+Operand extraction (index  0  returns the type of the expression):
+
+> (p0 & p1)[0];  (p0 & p1)[1];  (p0 & p1)[2];
+	AND
+	p0
+	p1
+> nops(p0 & p1);  type(p0 & p1);
+	2
+	AND
+
+Substitution: Only symbols can be substituted, and no symbol can be 
+substituted twice.
+
+> (p0 & p1) { p2/p0, p3/p1 };
+	p2 & p3
+
+Integer operations:
+
+> i := 1 + 4 - 2;  inc(i); dec(i); inc(i,4); dec(i,4);
+  i mult 2; i div 2; i mod 2;
+> i := 0 - 2;
+	-2
+> i := 2;
+
+Remark (operations on expressions):
+ - Currently only symbols may be substituted.
+
+
+List operations
+- - - - - - - - 
+
+The  nops(L)  statement returns the number of elements in the list  L .
+
+> l1 :== [p0, p1, p2]; 
+> nops(l1);
+	3
+
+The  push(E, L)  statement pushes the expression  E  on the list resp. array 
+L .  L  is treated as the right hand side of an assignment. If  L  is not of 
+type  LIST  or  ARRAY , then an error is raised.
+
+> push(p5, l1);
+	[p5, p0, p1, p2]
+> l2 :== [l1, [p0, p0]]; 
+> push(p6, l2[1]);
+	[p6, p5, p0, p1, p2]
+
+The  pop(L)  expression pops one expression from  L  and returns this 
+expression. If  L  is empty, the  NULL  expression is returned.  L  is 
+treated as the right hand side of an assignment. If  L  is not of type  LIST 
+or  ARRAY , then an error is raised.
+
+> l :== [p0, p1, p2]; 
+> pop(l); 
+	p0
+
+The  append(L, E)  statement is similar to the push statements, except that 
+the expression  E  is not put at the head of the list  L , but appended at 
+the end.
+
+> l :== [p0, p1, p2]; 
+> append(l, p5);
+	[p0, p1, p2, p5]
+
+A subrange can be extracted from a given list.
+
+> l :== [p0, p1, p2, p3, p4]; 
+> l[3..];
+	[p2, p3, p4]
+> l[2..3];
+	[p1, p2]
+
+See the user module for further list operations.
+
+
+Statements
+- - - - - 
+
+Default display of an expression:
+
+> p0 & (p1 v p2);
+
+Assignment and unassignment:
+
+> A := p0 & p1;
+	p0 & p1
+> A :== p0 & p1;  # silent assignment
+> unassign( A );
+
+If an expression contains any indices, then it is allowed to assign to this 
+index. The index can be any expression that evaluates to an integer value.
+
+> A := p0 & p1;
+	p0 & p1
+> A[3] := p2;         # error
+> A[1] :== p0 v p1;  A;
+	(p0 v p1) & p1
+> A[1][1] :== p4;  A;
+	(p4 v p1) & p1
+
+Two expressions can be compared with  =  (equality) and  <>  (inequality).
+
+> p0 v p1 = p1 v p0;
+> p0 v p1 <> p1 v p0;
+
+There are additional comparisons for integer expressions. See also the  less 
+and  sort  commands of the user module.
+
+> 3 < 5;  13 <= 13;  9 >= 8;  7 > 2;
+
+Comments:
+
+> p0 & p1;  # this is a comment
+
+Set and release protection of a symbol:
+
+> protect( p0 );
+> unprotect( p0 );
+
+Remark (operations on expressions):
+ - The left hand side of an assignment as well as the arguments of  unassign ,
+   protect  and  unprotect  stay  unevaluated  (otherwise an assigned symbol 
+   could never be reassigned or unassigned).
+ - None of the above commands have expressions as results. Therefore they 
+   cannot be used to build up expressions or on the right hand side of an 
+   assignment.
+
+
+Module commands
+- - - - - - - - 
+
+Load and unload modules:
+
+> load(cpc);
+> unload(cpc);
+
+Note that you can also add own functions (written in the LWB programming 
+language) and formulae to an existing module. Put them in the file  
+homedir/library/init/modname_init.lwb ; it will be automatically parsed when 
+modname  is loaded. However, do not forget to prefix the procedure and 
+formula names with ` modname:: '. Otherwise, the symbols will be stored in 
+the user module. Use the function  get()  to determine  homedir .
+
+Changing the current top module:
+
+> topmod(cpc);
+
+List available and loaded modules:
+
+> availmod; 
+> listmod;
+
+Module contents (mostly protected function symbols):
+
+> showmod(cpc);
+
+Module selection operator:
+
+> cpc::provable( p0 v ~p0 );
+> ::p0;  user::p0;   # symbol p0 in module user
+
+Show the default module for a particular function, which may be defined in 
+several loaded modules:
+
+> which(provable);
+
+Remark (modules):
+ - Apart from the module selection operator none of the above module 
+   commands have expressions as results. Therefore they cannot be used to 
+   build up expressions or on the right hand side of an assignment.
+ - load  and  unload  accept a list of comma separated module identifiers.
+

@@ -1,0 +1,94 @@
+<TEXT>
+________________________________________ 
+
+   Propositional Linear Time Logic
+    
+      A simple 2-bit flip-machine  
+________________________________________
+   
+</TEXT>
+<INPUT>
+load(pltl);
+</INPUT>
+<OUTPUT>
+	pltl  user  
+Entering special mode for tense & temporal logics. 
+
+</OUTPUT>
+<TEXT>
+Temporal operators:
+    X p  :  neXttime p
+    G p  :  always p, p is Going to be
+    F p  :  sometimes p,  there is a Future where p
+</TEXT>
+<DELIMITER>
+
+</DELIMITER
+<INPUT>
+flip_start :== p0 & ~p1;                 # 1,0
+illegal:== [p0 & p1, ~p0 & ~p1];   # 1,1 and 0,0
+
+flip:==  G ( (X p0 <-> ~p0) &        # .. 1,0->0,1->1,0->0,1 ..
+                   (X p1 <-> ~p1) );
+                      
+</INPUT>
+<OUTPUT>
+
+</OUTPUT>
+<INPUT>
+provable( flip & flip_start -> G F (p0 & ~p1) );
+provable( flip & flip_start -> G F (~p0 & p1) );
+</INPUT>
+<OUTPUT>
+	true
+	true
+
+</OUTPUT>
+<INPUT>
+proc: pltl::countermodel(A) 
+begin
+    return model(~A);
+end;
+</INPUT>
+<OUTPUT>
+
+</OUTPUT>
+<INPUT>
+countermodel( flip & illegal[1] -> F (p0 & ~p1) ); countermodel( flip & illegal[2] -> F (p0 & ~p1) );
+</INPUT>
+<OUTPUT>
+	[[[p0, p1], [2]], [[~p0, ~p1], [1]]]
+	[[[~p0, ~p1], [2]], [[p0, p1], [1]]]
+
+</OUTPUT>
+<TEXT>
+The model is given as a list of states, where the number
+is the index of the respective successor state.
+</TEXT>
+<DELIMITER>
+
+</DELIMITER
+<TEXT>
+We construct a flip2 with error correction :
+(the p1 in the first line)
+</TEXT>
+<INPUT>
+flip2:==  G ( (X p0 <-> ~p0 & p1) &    
+                     (X p1 <-> ~p1) );
+
+   provable( flip2 & illegal[1] ->
+                     G F (p0 & ~p1) & G F (~p0 & p1) );
+   provable( flip2 & illegal[2] ->
+                     G F (p0 & ~p1) & G F (~p0 & p1) );
+</INPUT>
+<OUTPUT>
+	true
+	true
+
+</OUTPUT>
+<INPUT>
+
+</INPUT>
+<OUTPUT>
+
+</OUTPUT>

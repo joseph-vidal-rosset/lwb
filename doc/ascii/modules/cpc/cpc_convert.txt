@@ -1,0 +1,50 @@
+
+convert
+=======
+
+convert connectives
+
+SYNTAX
+- convert(A, S1) 
+- convert(A, "imp", S2) 
+- convert(T, S1) 
+- convert(T, "imp", S2) 
+
+PARAMETERS
+- A: formula
+- T: theory
+- S1: one of  "andimp" ,  "eq" ,  "impimp" 
+- S2: one of  "eq" ,  "or" 
+
+RESULT:  formula resp. theory
+
+SYNOPSIS
+
+- convert  converts certain occurrences of connectives in the formula  A  
+  resp. in the theory  T . The result is equivalent to  A  resp. to  T .
+- Two arguments: 
+  S1  is  "andimp" : Converts  B & C -> D  into  B -> C -> D . 
+  S1  is  "eq" : Converts  B <-> C  into  (B -> C) & (C -> B) . 
+  S1  is  "impimp" : Converts  B -> C -> D  into  B & C -> D .
+- Three arguments: 
+  S2  is  "eq" : Converts  (B -> C) & (B -> C) ,  (B <-> C) & (B -> C) , ... 
+  into  B <-> C . Conjunctions in  A  resp. the theory  T  is arranged if 
+  conversions are possible. 
+  S2  is  "or" : Converts  ~B -> C  into  B v C , and  B -> C  into  ~B v C .
+
+EXAMPLE
+
+> convert(p0 & (p1 v p2) & p3 & p4 -> p5, "andimp");
+	p0 -> p1 v p2 -> p3 -> p4 -> p5
+> convert(p0 & (p4 -> p5) & ((p2 v p3) & (p5 -> p4)), "imp", "eq");
+	p0 & (p4 <-> p5) & (p2 v p3)
+> convert([p4 -> p5 v p6, ~p0, p1 & (p5 v p6 <-> p4)], "imp", "eq");
+	[~p0, p1, p5 v p6 <-> p4]
+> convert(p4 & (p5 -> p4) v (~(p6 & ~p1) -> p4 v p5), "imp", "or");
+	p4 & (~p5 v p4) v (p6 & ~p1 v (p4 v p5))
+> convert([p0 -> p1, ~p0 -> p1], "imp", "or");
+	[~p0 v p1, p0 v p1]
+
+SEE ALSO
+  remove
+

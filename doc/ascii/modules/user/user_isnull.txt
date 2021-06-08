@@ -1,0 +1,27 @@
+
+isnull
+======
+
+test on null expression
+
+SYNTAX
+- isnull(E) 
+
+PARAMETERS
+- E: expression
+
+RESULT:  true  or  false 
+
+SYNOPSIS
+
+- isnull  tests whether  E  is the (invisible) null expression, which is 
+  typically the result of output functions.
+
+EXAMPLE
+
+> isnull( ascii(a and b) );
+	a & b
+	true
+> isnull( a and b );
+	false
+

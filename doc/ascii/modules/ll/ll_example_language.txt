@@ -1,0 +1,40 @@
+
+Language example
+================
+
+
+Language
+--------
+
+First we load the module  ll .
+
+> load(ll);
+	ll  user  
+Entering special mode for linear logic. 
+Additional operators for linear logic: 
+new operator        : X (times)
+redefined operators : & (with), + (llplus), ? (qm)
+(before: and,      plus,       help)
+
+Formulas of  ll  are built from the symbols for conjunctions ( & ,  X ), 
+disjunctions ( + ,  |  ), implication ( -o ), equivalence ( o-o ), negation 
+( ~ ), modalities ( ? ,  ! ), the four constants  top ,  1 ,  bot  and  0 , 
+and variables.
+Theories are lists of formulas.
+
+> A := (p0 -o bot) o-o ~(p1 & 1 | p0);
+	p0 -o bot o-o ~(p1 & 1 | p0)
+> B := ? p4 -o ! A;
+	?p4 -o !(p0 -o bot o-o ~(p1 & 1 | p0))
+> T := [A, B];
+	[p0 -o bot o-o ~(p1 & 1 | p0), ?p4 -o !(p0 -o bot o-o ~(p1 & 1 | p0))]
+> typek(A, "fml");
+	true
+> typek(B[1], "var");
+	false
+> typek(T, "theory");
+	true
+
+You can also use  with ,  times ,  par ,  llplus ,  llimp ,  lleq ,  not ,  
+qm  instead of  & ,  X ,  | ,  + ,  -o ,  o-o ,  ~ ,  ? .
+

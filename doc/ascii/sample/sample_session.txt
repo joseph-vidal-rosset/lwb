@@ -1,0 +1,64 @@
+sample session
+==============
+
+
+At first we load the module  cpc  for classical propositional logic.
+
+> load(cpc);
+	cpc  user  
+
+We store the formula of Peirce in  A  and test whether it is provable in  
+cpc .
+
+> A := ((p0 -> p1) -> p0) -> p0;
+	((p0 -> p1) -> p0) -> p0
+> provable(A);
+	true
+
+The formula of Peirce is not provable in intuitionistic propositional logic. 
+We load the module  ipc  to test this fact. However, we can still use the 
+function  provable  of the module  cpc  with the help of the  ::  operator.
+
+> load(ipc);
+	ipc  cpc  user  
+> provable(A);
+	false
+> cpc::provable(A);
+	true
+
+With  topmod  we can move the module  cpc  back on the top of the stack of 
+the modules.
+
+> topmod(cpc);
+cpc  ipc  user  
+> provable(A);
+	true
+
+The function  simplify  simplifies formulas.
+
+> simplify(A & (p2 -> p3) -> (p3 -> p2));
+	p3 -> p2
+> simplify(A & (p2 -> (p1 -> p3)) -> (p3 v ~p1 -> p4));
+	(p1 -> p3) -> p4
+
+With the programming language it is possible to define new functions and 
+procedures. The function  my_subfmls  computes the list of the subformulas 
+of a formula of classical propositional logic. We assume that the formula is 
+in negation normal form.
+
+> proc : my_subfmls(A)
+  begin
+    if (type(A) = AND) or (type(A) = OR)
+    then return concat(union(subfmls(A[1]), subfmls(A[2])), [A]);
+    else return [A];
+  end;
+> my_subfmls(((p0 & p0) & (p0 & p0)) & ((p0 & p0) & p0));
+	[p0, p0 & p0, p0 & p0 & p0, p0 & p0 & (p0 & p0), p0 & p0 & (p0 & p0) & (p0 
+& p0 & p0)]
+> sort(my_subfmls(p0 v p1 v p2 v p10));
+	[p0, p1, p2, p10, p0 v p1, p0 v p1 v p2, p0 v p1 v p2 v p10]
+
+With  quit  we quit the LWB session.
+
+> quit;
+

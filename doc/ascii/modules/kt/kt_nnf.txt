@@ -1,0 +1,29 @@
+
+nnf
+===
+
+negation normal form
+
+SYNTAX
+- nnf(A) 
+
+PARAMETERS
+- A: formula
+
+RESULT:  formula
+
+SYNOPSIS
+
+- nnf  computes a negation normal form of the formula  A .
+- The result is equivalent to  A , i.e.  nnf(A) <-> A  is provable in  kt .
+
+EXAMPLE
+
+> nnf(p0 & (~ box p1 -> dia ~p2));
+	p0 & (box p1 v dia ~p2)
+> nnf(~p0 & box dia p1);
+	~p0 & box dia p1
+
+SEE ALSO
+  nnfp
+

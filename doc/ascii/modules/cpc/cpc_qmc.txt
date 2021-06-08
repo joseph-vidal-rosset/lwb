@@ -1,0 +1,36 @@
+
+qmc
+===
+
+Quine-McCluskey algorithm
+
+SYNTAX
+- qmc(A) 
+
+PARAMETERS
+- A: formula
+
+RESULT:  formula in disjunctive normal form
+
+SYNOPSIS
+
+- qmc  applies the Quine-McCluskey algorithm on the formula  A . The result 
+  is a formula in disjunctive normal form which is in a certain sense 
+  minimal.
+- In most cases,  qmc(A)  is shorter than  dnf(A) .
+- The algorithm requires exponential memory relative to the number of 
+  variables in  A . Therefore it is advisable to simplify the formula 
+  first.
+
+EXAMPLE
+
+> qmc(p0 & p1 v p0 & ~p1 v ~p0 & p1);
+	p0 v p1
+> qmc(p0 <-> p1 <-> p2);
+	p0 & p1 & p2 v p0 & ~p1 & ~p2 v p1 & ~p0 & ~p2 v p2 & ~p0 & ~p1
+> qmc((p0 -> p1 -> p2) <-> (p1 -> p2));
+	p0 v p2 v ~p1
+
+SEE ALSO
+  dnf, dnfp
+

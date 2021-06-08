@@ -1,0 +1,32 @@
+
+provable
+========
+
+formula provable?
+
+SYNTAX
+- provable(A) 
+
+PARAMETERS
+- A: formula
+
+RESULT:  true  or  false 
+
+SYNOPSIS
+
+- provable  tests whether the formula  A  is provable in  pltl .
+- The implementation of  pltl::satisfiable  is an efficient version of the 
+  tableau graph expansion method with a strongly connected components 
+  analysis for the eventuality checking. It is due to Geert Janssen, Formal 
+  Verification Group, Eindhoven University of Technology.
+
+EXAMPLE
+
+> provable( G(p0 U p1) & G(p0 -> p2) & G(p1 -> p2) -> G p2 );
+	true
+> provable( X G p0 <-> G X p0 );
+	true
+
+SEE ALSO
+  satisfiable, model
+

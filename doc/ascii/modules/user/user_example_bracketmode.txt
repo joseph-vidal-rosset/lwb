@@ -1,0 +1,20 @@
+
+Using  set("bracketmode", S)  example
+=====================================
+
+
+Using  set("bracketmode", S) 
+-----------------------------
+
+set("infolevel", S)  changes the amount of displayed brackets.
+
+> A :== (p1 v ((p2 v p3) v p4)) & p5 -> p6 -> p7 -> p8;
+> set("bracketmode", "assoc");
+	true
+> A;
+	(p1 v (p2 v p3 v p4)) & p5 -> p6 -> p7 -> p8
+> set("bracketmode", "full");
+	true
+> A;
+	(((p1 v ((p2 v p3) v p4)) & p5) -> (p6 -> (p7 -> p8)))
+

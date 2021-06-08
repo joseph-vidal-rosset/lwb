@@ -1,0 +1,109 @@
+
+s4n example
+===========
+
+
+Language
+--------
+
+At first we load the module  s4n .
+
+> load(s4n);
+	s4n  user  
+
+Formulas of  kn  are built from the connectives  box0 ,  box1 ,  box2 , ..., 
+dia0 ,  dia1 ,  dia2 , ..., from the connectives of classical propositional 
+logic, namely  &  (conjunction),  v  (disjunction),  ->  (implication),  <-> 
+(equivalence),  ~  (negation), the two constants  true  and  false , and 
+from variables.
+Theories are lists of formulas.
+
+> a := p -> dia0(q & ~box1(p v false) <-> true);
+	p -> dia0 (q & ~box1 (p v false) <-> true)
+> b := box0 a32;
+	box0 a32
+> t := [a, b];
+	[p -> dia0 (q & ~box1 (p v false) <-> true), box0 a32]
+> typek(a, "fml");
+	true
+> typek(b[1], "var");
+	true
+> typek(t, "theory");
+	true
+
+You can also use  and ,  or ,  imp ,  eq ,  not  instead of  & ,  v ,  -> ,  
+<-> ,  ~ .
+
+> a1 := p & q v r -> s <-> p; 
+	p & q v r -> s <-> p
+> a2 := p and q or r imp s eq p; 
+	p & q v r -> s <-> p
+> a1 = a2;
+	true
+
+
+Normal forms
+------------
+
+In the modal logic  s4n  there exists a negation normal form.
+
+> a := ~ ~dia1 p -> p;
+	~~dia1 p -> p
+> nnf(a);
+	box1 ~p v p
+
+This normal forms is not unique as the following example shows.
+
+> b := box1 ~p v p v p & q;
+	box1 ~p v p v p & q
+> nnfp(b);
+	true
+> provable(a <-> b);
+	true
+
+If a formula contains equivalencies, the result of  nnf  can be very long 
+compared to the original formula.
+
+> c := dia0 p0 <-> dia0 p1 <-> dia0 p2 <-> dia0 p3 <-> dia0 p4 <-> dia0 p5 <-> dia0 p6;
+	dia0 p0 <-> dia0 p1 <-> dia0 p2 <-> dia0 p3 <-> dia0 p4 <-> dia0 p5 <-> 
+dia0 p6
+> length(c);
+	20
+> length(nnf(c));
+	664
+
+
+Typical provable formulas
+-------------------------
+
+All formulas that are provable in classical propositional logic are also 
+provable in the modal logic  s4n .
+Therefore we concentrate on formulas typical for  s4n .
+
+> provable( box2(p & q)  <->  box2 p & box2 q );
+	true
+> provable( dia7(p v q)  <->  dia7 p v dia7 q );
+	true
+> provable( ~ box15 ~ p  <-> dia15 p );
+	true
+> provable( box2(r1 & r2) -> box2 r1 -> box2 r2 );
+	true
+> provable( box3 p -> p );
+	true
+> provable( box4 p -> box4 box4 p );
+	true
+
+
+Typical non-provable formulas
+-----------------------------
+
+One axiom of  s5  is not provable in  s4 .
+
+> provable( ~ box3 q -> box3 ~ box3 p );
+	false
+
+The indizes of the modal connectives are essential.
+
+> provable( box4 s -> box4 box3 s );
+	false
+

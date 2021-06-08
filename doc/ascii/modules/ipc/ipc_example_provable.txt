@@ -1,0 +1,45 @@
+
+Typical provable formulas example
+=================================
+
+
+Typical provable formulas
+-------------------------
+
+As long as only the connectives  &  and  v  occur in a formula, there is no 
+difference between classical and intuitionistic propositional logic. For 
+example both  &  and  v  are associative, and the distributivity law for 
+these two connectives holds.
+
+> provable( p0 v (p1 v p2) <-> (p0 v p1) v p2 );
+	true
+> provable( p0 & (p1 & p2) <-> (p0 & p1) & p2 );
+	true
+> provable( p0 & (p1 v p2) <-> p0 & p1 v p0 & p2 );
+	true
+> provable( p0 v p1 & p2 <-> (p0 v p1) & (p0 v p2) );
+	true
+
+~A  is equivalent to  A -> false .
+
+> provable( ~p0 <-> (p0 -> false) );
+	true
+
+Moreover if the formula  A  is provable in classical propositional logic, 
+then  ~ ~A  is provable in intuitionistic propositional logic, for example:
+
+> provable(~ ~(p0 v ~p0));
+	true
+> provable(~ ~(~(p0 v p1) <-> ~p0 & ~p1));
+	true
+
+The pigeon-hole formula and the formula of Tatsuta are examples of more 
+complicated formulas that are provable in intuitionistic propositional 
+logic.
+
+> A2 := pigeonhole(2);
+	(p11 v p12) & (p21 v p22) & (p31 v p32) -> p11 & p21 v p11 & p31 v p21 & 
+p31 v p12 & p22 v p12 & p32 v p22 & p32
+> provable(A2);
+	true
+

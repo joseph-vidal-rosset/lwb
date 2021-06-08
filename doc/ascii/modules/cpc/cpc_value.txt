@@ -1,0 +1,33 @@
+
+value
+=====
+
+value of a formula in a model
+
+SYNTAX
+- value(M, A) 
+
+PARAMETERS
+- M: model
+- A: formula
+
+RESULT:  true  or  false 
+
+SYNOPSIS
+
+- value  computes the value of the formula  A  in the model  M .
+- If the result is 1, then the formula  A  is satisfiable in  cpc .
+- This computation corresponds to one line in a truthtable for  A .
+
+EXAMPLE
+
+> value([p1,p2], ~p2 & (p1 v p3));
+	false
+> value([p1], ~p2 & (p1 v p3));
+	true
+> value([p0,p1,p2,p3], p0 & ~p0);
+	false
+
+SEE ALSO
+  bddsat, model, satisfiable, truthtable
+

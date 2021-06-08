@@ -1,0 +1,32 @@
+
+dianr
+=====
+
+add a dia connective with an index
+
+SYNTAX
+- dianr(n, A) 
+
+PARAMETERS
+- A: formula
+
+RESULT:  formula
+
+SYNOPSIS
+
+- dianr  adds a dia connective with index  N  in front of  A . You can also 
+  type  diaN   A .
+- In order to get  A  back from the result  B , use  index(B) .
+
+EXAMPLE
+
+> dianr(2, p0 & p1 & p2);
+	dia2 (p0 & p1 & p2)
+> B := dianr(10, p1 -> dia1(true -> p1));
+	dia10 (p1 -> dia1 (true -> p1))
+> index(B);
+	10
+
+SEE ALSO
+  boxnr, index
+

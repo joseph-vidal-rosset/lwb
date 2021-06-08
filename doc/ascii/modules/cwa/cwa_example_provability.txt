@@ -1,0 +1,36 @@
+
+Provability example
+===================
+
+
+Provability
+-----------
+
+If we want to test whether a formula  A  is provable in the closed world 
+assumption theory of a theory  T , in general we cannot just compute  cwa(T) 
+and apply  cpc::provable  afterwards. The reason is the implicit restriction 
+already mentioned above. We have to use the list of the variables occurring 
+in  A  or in  T  as restriction for  cwa  and afterwards we can call  
+cpc::provable .
+
+> A := p1 -> p2; T := [p3, p4, ~p5];
+	p1 -> p2
+	[p3, p4, ~p5]
+> cwa(T);
+	[p3, p4, ~p5, ~p5]
+> cpc::provable(A, cwa(T));
+	false
+> provable(A, T);
+	true
+> cwa(T, [p3,p4,p5,p1,p2]);
+	[p3, p4, ~p5, ~p5, ~p1, ~p2]
+> simplify(cwa(T, [p3,p4,p5,p1,p2]));
+	[p3, p4, ~p5, ~p1, ~p2]
+> cpc::provable(A, cwa(T, [p3,p4,p5,p1,p2]));
+	true
+> provable(A, T, [p3,p4,p5,p1,p2]);
+	true
+
+Naturally, if all variables of the formula  A  occur in the theory  t , then 
+these precautions are not needed.
+

@@ -1,0 +1,30 @@
+
+satisfiable
+===========
+
+formula satisfiable ?
+
+SYNTAX
+- satisfiable(A) 
+
+PARAMETERS
+- A: formula
+
+RESULT:  true  or  false 
+
+SYNOPSIS
+
+- satisfiable  tests whether the formula  A  is satisfiable in  s4 .
+- Choose an appropriate infolevel for additional information during the 
+  execution of  satisfiable  (e.g.  set("infolevel", 3); ).
+
+EXAMPLE
+
+> satisfiable(p0 & ~ box p0);
+	true
+> satisfiable(box ~p1 & p1);
+	false
+
+SEE ALSO
+  provable, satisfiable
+

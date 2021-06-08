@@ -1,0 +1,112 @@
+
+kt example
+==========
+
+
+Language
+--------
+
+At first we load the module  kt .
+
+> load(kt);
+	kt  user  
+
+Formulas of  kt  are built from the connectives  box  and  dia , from the 
+connectives of classical propositional logic, namely  &  (conjunction),  v  
+(disjunction),  ->  (implication),  <->  (equivalence),  ~  (negation), the 
+two constants  true  and  false , and from variables.
+Theories are lists of formulas.
+
+> a := p -> (q <-> dia box(q2 & true v ~false));
+	p -> (q <-> dia box (q2 & true v ~false))
+> b := qq -> a76;
+	qq -> a76
+> t := [a, b];
+	[p -> (q <-> dia box (q2 & true v ~false)), qq -> a76]
+> typek(a, "fml");
+	true
+> typek(b[1], "var");
+	true
+> typek(t, "theory");
+	true
+
+You can also use  and ,  or ,  imp ,  eq ,  not  instead of  & ,  v ,  -> ,  
+<-> ,  ~ .
+
+> a1 := p & q v r -> s <-> p; 
+	p & q v r -> s <-> p
+> a2 := p and q or r imp s eq p; 
+	p & q v r -> s <-> p
+> a1 = a2;
+	true
+
+In the possible world semantics,  box p  means that  p  is true in all 
+accessible worlds, and  dia p  means that there is an accessible world where 
+p  is true. The accessibility relation must be reflexive.
+
+
+Normal forms
+------------
+
+In the modal logic  kt  there exists a negation normal form.
+
+> a := dia ~ dia((p -> box q) v ~p & q);
+	dia ~dia ((p -> box q) v ~p & q)
+> nnf(a);
+	dia box (p & dia ~q & (p v ~q))
+
+This normal forms is not unique as the following example shows.
+
+> b := dia box(p & dia ~q);
+	dia box (p & dia ~q)
+> nnfp(b);
+	true
+> provable(a <-> b);
+	true
+
+If a formula contains equivalencies, the result of  nnf  can be very long 
+compared to the original formula.
+
+> c := dia p0 <-> dia p1 <-> dia p2 <-> dia p3 <-> dia p4 <-> dia p5 <-> dia p6;
+	dia p0 <-> dia p1 <-> dia p2 <-> dia p3 <-> dia p4 <-> dia p5 <-> dia p6
+> length(c);
+	20
+> length(nnf(c));
+	664
+
+
+Typical provable formulas
+-------------------------
+
+All formulas that are provable in classical propositional logic are also 
+provable in the modal logic  kt .
+Therefore we concentrate on formulas typical for  kt .
+
+> provable( box(p & q)  <->  box p & box q );
+	true
+> provable( dia(p v q)  <->  dia p v dia q );
+	true
+> provable( ~ box ~ p  <-> dia p );
+	true
+> provable( box p -> p );
+	true
+> fml("t");
+	box p1 -> p1
+> provable(fml("t"));
+	true
+
+
+Typical non-provable formulas
+-----------------------------
+
+None of the following axioms of  s5  is provable in  kt .
+
+> fml("4");
+	box p1 -> box box p1
+> provable(fml("4"));
+	false
+> fml("5");
+	~box p1 -> box ~box p1
+> provable(fml("5"));
+	false
+

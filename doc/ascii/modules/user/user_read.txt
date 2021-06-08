@@ -1,0 +1,24 @@
+
+read
+====
+
+read values from a file
+
+SYNTAX
+- read(S) 
+
+PARAMETERS
+- S: string
+
+RESULT:  nothing
+
+SYNOPSIS
+
+- S  is a string containing the name and path of the file to be read. The 
+  values of the variables in the file read are defined with the values in 
+  the file, thus overwriting existing values. Variables not present in the 
+  file read are unchanged.
+
+SEE ALSO
+  save
+

@@ -1,0 +1,126 @@
+
+s4 example
+==========
+
+
+Language
+--------
+
+At first we load the module  s4 .
+
+> load(s4);
+	s4  user  
+
+Formulas of  s4  are built from the connectives  box  and  dia , from the 
+connectives of classical propositional logic, namely  &  (conjunction),  v  
+(disjunction),  ->  (implication),  <->  (equivalence),  ~  (negation), the 
+two constants  true  and  false , and from variables.
+Theories are lists of formulas.
+
+> a := box(dia(p -> dia true) v ~false) & q <-> q;
+	box (dia (p -> dia true) v ~false) & q <-> q
+> b := p34 v qp;
+	p34 v qp
+> t := [a, b];
+	[box (dia (p -> dia true) v ~false) & q <-> q, p34 v qp]
+> typek(a, "fml");
+	true
+> typek(b[1], "var");
+	true
+> typek(t, "theory");
+	true
+
+You can also use  and ,  or ,  imp ,  eq ,  not  instead of  & ,  v ,  -> ,  
+<-> ,  ~ .
+
+> a1 := p & q v r -> s <-> p; 
+	p & q v r -> s <-> p
+> a2 := p and q or r imp s eq p; 
+	p & q v r -> s <-> p
+> a1 = a2;
+	true
+
+In the possible world semantics,  box p  means that  p  is true in all 
+accessible worlds, and  dia p  means that there is an accessible world where 
+p  is true. The accessibility relation must be reflexive and transitive.
+
+
+Normal forms
+------------
+
+In the modal logic  s4  there exists a negation normal form.
+
+> a := box p -> (dia ~q -> ~p v ~p & q);
+	box p -> dia ~q -> ~p v ~p & q
+> nnf(a);
+	dia ~p v (box q v (~p v ~p & q))
+
+This normal forms is not unique as the following example shows.
+
+> b := dia ~p v box q v ~p;
+	dia ~p v box q v ~p
+> nnfp(b);
+	true
+> provable(a <-> b);
+	true
+
+If a formula contains equivalencies, the result of  nnf  can be very long 
+compared to the original formula.
+
+> c := dia p0 <-> dia p1 <-> dia p2 <-> dia p3 <-> dia p4 <-> dia p5 <-> dia p6;
+	dia p0 <-> dia p1 <-> dia p2 <-> dia p3 <-> dia p4 <-> dia p5 <-> dia p6
+> length(c);
+	20
+> length(nnf(c));
+	664
+
+
+Typical provable formulas
+-------------------------
+
+All formulas that are provable in classical propositional logic are also 
+provable in the modal logic  s4 .
+Therefore we concentrate on formulas typical for  s4 .
+
+> provable( box(p & q)  <->  box p & box q );
+	true
+> provable( dia(p v q)  <->  dia p v dia q );
+	true
+> provable( ~ box ~ p  <-> dia p );
+	true
+> provable( box p -> p );
+	true
+> fml("t");
+	box p1 -> p1
+> provable(fml("t"));
+	true
+
+In contrast to  k  and  kt , in  s4  there is only a finite number of 
+non-equivalent sequences of  box  and  dia .
+
+> provable( box box p  <->  box p );
+	true
+> provable( dia dia p  <->  dia p );
+	true
+> provable( dia box dia box p  <->  dia box p );
+	true
+
+
+Typical non-provable formulas
+-----------------------------
+
+The axiom that causes the difference between  s4  and  s5  is naturally not 
+provable in  s4 .
+
+> fml("5");
+	~box p1 -> box ~box p1
+> provable(fml("5"));
+	false
+
+We cannot move  box  and  dia  inwards and outwards in all cases.
+
+> provable( dia p & dia q  ->  dia(p & q) );
+	false
+> provable( box(p v q)  ->  box p v box q );
+	false
+

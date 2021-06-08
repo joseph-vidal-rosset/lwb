@@ -1,0 +1,35 @@
+
+vars
+====
+
+occurring variables
+
+SYNTAX
+- vars(A) 
+- vars(T) 
+
+PARAMETERS
+- A: formula
+- T: theory
+
+RESULT:  list of variables
+
+SYNOPSIS
+
+- vars  computes the list of variables of  ll  occurring in the formula  A  
+  resp. in the theory  T .
+- The resulting list is sorted according to the ordering given by  less , 
+  and no element occurs twice in it.
+
+EXAMPLE
+
+> vars((p0 & ~p1) o-o p0 | ~p0);
+	[p0, p1]
+> vars(top);
+	[]
+> vars([(~p2 | p1) -o p2, p0 | p1, top -o p0]);
+	[p0, p1, p2]
+
+SEE ALSO
+  less, sort, typek
+

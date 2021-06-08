@@ -1,0 +1,33 @@
+
+provable
+========
+
+provable in autoepistemic extension ?
+
+SYNTAX
+- provable(A, T, Mode) 
+
+PARAMETERS
+- A: formula
+- T: theory
+- Mode: one of  "one" ,  "all" 
+
+RESULT:  true  or  false 
+
+SYNOPSIS
+
+- Third argument is  "one" :  provable  tests whether the formula  A  is 
+  provable in at least one autoepistemic extension of the theory  T .
+- Third argument is  "all" :  provable  tests whether the formula  A  is 
+  provable in all autoepistemic extensions of the theory  T .
+
+EXAMPLE
+
+> provable(p0, [~ box p0 -> p1, ~ box p1 -> p0], "one");
+	true
+> provable(p0, [~ box p0 -> p1, ~ box p1 -> p0], "all");
+	false
+
+SEE ALSO
+  extensionsnr
+

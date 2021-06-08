@@ -1,0 +1,30 @@
+
+k
+=
+
+embedding in  k 
+
+SYNTAX
+- k(A) 
+
+PARAMETERS
+- A: formula
+
+RESULT:  formula of  k 
+
+SYNOPSIS
+
+- k  embeds the formula  A  in  k .
+- k(A)  is provable in  k  iff  A  is provable in  kt .
+- The length of  k(A)  can be exponential relative to the length of  A .
+
+EXAMPLE
+
+> k(dia p0 v box ~p1);
+	dia p0 v p0 v box ~p1
+> k(dia(box p0 -> p1));
+	dia (box p0 & p0 -> p1) v (box p0 & p0 -> p1)
+
+SEE ALSO
+  provable, provable
+

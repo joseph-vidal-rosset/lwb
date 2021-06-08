@@ -1,0 +1,145 @@
+<TEXT>
+_________________________________________________
+ 
+     Peterson's Mutual Exclusion Algorithm for 2
+     processes  
+_________________________________________________
+
+</TEXT>
+<INPUT>
+load(pltl);
+</INPUT>
+<OUTPUT>
+	pltl  user  
+Entering special mode for tense & temporal logics. 
+
+</OUTPUT>
+<TEXT>
+There are 2 processes each of which can adopt 4 states
+(hence we need twice 2 Bits to represent them).
+
+    ncs   :  non-critical section
+    try   :  `request' section
+    wait  :  wait section
+    cs    :  critical section
+</TEXT>
+<INPUT>
+at_ncs1:==  ~c1 & ~c2;     at_ncs2:==  ~d1 & ~d2;   
+at_try1:==   c1 & ~c2;     at_try2:==   d1 & ~d2;      
+at_wait1:== ~c1 &  c2;     at_wait2:== ~d1 &  d2;  
+at_cs1:==    c1 &  c2;     at_cs2:==    d1 &  d2;     
+</INPUT>
+<OUTPUT>
+
+</OUTPUT>
+<TEXT>
+The processes are modelled using interleaving, which
+is represented by a 'program counter' bit (pc). If pc then
+the first process is running, if ~pc the second.
+</TEXT>
+<DELIMITER>
+
+</DELIMITER
+<TEXT>
+There are other 'global' variables (bits) :
+   in1 (in2):  process 1 (2) requests the critical resource.
+   t :  the 'tie-breaker'; if  in1 & in2 & t then process 1 
+        enters the  critical section, if in1 & in2 & ~t then 
+        process 2 enters.
+</TEXT>
+<INPUT>
+ first:== 
+      pc ->
+        # the 2nd process rests :
+         ( (d1 <-> X d1) & (d2 <-> X d2) & (in2 <-> X in2) )  
+         &
+         (
+           # at_ncs1 => at_try1 :
+           ( at_ncs1  & X (at_try1 & in1) & (t <-> X t) )        v
+
+           # give control  (i.e. ~t) to process 2 (if he wants it)
+           ( at_try1  & X (at_wait1 &  ~t) & (in1 <-> X in1) )   v
+
+           # keep waiting ...
+           ( at_wait1 & (in2 & ~t) & X at_wait1  &
+                        (t <-> X t) & (in1 <-> X in1) )          v
+
+           # other process does not want control (~in2)
+           # or has quit CS (t). Enter CS.
+           ( at_wait1 & (~in2 v t) & X at_cs1  &
+                        (in1 <-> X in1) & (t <-> X t) )          v
+
+            # return to NCS
+           ( at_cs1   & X (at_ncs1 & ~in1) & (t <-> X t) )
+         );
+</INPUT>
+<OUTPUT>
+
+</OUTPUT>
+<INPUT>
+second:==
+      ~pc ->
+          ( (c1 <-> X c1) & (c2 <-> X c2) & (in1 <-> X in1) )
+          &
+          ( ( at_ncs2  & X (at_try2 & in2) & (t <-> X t) )       v
+            ( at_try2  & X (at_wait2 & t) & (in2 <-> X in2) )    v
+            ( at_wait2 & (in1 & t) & X at_wait2  &
+                (in2 <-> X in2)  &  (t <-> X t) )                v
+            ( at_wait2 & (~in1 v ~t) & X at_cs2  &
+              (in2 <-> X in2) & (t <-> X t) )                    v
+            ( at_cs2   & X at_ncs2 & X ~in2 & (t <-> X t) )
+          );
+</INPUT>
+<OUTPUT>
+
+</OUTPUT>
+<INPUT>
+start:==  t & ~in1 & ~in2 & at_ncs1 & at_ncs2;
+
+fairness:==  F pc  & F ~pc;
+
+peterson:==  start & G ( first & second & fairness );
+
+length(peterson);
+</INPUT>
+<OUTPUT>
+	278
+
+</OUTPUT>
+<TEXT>
+____  prove mutual exclusion  __________________
+
+</TEXT>
+<INPUT>
+mut_exc:==   G ~(at_cs1 & at_cs2);
+
+timestart(); 
+provable( peterson -> mut_exc );  
+timestop();  
+</INPUT>
+<OUTPUT>
+	true
+	0.27
+
+</OUTPUT>
+<TEXT>
+____  prove 'response'  ________________________
+
+</TEXT>
+<INPUT>
+response:== G( at_try1 -> F at_cs1);
+timestart(); 
+provable( peterson ->  response); 
+timestop();   
+</INPUT>
+<OUTPUT>
+	true
+	0.40
+
+</OUTPUT>
+<INPUT>
+
+</INPUT>
+<OUTPUT>
+
+</OUTPUT>

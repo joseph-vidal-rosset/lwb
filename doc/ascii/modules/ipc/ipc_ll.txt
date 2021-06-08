@@ -1,0 +1,30 @@
+
+ll
+==
+
+embedding in  ll 
+
+SYNTAX
+- ll(A) 
+
+PARAMETERS
+- A: formula
+
+RESULT:  formula of  ll 
+
+SYNOPSIS
+
+- ll  embeds the formula  A  in  ll .
+- A  is provable in  ipc  iff the result of  ll  is provable in  ll  (if the 
+  variables of  A  in  ipc  are also variables in  ll ).
+
+EXAMPLE
+
+> ll(p0 & ~(p1 -> p2));
+	p0 & (!(!p1 -o p2) -o 0)
+> ll(p0 v p1);
+	!p0 + !p1
+
+SEE ALSO
+  provable, provable
+

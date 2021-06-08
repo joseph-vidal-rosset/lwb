@@ -1,0 +1,53 @@
+
+typek
+=====
+
+type test
+
+SYNTAX
+- typek(X, S) 
+
+PARAMETERS
+- X: expression
+- S: one of  "fml" ,  "model" ,  "truthtable" ,  "theory" ,  "var" 
+
+RESULT:  true  or  false 
+
+SYNOPSIS
+
+- S  is  "fml" :  typek  checks whether  X  is a formula in  cpc .
+- S  is  "model" :  typek  checks whether  X  is a model in  cpc . A model 
+  in  cpc  is a list of variables.
+- S  is  "proof" :  typek  checks whether  X  is a proof in Gentzen style.
+- S  is  "truthtable" :  typek  checks whether  X  is a truthtable.
+- S  is  "theory" :  typek  checks whether  X  is a theory in  cpc . A 
+  theory is a list of variables.
+- S  is  "var" :  typek  checks whether  X  is a variable in  cpc .
+
+EXAMPLE
+
+> typek(~ ~(p2 v p1 -> false) & (p1 <-> true), "fml");
+	true
+> typek([~p3, p4 -> p2], "fml");
+	false
+> gp :== proof((p0 <-> p0) & (p1 <-> p1));
+  proofp(gp);
+	proofp(Launching lwbproof_wish, please wait ...
+)
+> typek([p0, p1, p3], "model");
+	true
+> typek([p2 v p3, p5, (~p1 -> p2) v true], "theory");
+	true
+> typek([ [[p,q],p & q],
+          [[[false,false],false],
+           [[false,true ],false],
+           [[true, false],false],
+           [[true, true ],true ]] ],
+        "truthtable");
+	true
+> typek(p2, "var");
+	true
+
+SEE ALSO
+  model, proof, truthtable
+

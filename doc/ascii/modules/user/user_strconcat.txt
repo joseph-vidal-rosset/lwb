@@ -1,0 +1,33 @@
+
+strconcat
+=========
+
+concatenate strings
+
+SYNTAX
+- strconcat(S1, S2, ...) 
+
+PARAMETERS
+- S1, S2, ...: strings
+
+RESULT:  string
+
+SYNOPSIS
+
+- strconcat  concatenates the strings  S1 ,  S2 , ... to one string.
+
+EXAMPLE
+
+> strconcat("abc", "de", "f");
+	"abcdef"
+> strconcat("abc", "");
+	"abc"
+> m :== 12; n :== 7;
+  strconcat("result = ", string(m), ", ", string(n));
+	"result = 12, 7"
+> strconcat();
+	""
+
+SEE ALSO
+  strindex, string, strleft, strmid, strright
+

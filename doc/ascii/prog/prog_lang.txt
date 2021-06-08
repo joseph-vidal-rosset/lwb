@@ -1,0 +1,240 @@
+programming language
+====================
+
+
+Compound statements
+- - - - - - - - - - 
+
+if then else  statements are used for conditional computation. The  else  
+statement is optional. One statement in the  then  and in the  else  part is 
+allowed. If several statements are used, they must be enclosed within  begin 
+end . Use parentheses if there are several conditions in the  if  part.
+
+> if provable(a) then x := true; 
+> x := 3;
+> if ( 1 < x ) and ( x < 100 )
+  then begin y := x; z := y + 4; end;
+  else begin y := 0; z := 0; end;
+
+foreach  loops are used to run over a given expression. After the statement, 
+the counting variable has as its value the last subexpression of the 
+expression. If several statements are used, they must be enclosed within  
+begin end :
+
+> foreach i in [A,B,C] do print(i);
+	A
+	B
+	C
+> foreach i in p0 & p1 do print(i);
+	p0
+	p1
+
+for  loops execute a statement as long as the integer parameter has a value 
+between the given two bounds. If no increment value is given, 1 is assumed. 
+If the upper bound is smaller then the initial value, then the statement in 
+the loop is never executed. If several statements are used, they must be 
+enclosed within  begin end :
+
+> x :== [0,1,2];
+> for i := 1 to nops(x) do x[i] :== x[i] + 2;
+  x;
+	[2, 3, 4]
+> decvalue :== 0 - 3;  total :== 0;
+  for j := 10 to 5 by decvalue do
+  begin
+    print(j);
+    total :== total + j;
+  end; 
+	10
+	7
+
+while  loops are used to execute a statement as long as an expression 
+evaluates to true. If several statements are used, they must be enclosed 
+within  begin end :
+
+> n := 5;  e := 1;
+  while ( n > 0 ) do
+  begin
+    n := n - 1;
+    e := 3 mult e;
+  end;
+
+
+Procedure definition
+- - - - - - - - - - 
+
+Named procedures define a procedure.
+
+> proc id(x) begin
+    return x; 
+  end; 
+
+> proc : id(x) begin       # silent version. 
+    return x;  
+  end; 
+
+Anonymous procedures are used as an expression. This expression can be 
+assigned to any identifier, executed directly or be part of a enclosing 
+expression:
+
+> A :== p0 -> p1;  B :== ~p2;
+> myand :== proc (x, y) begin     # same as: proc myand() ...
+    return x & y;
+  end; 
+> myand(A, B);
+	(p0 -> p1) & ~p2
+> proc (x, y) begin
+    return x & y;
+  end(A, B);                      # execute immediately
+	(p0 -> p1) & ~p2
+
+> L :== [                         # an array of procedures
+    proc (x, y) begin return x & y; end,
+    proc (x, y) begin return x v y; end,
+    proc (x)    begin return ~x; end
+  ];  
+> L[1](A, B);
+	(p0 -> p1) & ~p2
+
+
+Declarations
+- - - - - - 
+
+Value parameters are given in the header of the procedure definition.
+
+> proc id(x) begin
+    return x;              # x is a value parameter
+  end;
+
+Variable parameters are specified with the keyword  var  in the header of 
+the procedure. Changes to such a parameter are visible from outside of the 
+procedure.
+
+> m :== 6;  n :== 7;
+> proc : myassign(var x, y) begin
+    x := y; 
+  end; 
+> myassign(m, n);         
+  m; 
+	7
+
+Note: The actual argument to a variable parameter must be an identifier.
+
+Optional parameters are given in the header of the procedure definition, but 
+they are enclosed within brackets. The list of optional arguments must be 
+given after all necessary arguments. No reference parameters may be 
+optional.
+
+> proc a(x, [y, z]) begin
+    if isnull(y) then return x;      # one actual argument
+    if isnull(z) then return x v y;  # two actual arguments
+    return x v y v z;                # three actual arguments
+  end; 
+
+Note that a call to  a  with less than 1 or more than 3 arguments will raise 
+an error.
+
+Local variables are declared as the first statement after a  begin  or after 
+the header of a procedure:
+
+> proc myor(x, y) 
+    local result; 
+  begin
+    if (x=true) or (y=true) then 
+      result := true; 
+    else 
+      result := x v y; 
+    return result; 
+  end; 
+
+Local procedures are specified after the header of a procedure. With the 
+help of local procedures and static lexical scope, procedures may be defined 
+that have static variables, but these are not visible from the global 
+scope.
+
+> proc : count (x)
+    local total;
+    proc mycount(x) begin            # local procedure
+      local i; 
+      if type(x)=SYMBOL then return; 
+      if type(x)=EQ then inc(total); # total  is static to  mycount
+      foreach i in x do begin
+        mycount(i);                  # recursive call
+      end; 
+    end; 
+  begin            # begin count(x); 
+    total := 0; 
+    mycount(x); 
+    return total; 
+  end;             # end count(x); 
+> A :== (~p0 <-> p1) -> (p1 <-> (p2 <-> p5)); 
+> count(A);    
+	3
+
+Static lexical scope rules are used. This means that procedures (even local 
+procedures) inherit their environment from the lexical environment when they 
+were defined. This fact is important when procedures are passed as 
+arguments.
+
+
+Error handling
+- - - - - - - 
+
+Errors are explicitly raised by the  raiseerror()  statements. An error 
+string must be supplied.
+
+> proc test(x) begin
+    if type(x) <> LIST then raiseerror("List expected"); 
+    # ...
+  end; 
+
+If an error occurs, all current living procedure instances are deleted, 
+until the first instance that was called with an error protecting mode. If 
+an error occurs within a  catcherror()  expression, the error string is 
+returned instead of the result. In order to check the reason for returning 
+from a  catcherror() , the error expression is assigned to  error .
+
+> proc savecall() 
+    local r; 
+  begin
+    r := catcherror(call()); 
+    if r = error then 
+      print("an error occurred within g call()");
+  end; 
+
+
+Explicit evaluation
+- - - - - - - - - - 
+
+It can be necessary for local variables and arguments to be evaluated, if an 
+inplace change is applied onto them. Global symbols are evaluated whenever 
+they are part of the right hand side of an expression.
+
+> proc : replace_functor (x) begin
+    if type(x)<>FUNCTION then return fail; 
+    x[0] := myfunc;     # change the functor; 
+    return eval(x);     # evaluate  x , which calls  myfunc
+  end; 
+
+The above function does not have to know the actual arguments of the 
+function passed as  x .
+
+
+Debugger
+- - - - 
+
+There is a rather primitive debugger. It is started by typing  debugger 
+function( args )  and is left by entering a single  q  (or by passing the 
+last statement). The debugger mode knows the following single letter 
+commands:
+ - q;  exit debug mode.
+ - s;  step: execute code (primitive instructions) until the end of the next 
+   statement is reached.
+ - n;  next: as step but does not enter other functions.
+ - p x;   print identifier  x .
+ - (  w;  display the stack of alive activation records with values of the 
+   local variables. )
+ - (  si;  step instruction: execute one primitive operation. )
+ - (  d x;  print identifier  x  in debug format. )
+ - (  ps;  print temporaries of the top activation record. )
+

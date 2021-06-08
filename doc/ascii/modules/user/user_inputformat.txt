@@ -1,0 +1,35 @@
+
+inputformat
+===========
+
+print a sequence of expressions
+
+SYNTAX
+- inputformat(E1, E2, ...) 
+
+PARAMETERS
+- E1, E2, ...: expressions
+
+RESULT:  null expression
+
+SYNOPSIS
+
+- inputformat  displays the sequence of expressions  E1 ,  E2 , ... in input 
+  format.
+- Each expression is written on one line.
+- This format does not depend on the current top module. It is useful for 
+  cpoy-and-paste when the top module changes.
+
+EXAMPLE
+
+> B :== p1 -> p2 & p3;
+> inputformat(B);
+	p1 -> p2 and p3
+> inputformat(p1 & p2, p3 <-> p4, p5);
+	p1 and p2
+	p3 <-> p4
+	p5
+
+SEE ALSO
+  ascii, latex, pretty, set
+

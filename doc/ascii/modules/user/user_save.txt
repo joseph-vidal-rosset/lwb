@@ -1,0 +1,23 @@
+
+save
+====
+
+save values to a file
+
+SYNTAX
+- save(S) 
+
+PARAMETERS
+- S: string
+
+RESULT:  nothing
+
+SYNOPSIS
+
+- S  is a string containing the name and path of the file to be saved to. 
+  The values of all current variables are stored in the file for a later  
+  read .
+
+SEE ALSO
+  read
+

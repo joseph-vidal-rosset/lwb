@@ -1,0 +1,102 @@
+
+ktn example
+===========
+
+
+Language
+--------
+
+At first we load the module  ktn .
+
+> load(ktn);
+	ktn  user  
+
+Formulas of  kn  are built from the connectives  box0 ,  box1 ,  box2 , ..., 
+dia0 ,  dia1 ,  dia2 , ..., from the connectives of classical propositional 
+logic, namely  &  (conjunction),  v  (disjunction),  ->  (implication),  <-> 
+(equivalence),  ~  (negation), the two constants  true  and  false , and 
+from variables.
+Theories are lists of formulas.
+
+> a := p -> (q <-> dia2 box3(q2 & box2 true v ~false));
+	p -> (q <-> dia2 box3 (q2 & box2 true v ~false))
+> b := qq -> a76;
+	qq -> a76
+> t := [a, b];
+	[p -> (q <-> dia2 box3 (q2 & box2 true v ~false)), qq -> a76]
+> typek(a, "fml");
+	true
+> typek(b[1], "var");
+	true
+> typek(t, "theory");
+	true
+
+You can also use  and ,  or ,  imp ,  eq ,  not  instead of  & ,  v ,  -> ,  
+<-> ,  ~ .
+
+> a1 := p & q v r -> s <-> p; 
+	p & q v r -> s <-> p
+> a2 := p and q or r imp s eq p; 
+	p & q v r -> s <-> p
+> a1 = a2;
+	true
+
+
+Normal forms
+------------
+
+In the modal logic  ktn  there exists a negation normal form.
+
+> a := dia2 ~ dia2((p -> box10 q) v ~p & q);
+	dia2 ~dia2 ((p -> box10 q) v ~p & q)
+> nnf(a);
+	dia2 box2 (p & dia10 ~q & (p v ~q))
+
+This normal forms is not unique as the following example shows.
+
+> b := dia2 box2(p & dia10 ~q);
+	dia2 box2 (p & dia10 ~q)
+> nnfp(b);
+	true
+> provable(a <-> b);
+	true
+
+If a formula contains equivalencies, the result of  nnf  can be very long 
+compared to the original formula.
+
+> c := dia6 p0 <-> dia6 p1 <-> dia6 p2 <-> dia6 p3 <-> dia6 p4 <-> dia6 p5 <-> dia6 p6;
+	dia6 p0 <-> dia6 p1 <-> dia6 p2 <-> dia6 p3 <-> dia6 p4 <-> dia6 p5 <-> 
+dia6 p6
+> length(c);
+	20
+> length(nnf(c));
+	664
+
+
+Typical provable formulas
+-------------------------
+
+All formulas that are provable in classical propositional logic are also 
+provable in the modal logic  ktn .
+Therefore we concentrate on formulas typical for  ktn .
+
+> provable( box2(p & q)  <->  box2 p & box2 q );
+	true
+> provable( dia1(p v q)  <->  dia1 p v dia1 q );
+	true
+> provable( ~ box5 ~ p  <-> dia5 p );
+	true
+> provable( box1(r1 & r2) -> box1 r1 -> box1 r2 );
+	true
+> provable( box12 p -> p );
+	true
+
+
+Typical non-provable formulas
+-----------------------------
+
+> provable(box2 p -> box2 box2 p);
+	false
+> provable(~ box3 q -> box3 ~ box3 p);
+	false
+

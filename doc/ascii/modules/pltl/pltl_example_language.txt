@@ -1,0 +1,57 @@
+
+Language example
+================
+
+
+Language
+--------
+
+At first we load the module  pltl .
+
+> load(pltl);
+	pltl  user  
+Entering special mode for tense & temporal logics. 
+Additional operators for tense & temporal logics: 
+new operators       : H, P, G, F, X, U, W, B
+
+Formulas of  pltl  are built from the two constants  true  and  false , from 
+the connectives  X ,  G ,  F ,  U  and  B , from the connectives of 
+classical propositional logic, namely  &  (conjunction),  v  (disjunction),  
+->  (implication),  <->  (equivalence),  ~  (negation), and from variables.
+Theories are lists of formulas.
+
+> A1 := (F p1 -> G X ~p2 v false) <-> G X (p3 U true);
+	F p1 -> G X ~p2 v false <-> G X (p3 U true)
+> A2 := p3 -> p112;
+	p3 -> p112
+> T := [A1, A2];
+	[F p1 -> G X ~p2 v false <-> G X (p3 U true), p3 -> p112]
+> typek(A1, "fml");
+	true
+> typek(A2[1], "var");
+	true
+> typek(T, "theory");
+	true
+
+tX ,  tG ,  tF ,  tU ,  tB ,  not ,  and ,  or ,  imp ,  eq  may be used 
+instead of  X ,  G ,  F ,  U ,  B ,  ~ ,  & ,  v ,  -> ,  <-> .
+
+> A1 := F p0 & p1 v G p2 -> G F p3 <-> p4; 
+	F p0 & p1 v G p2 -> G F p3 <-> p4
+> A2 := tF p0 and p1 or tG p2 imp tG tF p3 eq p4; 
+	F p0 & p1 v G p2 -> G F p3 <-> p4
+> A1 = A2;
+	true
+
+The meaning of the temporal connectives is as follows:
+ - X q  means: `neXttime'  q  (is true).
+ - G q  means: `always'  q , or `henceforth'  q .
+ - F q  means: `sometimes'  q .
+ - p U q  means:  p  `until'  q , where  q  must eventually be true (strong 
+   until).
+ - p W q  means:  p  `weak until'  q , where  q  need not be true.
+ - p B q  means:  p  `before'  q  (if  q  is never true there is no need for 
+   p  to be true either).
+In most temporal logics, including  pltl , the time is discrete. The 
+connectives are evaluated as true or false of  points  in time.
+

@@ -1,0 +1,21 @@
+
+! ---- DO NOT WRITE BELOW THIS LINE ----
+
+Xlwb.outputMode:    pretty
+Xlwb.bracketMode:   assoc
+Xlwb.cutLongOutput: True
+Xlwb.setPercent: True
+Xlwb.infolevel:     1
+Xlwb.inputForeground:   RGB:ffff/ffff/ffff
+Xlwb.inputBackground:   RGB:0/0/ffff
+Xlwb.outputForeground:  RGB:ffff/0/0
+Xlwb.outputBackground:  RGB:8e8e/1d1d/0
+Xlwb.messageForeground: RGB:0/0/0
+Xlwb.messageBackground: RGB:dada/eded/e8e8
+Xlwb.textBackground: RGB:ffff/fafa/e4e4
+Xlwb.textForeground: RGB:0/0/0
+Xlwb.sepitemBackground: RGB:ffff/0/0
+Xlwb.inputFont: -adobe-helvetica-bold-r-normal--24-240-75-75-p-138-iso8859-1
+Xlwb.outputFont: -adobe-symbol-medium-r-normal--24-240-75-75-p-142-adobe-fontspecific
+Xlwb.textFont: -adobe-helvetica-bold-o-normal--24-240-75-75-p-138-iso8859-1
+Xlwb.messageFont: -*-fixed-medium-*-*-*-14-*-*-*-*-*-iso8859-*

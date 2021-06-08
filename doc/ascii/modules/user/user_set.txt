@@ -1,0 +1,67 @@
+
+set
+===
+
+set the configuration values
+
+SYNTAX
+- set("bracketmode", SB) 
+- set("helpmode", SH) 
+- set("infolevel", N) 
+- set("outputmode", SO) 
+- set("percents", F) 
+- set("percentsdelay", N) 
+
+PARAMETERS
+- SB: one of  "assoc" ,  "full" 
+- SH: one of  "ascii" ,  "www" 
+- N: natural number
+- SO: one of  "ascii" ,  "inputformat" ,  "latex" ,  "pretty" 
+- F: one of  true ,  false 
+
+RESULT:  true 
+
+SYNOPSIS
+
+- First argument is  "bracketmode" : The default value is  "assoc"  . If the 
+  bracket mode is  "full" , then all brackets are displayed.
+- First argument is  "helpmode" : The default value is  "www"  ; then help 
+  is displayed using a WWW browser. If the bracket mode is  "ascii" , then 
+  help is displayed in ASCII format. If you use a graphical user interface, 
+  then the info window is used.
+- First argument is  "infolevel"  : If  N  is  0 , then no additional 
+  information is printed. The greater  N  is, the more information is 
+  printed about the running functions. If additional information is 
+  available for a function, then it is described in its help page.
+- First argument is  "outputmode" : The default value is  "ascii"  . A line 
+  obtained with  "inputformat"  can be used for copy-and-paste whatever the 
+  current top module is. The value  "pretty"  is used in connection with a 
+  font that contains special symbols e.g. for connectives. For more 
+  information see the WWW page on the graphical user interface you are using 
+  (e.g. XLWB, MacLWB).
+- First argument is  "percents" : If  F  is  true , then percent values are 
+  shown.
+- First argument is  "percentsdelay " : The percent values are only shown 
+  after a delay of  N /100 seconds. The default value for  N  is 100. Assume 
+  e.g. that you have a  for  loop containing a call of a decision procedure. 
+  If you set the value to 0, then you will be slowed down considerably 
+  because of the numerous displayed percent values. With the default value, 
+  you will obtain the percent values only for the harder formulas, that is 
+  the efficiency is hardly influenced.
+
+EXAMPLE
+
+> set("bracketmode", "full");
+	true
+> set("helpmode", "ascii");
+	true
+> set("infolevel", 3);
+	true
+> set("outputmode", "ascii");
+	true
+> set("percents", true);
+	true
+
+SEE ALSO
+  ascii, get, inputformat, latex, pretty
+

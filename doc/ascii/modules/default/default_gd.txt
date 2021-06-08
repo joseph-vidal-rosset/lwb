@@ -1,0 +1,31 @@
+
+gd
+==
+
+generating defaults of an extension
+
+SYNTAX
+- gd(E, Td) 
+
+PARAMETERS
+- E: theory, extension of  Td 
+- Td: default theory
+
+RESULT:  list of defaults
+
+SYNOPSIS
+
+- gd  computes the list of the generating defaults of the extension  E . 
+  Intuitively, these are the defaults of the default theory  Td  used to 
+  obtain the extension  E .
+
+EXAMPLE
+
+> gd([p0,p1 -> p2,~p2], [[p0,p1 -> p2], [[p0,p1,p1],[p0,~p2,~p2]] ]);
+	[[p0, ~p2, ~p2]]
+> gd([p1,p3 v p4,~p5], [ [p1], [[p1,[p2,p3],p3 v p4],[true,~p5,~p5]] ]);
+	[[p1, [p2, p3], p3 v p4], [true, ~p5, ~p5]]
+
+SEE ALSO
+  extensions
+

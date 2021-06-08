@@ -1,0 +1,27 @@
+
+wu
+==
+
+weak until
+
+SYNTAX
+- wu(A, B) 
+
+PARAMETERS
+- A, B: formulae
+
+RESULT:  formula
+
+SYNOPSIS
+
+- wu  is a formulation of the  `weak until'  connective  W  in terms of the 
+  strong until  U .
+
+EXAMPLE
+
+> wu(p0,p1);
+	G p0 v (p0 U p1)
+
+SEE ALSO
+  lu, lua
+

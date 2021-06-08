@@ -1,0 +1,54 @@
+
+Typical provable formulas example
+=================================
+
+
+Typical provable formulas
+-------------------------
+
+All formulas that are provable in classical propositional logic are also 
+provable in the modal logic  s5 .
+Therefore we concentrate on formulas typical for  s5 .
+
+> provable( box(p0 & p1)  <->  box p0 & box p1 );
+	true
+> provable( dia(p0 v p1)  <->  dia p0 v dia p1 );
+	true
+> provable( ~ box ~ p0 <-> dia p0 );
+	true
+> provable( box p0 -> p0 );
+	true
+> fml("t");
+	box p1 -> p1
+> provable(fml("t"));
+	true
+> fml("5");
+	~box p1 -> box ~box p1
+> provable(fml("5"));
+	true
+
+In contrast to  k  and  kt , in  s5  the only non-equivalent sequences of  
+box  and  dia  are  box  and  dia .
+
+> provable( box box p0  <->  box p0 );
+	true
+> provable( dia dia p0  <->  dia p0 );
+	true
+> provable( dia box p0  <->  box p0 );
+	true
+> provable( box dia p0  <->  dia p0 );
+	true
+
+With the help of the distributivity law, the equivalencies above and the 
+following four equivalencies it is possible to transform every formula in an 
+equivalent formula without nested  box  and  dia ,
+
+> provable( box(p0 v box p1)  <->  box p0 v box p1 );
+	true
+> provable( box(p0 v dia p1)  <->  box p0 v dia p1 );
+	true
+> provable( dia(p0 v box p1)  <->  dia p0 v box p1 );
+	true
+> provable( dia(p0 v dia p1)  <->  dia p0 v dia p1 );
+	true
+

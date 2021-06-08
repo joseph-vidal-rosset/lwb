@@ -1,0 +1,35 @@
+
+provable
+========
+
+formula provable?
+formula provable in theory?
+
+SYNTAX
+- provable(A) 
+- provable(A, T) 
+
+PARAMETERS
+- A: formula
+- T: theory
+
+RESULT:  true  or  false 
+
+SYNOPSIS
+
+- One argument:  provable  tests whether the formula  A  is provable in  s5 .
+- Two arguments:  provable  tests whether the formula  A  is provable in  s5 
+  plus the theory  T .
+- Choose an appropriate infolevel for additional information during the 
+  execution (e.g.  set("infolevel",4); ).
+
+EXAMPLE
+
+> provable(dia dia p0 -> dia p0);
+	true
+> provable(p0, [p1, box p0 <-> box p1]);
+	true
+
+SEE ALSO
+  consistent, satisfiable
+

@@ -1,0 +1,115 @@
+
+Translations:
+  - Are pairs `string int' where :
+    `string' is to be mapped to the character with code `int' (and vice versa).
+
+  - Note that currently only codes for special characters are accepted:
+    i.e. :  127 < int < 256 
+
+  - Logical operators:
+    Use the inputformat of the operator as string; e.g. `and' for the classical
+    conjunction.
+
+  - Constants:
+    - Classical constants:  map `true' and `false' to the signs
+        `top' and `bottom' if supported by the font.
+    - Linear logic constants: do not map `top' and `bot' to the corresponding
+        signs. The translation will be dynamically changed if the linear logic
+        module `ll' is loaded (and `true' and `false' are mapped to the signs).
+
+  - Greek symbols:
+    Use the LaTeX symbols without the backslash; e.g. `alpha' for `\alpha'.
+
+Commments:
+  - Anything above the line `# ---- START OF TABLE ----' is ignored.
+  - Below the line, anything from `#' to the end of line is ignored.
+
+Use of this file:
+  - Uncomment the symbols for which the font provides a suitable special char.
+  - Replace the `1xx' by the corresponding codes.
+
+
+# ---- START OF TABLE ----
+
+# ---- operators 
+
+# and	1xx
+# v	1xx
+# ->	1xx	
+# <->	1xx
+# ~	1xx
+
+# box	1xx
+# dia	1xx
+
+# (temporal operators)
+# tH	1xx
+# tP	1xx
+# tG	1xx
+# tF	1xx
+# tX	1xx
+# tU	1xx
+# tB	1xx
+# tA	1xx
+# tE	1xx
+
+# (linear logic operators)
+# !	1xx
+# qm 	1xx      # (question mark)
+# times	1xx
+# |   	1xx     # (par)
+# with	1xx
+# llplus	1xx
+# -o 	1xx      # (lin. implication)
+# o-o	1xx
+
+
+# ---- constants
+
+# true	1xx
+# false	1xx
+
+
+# ---- greek symbols
+
+# alpha	1xx
+# beta	1xx 
+# gamma	1xx
+# delta	1xx
+# epsilon 	1xx
+# varepsilon 	1xx
+# zeta 	1xx
+# eta	1xx
+# theta	1xx
+# vartheta 	1xx
+# iota 	1xx
+# kappa	1xx
+# lambda 	1xx
+# mu 	1xx
+# nu 	1xx
+# xi	1xx
+# pi	1xx
+# varpi	1xx 
+# rho 	1xx
+# varrho	1xx 
+# sigma 	1xx
+# varsigma	1xx
+# tau 	1xx
+# upsilon 	1xx
+# phi 	1xx
+# varphi 	1xx
+# chi 	1xx
+# psi 	1xx
+# omega	1xx
+# Gamma 	1xx
+# Delta 	1xx
+# Theta 	1xx
+# Lambda 	1xx
+# Xi 	1xx
+# Pi 	1xx
+# Sigma 	1xx
+# Upsilon 	1xx
+# Phi 	1xx
+# Psi 	1xx
+# Omega	1xx
+

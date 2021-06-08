@@ -1,0 +1,37 @@
+
+Typical provable formulas example
+=================================
+
+
+Typical provable formulas
+-------------------------
+
+All formulas that are provable in classical propositional logic are also 
+provable in the modal logic  s4 .
+Therefore we concentrate on formulas typical for  s4 .
+
+> provable( box(p0 & p1)  <->  box p0 & box p1 );
+	true
+> provable( dia(p0 v p1)  <->  dia p0 v dia p1 );
+	true
+> provable( ~ box ~ p0 <-> dia p0 );
+	true
+> provable( box p0 -> p0 );
+	true
+> fml("t");
+	box p1 -> p1
+> provable(fml("t"));
+	true
+
+In contrast to  k  and  kt , in  s4  there is only a finite number of 
+non-equivalent sequences of  box  and  dia .
+
+> provable( box box p0  <->  box p0 );
+	true
+> provable( dia dia p0  <->  dia p0 );
+	true
+> provable( dia box dia box p0  <->  dia box p0 );
+	true
+> provable( box dia box dia p0  <->  box dia p0 );
+	true
+

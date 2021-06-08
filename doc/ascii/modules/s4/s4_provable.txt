@@ -1,0 +1,60 @@
+
+provable
+========
+
+formula provable?
+formula provable in theory?
+
+SYNTAX
+- provable(A) 
+- provable(A, T) 
+
+PARAMETERS
+- A: formula
+- T: formula
+
+RESULT:  true  or  false 
+
+SYNOPSIS
+
+- One argument:  provable  tests whether the formula  A  is provable in  s4 .
+- Two arguments:  provable  tests whether the formula  A  is provable in  s4 
+  plus the theory  T .
+- If  provable  is too slow, you can try to apply one of the following 
+  facts: 
+  If  cpc(A)  is not provable in  cpc , then  A  is not provable in  s4 . 
+  If  A  is provable in  cpc , then  A  is provable in  s4 . 
+  If  A  is provable in  k  or in  kt , then  A  is provable in  s4 .
+- Choose an appropriate infolevel for additional information during the 
+  execution (e.g.  set("infolevel",3) ). 
+  Displayed sequents have the form  [LV],[L1],[L2],[L3]=>[RV],[R1],[R2],[R3] .
+  The parts of the sequent contain the following formulas:  LV  and  RV : 
+  variables,  L1 :  v ,  -> ,  <->  formulas,  R1 :  & ,  <->  formulas,  L2 
+  and  R2 :  box  formulas,  L3  and  R3 :  dia  formulas.
+
+EXAMPLE
+
+> provable(box p0 -> box box p0);
+	true
+> provable(p0 -> box p0);
+	false
+> set("infolevel", 4);
+	true
+> provable(box p0 <-> box box p0);
+s4::provable( A = box p0 <-> box box p0 )
+[],[],[],[]==>[],[box p0 <-> box box p0],[],[]
+(r <->)
+(l box)
+1.[],[],[box p0, box box p0],[]==>[],[],[box p0],[]
+axiom (id)
+(l box)
+2.[p0],[],[box p0],[]==>[],[],[box box p0],[]
+(r box) with main formula box box p0
+2.1.[p0],[],[box p0],[]==>[],[],[box p0],[]
+axiom (id)
+Result of s4::provable: true.
+	true
+
+SEE ALSO
+  consistent, satisfiable
+

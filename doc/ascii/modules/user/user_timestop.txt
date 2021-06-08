@@ -1,0 +1,29 @@
+
+timestop
+========
+
+stop timing commands
+
+SYNTAX
+- timestop() 
+
+RESULT:  null expression
+
+SYNOPSIS
+
+- timestops  stops the timing of commands and prints the number of seconds 
+  of CPU time used since  timestart . Then the timer is reset. Subsequent 
+  commands won't be timed any more.
+
+EXAMPLE
+
+> timestart(); timestop(); 
+	0.00
+> timestart(); provable(pigeonhole(3)); timestop();
+	true
+	0.02
+> unload(cpc);
+
+SEE ALSO
+  clockticks, limitstart, limitstop, timestart
+

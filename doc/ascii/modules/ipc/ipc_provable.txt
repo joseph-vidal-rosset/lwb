@@ -1,0 +1,61 @@
+
+provable
+========
+
+formula provable?
+formula provable in theory?
+
+SYNTAX
+- provable(A) 
+- provable(A, T) 
+
+PARAMETERS
+- A: formula
+- T: theory
+
+RESULT:  true  or  false 
+
+SYNOPSIS
+
+- provable  tests whether the formula  A  is provable in  ipc .
+- If a second argument is given,  provable  tests whether the formula  A  is 
+  provable in  ipc  plus the theory  T .
+- If  provable  is too slow, you can try to apply the following fact: 
+  If  A  is not provable in  cpc  (resp.  cpc  plus  T ), then  A  is not 
+  provable in  ipc  (resp.  ipc  plus  T ).
+- Choose an appropriate infolevel for additional information during the 
+  execution (e.g.  set("infolevel",4) ). 
+  Displayed sequents have the form  [LV],[L1],[L2],[L3]=>[R] . The parts of 
+  the sequent contain the following formulas:  LV  and  RV : variables,  L1 :
+  v  formulas,  L2 : formulas of the form  P -> C ,  L3 : formulas of the 
+  form  (B -> C) -> D ,  R : variable or disjunction or conjunction.
+
+EXAMPLE
+
+> provable((p0 -> (p1 -> p2)) & p1 -> (p0 -> p2));
+	true
+> provable(p0 v p2, [p0 v ~p1, p2]);
+	true
+> set("infolevel", 4);
+	true
+> provable(~ ~(p0 v ~p0));
+ipc::provable( A = ~~(p0 v ~p0) )
+(r ~)
+(l ~)
+(l v->)
+(l ~->)
+[],[],[p0 -> false],[(p0 -> false) -> false]==>false
+(l ->->) with main formula (p0 -> false) -> false
+1.1.[false],[],[p0 -> false],[]==>false
+axiom (false)
+(r ->)
+(l P->)
+formula false -> false removed
+1.2.[false, p0],[],[],[]==>false
+axiom (false)
+Result of ipc::provable: true.
+	true
+
+SEE ALSO
+  consistent, satisfiable
+

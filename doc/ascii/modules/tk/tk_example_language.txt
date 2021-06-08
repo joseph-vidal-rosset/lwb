@@ -1,0 +1,49 @@
+
+Language example
+================
+
+
+Language
+--------
+
+At first we load the module  tk .
+
+> load(tk);
+	tk  user  
+Entering special mode for tense & temporal logics. 
+Additional operators for tense & temporal logics: 
+new operators       : H, P, G, F, X, U, W, B
+
+Formulas of  tk  are built from the two constants  true  and  false , from 
+the connectives  H ,  P ,  G , and  F , from the connectives of classical 
+propositional logic, namely  &  (conjunction),  v  (disjunction),  ->  
+(implication),  <->  (equivalence),  ~  (negation), and from variables.
+Theories are lists of formulas.
+
+> A1 := (F p1 -> G H ~p2 v false) <-> P P(p3 & true);
+	F p1 -> G H ~p2 v false <-> P P (p3 & true)
+> A2 := p7 -> p112;
+	p7 -> p112
+> T := [A1, A2];
+	[F p1 -> G H ~p2 v false <-> P P (p3 & true), p7 -> p112]
+> typek(A1, "fml");
+	true
+> typek(A2[1], "var");
+	true
+> typek(T, "theory");
+	true
+
+tH ,  tP ,  tG ,  tF ,  not ,  and ,  or ,  imp ,  eq  may be used instead 
+of  H ,  P ,  G ,  F ,  ~ ,  & ,  v ,  -> ,  <-> .
+
+> B1 := F p1 & p2 v G p3 -> H P p2 <-> p3; 
+> B2 := tF p1 and p2 or tG p3 imp tH tP p2 eq p3; 
+> B1 = B2;
+
+In the corresponding Kripke model semantics
+ - H p0  means: in all accessible worlds in the past  p0  is true
+ - P p0  means: there is an accessible world in the past where  p0  is true
+ - G p0  means: in all accessible worlds in the future  p0  is true
+ - F p0  means: there is an accessible world in the future where  p0  is 
+   true
+

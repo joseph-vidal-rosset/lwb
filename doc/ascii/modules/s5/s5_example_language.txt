@@ -1,0 +1,47 @@
+
+Language example
+================
+
+
+Language
+--------
+
+At first we load the module  s5 .
+
+> load(s5);
+	s5  user  
+
+Formulas of  s5  are built from the connectives  box  and  dia , from the 
+connectives of classical propositional logic, namely  &  (conjunction),  v  
+(disjunction),  ->  (implication),  <->  (equivalence),  ~  (negation), the 
+two constants  true  and  false , and from variables.
+Theories are lists of formulas.
+
+> A := (p0 & dia false <-> box(true -> p1) & p0) v ~p0;
+	(p0 & dia false <-> box (true -> p1) & p0) v ~p0
+> B := p11 & dia p7;
+	p11 & dia p7
+> T := [A, B];
+	[(p0 & dia false <-> box (true -> p1) & p0) v ~p0, p11 & dia p7]
+> typek(A, "fml");
+	true
+> typek(B[1], "var");
+	true
+> typek(T, "theory");
+	true
+
+You can also use  and ,  or ,  imp ,  eq ,  not  instead of  & ,  v ,  -> ,  
+<-> ,  ~ .
+
+> A1 := p0 & p1 v p2 -> p3 <-> p4; 
+	p0 & p1 v p2 -> p3 <-> p4
+> A2 := p0 and p1 or p2 imp p3 eq p4; 
+	p0 & p1 v p2 -> p3 <-> p4
+> A1 = A2;
+	true
+
+In the possible world semantics,  box p  means that  p  is true in all 
+accessible worlds, and  dia p  means that there is an accessible world where 
+p  is true. The accessibility relation must be reflexive, transitive and 
+symmetric.
+

@@ -1,0 +1,27 @@
+
+module ll
+=========
+
+general:
+--------
+depth
+length
+less
+sort
+typek
+vars
+
+misc:
+-----
+randomfml
+
+normalforms:
+------------
+canf
+nnf
+
+provability:
+------------
+provable
+satisfiable
+

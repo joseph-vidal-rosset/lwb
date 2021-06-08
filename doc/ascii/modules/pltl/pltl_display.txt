@@ -1,0 +1,52 @@
+
+display
+=======
+
+display of a model as time diagrams
+
+SYNTAX
+- display(M) 
+- display(M, Vars) 
+
+PARAMETERS
+- M: model
+- Vars: list of variables to be displayed
+
+RESULT:  
+SYNOPSIS
+
+- display  draws a time diagram for each variable of the given model  M . If 
+  Vars  is omitted, all variables occurring in  M  are displayed. Since the 
+  output is in ASCII characters, the output font should be fixed width.
+- A model is a list of states, where a state is again a list with two 
+  entries; the first is a list of literals, where positive literals are 
+  meant to be true and negative ones to be false, and the second is a list 
+  of integers, indicating the successor states (in linear time logic there 
+  is only one successor).
+
+EXAMPLE
+
+> display( model( p0 & ~p1 & p2 & p3 & X ~p0 & X p1 & X p2) , [p0,p1] );
+	    0   1   (R 1)
+	    ___    
+	p0     |___
+	        ___
+	p1  ___|   
+> A:== G F (p0 & (p1 U (~p0 & ~p1))) & G F (p0 & (~p1 U (~p0 & ~p1)));
+  display(model( A ));
+	    0   1   2   3   (R 0)
+	    ___     ___    
+	p0     |___|   |___
+	    ___            
+	p1     |___________
+> A:== G F (p0 & p1) & G F (p0 & ~p1) & G F (~p0 & p1) & G F (~p0 & ~p1);
+  display(model( A ));
+	    0   1   2   3   (R 0)
+	    _______        
+	p0         |_______
+	    ___     ___    
+	p1     |___|   |___
+
+SEE ALSO
+  model, satisfiable
+

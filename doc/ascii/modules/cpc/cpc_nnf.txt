@@ -1,0 +1,33 @@
+
+nnf
+===
+
+negation normal form
+
+SYNTAX
+- nnf(A) 
+
+PARAMETERS
+- A: formula
+
+RESULT:  formula
+
+SYNOPSIS
+
+- nnf  computes a negation normal form of the formula  A . The resulting 
+  formula  nnf(A)  is equivalent to  A , i.e.  A <-> nnf(A)  is provable in  
+  cpc .
+- A formula is in negation normal form if it contains neither  ->  nor  <->  
+  and if negations occur only in front of variables.
+- Use the function  remove  in order to remove  true  and  false .
+
+EXAMPLE
+
+> nnf(p0 -> p2 & ~p1);
+	~p0 v p2 & ~p1
+> nnf(p0 & ~(p1 v false v ~(p3 v p0)));
+	p0 & (~p1 & true & (p3 v p0))
+
+SEE ALSO
+  cnf, dnf, nnfp, remove
+

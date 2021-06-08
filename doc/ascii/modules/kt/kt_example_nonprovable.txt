@@ -1,0 +1,19 @@
+
+Typical non-provable formulas example
+=====================================
+
+
+Typical non-provable formulas
+-----------------------------
+
+None of the following axioms of  s5  is provable in  kt .
+
+> fml("4");
+	box p1 -> box box p1
+> provable(fml("4"));
+	false
+> fml("5");
+	~box p1 -> box ~box p1
+> provable(fml("5"));
+	false
+

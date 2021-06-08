@@ -1,0 +1,35 @@
+
+union
+=====
+
+union of lists or arrays
+
+SYNTAX
+- union(L1, L2, ...) 
+
+PARAMETERS
+- L1, L2, ...: lists or arrays
+
+RESULT:  list
+
+SYNOPSIS
+
+- union  makes the union of the lists or arrays  L1 ,  L2 , ... and returns 
+  the resulting list.
+- The result contains every element that occurs in one of the arguments, but 
+  no duplicate elements. Moreover, the resulting list is sorted.
+- If there is only one argument, then  union  simply removes the duplicate 
+  elements.
+
+EXAMPLE
+
+> union([p0,p1,p2], [p2,p4,p3], [p1]);
+	[p0, p1, p2, p3, p4]
+> union([1,1,2], [2,2,3]);
+	[1, 2, 3]
+> union([1,1,2,2,2,3]);
+	[1, 2, 3]
+
+SEE ALSO
+  concat
+

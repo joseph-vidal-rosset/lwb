@@ -1,0 +1,119 @@
+
+ipc example
+===========
+
+
+Language
+--------
+
+At first we load the module  ipc .
+
+> load(ipc);
+	ipc  user  
+
+Formulas of  ipc  are built from the symbols for conjunction ( & ), 
+disjunction ( v ), implication ( -> ), equivalence ( <-> ), negation ( ~ ), 
+the two constants  true  and  false , and variables.
+Theories are lists of formulas.
+
+> a := p0 & true v ~q -> (p1 <-> p0 v false);
+	p0 & true v ~q -> (p1 <-> p0 v false)
+> b := q31 & xyz;
+	q31 & xyz
+> t := [a, b];
+	[p0 & true v ~q -> (p1 <-> p0 v false), q31 & xyz]
+> typek(a, "fml");
+	true
+> typek(b[1], "var");
+	true
+> typek(t, "theory");
+	true
+> unassign(a, b);
+
+You can also use  and ,  or ,  imp ,  eq ,  not  instead of  & ,  v ,  -> ,  
+<-> ,  ~ .
+
+> a1 := p & q v r -> s <-> p; 
+	p & q v r -> s <-> p
+> a2 := p and q or r imp s eq p; 
+	p & q v r -> s <-> p
+> a1 = a2;
+	true
+
+
+Typical provable formulas
+-------------------------
+
+As long as only the connectives  &  and  v  occur in a formula, there is no 
+difference between classical and intuitionistic propositional logic. For 
+example both  &  and  v  are associative, and the distributivity law for 
+these two connectives holds.
+
+> provable( p v (q v r) <-> (p v q) v r );
+	true
+> provable( p & (q & r) <-> (p & q) & r );
+	true
+> provable( p & (q v r) <-> p & q v p & r );
+	true
+> provable( p v q & r <-> (p v q) & (p v r) );
+	true
+
+~A  is equivalent to  A -> false .
+
+> provable( ~p <-> (p -> false) );
+	true
+
+Moreover if the formula  A  is provable in classical propositional logic, 
+then  ~ ~A  is provable in intuitionistic propositional logic, for example:
+
+> provable(~ ~(p v ~p));
+	true
+> provable(~ ~(~(p v q) <-> ~p & ~q));
+	true
+
+The pigeon-hole formula and the formula of Tatsuta are examples of more 
+complicated formulas that are provable in intuitionistic propositional 
+logic.
+
+> a2 := pigeonhole(2);
+	(p11 v p12) & (p21 v p22) & (p31 v p32) -> p11 & p21 v p11 & p31 v p21 & 
+p31 v p12 & p22 v p12 & p32 v p22 & p32
+> provable(a2);
+	true
+
+
+Typical non-provable formulas
+-----------------------------
+
+In sharp contrast to classical propositional logic, the formula of the 
+excluded middle is not provable in intuitionistic propositional logic.
+
+> load(cpc); topmod(ipc);
+	cpc  ipc  user  
+ipc  cpc  user  
+> cpc::provable(p v ~p);
+	true
+> provable(p v ~p);
+	false
+> provable(~ ~(p v ~p));
+	true
+
+a -> b  is not equivalent to  ~a v b , and  <->  is not associative.
+
+> provable((a -> b) <-> ~a v b);
+	false
+> cpc::provable(((a <-> b) <-> c) <-> (a <-> (b <-> c)));
+	true
+> provable(((a <-> b) <-> c) <-> (a <-> (b <-> c)));
+	false
+
+Another well-known formula that is provable in classical, but not in 
+intuitionistic propositional logic is the formula of Peirce.
+
+> fml("peirce");
+	((p1 -> p2) -> p1) -> p1
+> cpc::provable(fml("peirce"));
+	true
+> provable(fml("peirce"));
+	false
+

@@ -1,0 +1,42 @@
+
+Language example
+================
+
+
+Language
+--------
+
+At first we load the module  ipc .
+
+> load(ipc);
+	ipc  user  
+
+Formulas of  ipc  are built from the symbols for conjunction ( & ), 
+disjunction ( v ), implication ( -> ), equivalence ( <-> ), negation ( ~ ), 
+the two constants  true  and  false , and variables.
+Theories are lists of formulas.
+
+> A := p0 & true v ~p1 -> (p2 <-> p0 v false);
+	p0 & true v ~p1 -> (p2 <-> p0 v false)
+> B := p31 & p7;
+	p31 & p7
+> T := [A, B];
+	[p0 & true v ~p1 -> (p2 <-> p0 v false), p31 & p7]
+> typek(A, "fml");
+	true
+> typek(B[1], "var");
+	true
+> typek(T, "theory");
+	true
+> unassign(A, B);
+
+You can also use  and ,  or ,  imp ,  eq ,  not  instead of  & ,  v ,  -> ,  
+<-> ,  ~ .
+
+> A1 := p0 & p1 v p2 -> p3 <-> p0; 
+	p0 & p1 v p2 -> p3 <-> p0
+> A2 := p0 and p1 or p2 imp p3 eq p4; 
+	p0 & p1 v p2 -> p3 <-> p4
+> A1 = A2;
+	false
+

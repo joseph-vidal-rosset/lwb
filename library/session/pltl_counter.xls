@@ -1,0 +1,64 @@
+<TEXT>
+___________________________________
+
+Propositional Linear Time Logic
+
+     A looping 3-bit counter 
+___________________________________
+
+</TEXT>
+<INPUT>
+load(pltl);
+</INPUT>
+<OUTPUT>
+	pltl  user  
+Entering special mode for tense & temporal logics. 
+
+</OUTPUT>
+<TEXT>
+
+Temporal operators:
+    X p  :  neXttime p
+    G p  :  always p, p is Going to be
+    F p  :  sometimes p,  there is a Future where p
+
+</TEXT>
+<DELIMITER>
+
+</DELIMITER
+<INPUT>
+start:== ~(p0 v p1 v p2 );    # 0,0,0
+
+    carries:==  q0 &                # carry0: always 1
+        (q1 <-> (p0 & q0)) &   # carry1
+        (q2 <-> (p1 & q1));      # carry2
+        
+     count:== 
+         (X p0 <-> (p0 & ~q0 v q0 & ~p0) ) &
+         (X p1 <-> (p1 & ~q1 v q1 & ~p1) ) &
+         (X p2 <-> (p2 & ~q2 v q2 & ~p2) );
+</INPUT>
+<OUTPUT>
+
+</OUTPUT>
+<INPUT>
+counter3:==  start  & G carries & G count;
+</INPUT>
+<OUTPUT>
+
+</OUTPUT>
+<INPUT>
+provable( counter3 -> F(p0 & p1 & p2) );
+provable( counter3 -> G F(p0 & p1 & p2) ); 
+</INPUT>
+<OUTPUT>
+	true
+	true
+
+</OUTPUT>
+<INPUT>
+
+</INPUT>
+<OUTPUT>
+
+</OUTPUT>

@@ -1,0 +1,319 @@
+# diagram.lwb
+
+######################################################################
+
+# The function  fmls  computes a maximal set of non-equivalent formulas
+# built from certain variables (first argument) and connectives (second
+# argument).
+# Possible connectives: BOX,DIA,NOT,AND,OR,IMP,EQ.
+# The function  diagram  computes the corresponding diagram.
+
+# Example:
+#
+# With
+#
+#   unix% lwb diagram.lwb
+#   > load(s4);
+#   s4> l :== sort(fmls([p], [BOX,DIA]));
+# 
+# then you obtain the following output:
+# 
+#	1: p
+#	2: box p
+#	3: dia p
+#	4: dia box p
+#	5: box dia p
+#	6: box dia box p
+#	7: dia box dia p
+#
+# These are the seven positive modalities of the modal logic S4.
+# With
+#
+#   s4> diagram(l);
+#
+# you obtain the following diagram:
+#
+#	level 0
+#	  2: box p, []
+#	------------------------------------------------------------
+#	level 1
+#	  1: p, [2]
+#	  4: box dia box p, [2]
+#	------------------------------------------------------------
+#	level 2
+#	  3: box dia p, [4]
+#	  6: dia box p, [4]
+#	------------------------------------------------------------
+#	level 3
+#	  7: dia box dia p, [3, 6]
+#	------------------------------------------------------------
+#	level 4
+#	  5: dia p, [1, 7]
+#	------------------------------------------------------------
+#
+# that is:
+#
+#           5
+#          / \
+#         /   \
+#        /     7
+#       /     / \
+#      1     3   6
+#       \     \ /
+#        \     4
+#         \   /
+#          \ /
+#           0
+#
+#
+# Other interesting examples:
+#  load(ipc); diagram(fmls([p,q],[AND,IMP]));
+#  load(s4); diagram(fmls([p],[BOX,DIA,AND,OR]));
+
+######################################################################
+######################################################################
+
+proc : fmls(atoms, connectives) 
+  local new_list, last_list;
+  local total, x;
+
+##############################
+
+  proc replace(a, b, l)
+  local x, r;
+  begin
+    r := [];
+    foreach x in l do if ( x <> a ) then append(r, x); else append(r, b);
+    return r;
+  end;
+
+##############################
+
+  proc insert(fml)
+  local x;
+  begin
+    foreach x in all_list do 
+    begin
+      if provable(x <-> fml)
+      then begin
+        if ( length(fml) < length(x) ) and ( depth(fml) = depth(x) )
+        then all_list := replace(x, fml, all_list);
+        return; 
+      end;
+    end;
+    foreach x in new_list do 
+    begin
+      if provable(x <-> fml)
+      then begin
+        if ( length(fml) < length(x) ) and ( depth(fml) = depth(x) )
+        then new_list := replace(x, fml, new_list);
+        return; 
+      end;
+    end;
+    append(new_list, fml);
+    inc(total); 
+    print(total, ": ", fml);
+  end; 
+
+##############################
+
+  proc search()
+  local l, n, x, y;
+  begin
+    n := nops(atoms);
+    while n > 0 do begin
+      foreach x in last_list do begin
+	foreach c in connectives do begin
+	  if (c = NOT) then insert(~x);
+	  if (c = BOX) then insert(box x);
+	  if (c = DIA) then insert(dia x);
+        end;
+	foreach y in all_list do begin
+          foreach c in connectives do begin
+	    if (c = AND) then insert(x & y);
+            else if (c = OR) then insert(x v y);
+            else if (c = IMP)
+                 then begin insert(x -> y); insert(y -> x); end;
+            else if (c = EQ) then insert(x <-> y);
+          end;
+        end;
+      end; 
+      n := nops(new_list);
+      all_list := concat(all_list, new_list); 
+      last_list := new_list;
+      new_list := [];
+    end; 
+  end; 
+
+##############################
+
+begin
+  total := 0;
+  new_list := [];
+  all_list := [];
+  foreach x in atoms do insert(x);
+  all_list := new_list;
+  last_list := new_list;
+  new_list := [];
+  search();
+  return(all_list);
+end;
+
+######################################################################
+######################################################################
+
+# Removes the elements of the list  l1  from the list  l2 .
+
+proc : remove_list(l1, l2)
+
+local r, x;
+
+begin
+
+  r := [];
+  foreach x in l2 do if not member(x, l1) then append(r, x);
+  return r;
+
+end; # remove_list
+
+######################################################################
+######################################################################
+
+# Converts a list  [a1, a2, ..., an]  into  [[1,a1], [2,a2], ..., [n,an]] .
+
+proc : add_index(var fmls)
+
+local a, i, r;
+
+begin
+
+  r := [];
+  i := 0;
+  foreach a in fmls
+  do begin
+    inc(i);
+    append(r, [i,a]);
+  end;
+  fmls := r;
+
+end; # add_index
+
+######################################################################
+
+# If  fmls  is  [[i1,a1], [i2,a2], ..., [in,an]], then the result is
+# [i1, i2, ..., in] .
+
+proc : numbers(fmls)
+
+local r, x;
+
+begin
+
+  r := [];
+  foreach x in fmls do append(r, x[1]);
+  return r;
+
+end;
+
+######################################################################
+######################################################################
+
+# Returns the minimal elements of the list  fmls .
+# An element  x  of  fmls  is minimal if there is no element  y  of  fmls
+# such that  y -> x  is provable.
+
+proc : minimal_elements(fmls)
+
+local flag, i, j, r;
+
+begin
+
+  r := [];
+  for i := 1 to nops(fmls)
+  do begin
+    j := 1;
+    flag := true;
+    while ( j <= nops(fmls) ) and flag
+    do begin
+      if ( i <> j )
+      then
+        if provable(fmls[j][2] -> fmls[i][2]) then flag := false;
+      inc(j);
+    end;
+    # if  flag  is true then  fmls[i]  is minimal
+    if flag then append(r, fmls[i]);
+  end;
+  return r;
+
+end; # minimal_elements
+
+######################################################################
+
+# Returns a list of the formulas in the list  fmls  that are immediate
+# predecessors of  x .
+
+proc : predecessors(x, fmls)
+
+local flag, r, r2, y, z;
+
+begin
+
+  r := [];
+  foreach y in fmls
+  do
+    if provable(y[2] -> x[2]) then append(r, y);
+
+  # Now we remove superfluous elements.
+  r2 := [];
+  foreach y in r
+  do begin
+    flag := false;
+    foreach z in r do
+      if y <> z then if provable(y[2] -> z[2]) then flag := true;
+    if not flag then append(r2, y);
+  end;
+
+  return r2;
+
+end; # predecessors
+
+######################################################################
+######################################################################
+
+proc : diagram(fmls)
+
+local fmls2, x, min, old_min, level;
+
+begin
+
+  add_index(fmls);
+
+  min := minimal_elements(fmls);
+  fmls := remove_list(min, fmls); fmls2 := fmls;
+  print();
+  print("level 0");
+  foreach a in min do print("  ", a[1], ": ", a[2], ", []");
+  print("------------------------------------------------------------");
+
+  level := 1;
+  old_min := min;
+
+  while ( fmls <> [] )
+  do begin
+    print("level ", level);
+    min := minimal_elements(fmls);
+    fmls := remove_list(min, fmls);
+    foreach x in min
+    do begin
+      pred := predecessors(x, old_min);
+      print("  ", x[1], ": ", x[2], ", ", numbers(pred));
+    end;
+    print("------------------------------------------------------------");
+    inc(level);
+    old_min := concat(old_min, min);
+  end;
+
+end; # diagram
+
+######################################################################
+######################################################################

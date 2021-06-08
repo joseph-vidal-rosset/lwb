@@ -1,0 +1,34 @@
+
+Normal forms example
+====================
+
+
+Normal forms
+------------
+
+In the modal logic  kt  there exists a negation normal form.
+
+> A := dia ~ dia((p0 -> box p1) v ~p0 & p1);
+	dia ~dia ((p0 -> box p1) v ~p0 & p1)
+> nnf(A);
+	dia box (p0 & dia ~p1 & (p0 v ~p1))
+
+This normal forms is not unique as the following example shows.
+
+> B := dia box(p0 & dia ~p1);
+	dia box (p0 & dia ~p1)
+> nnfp(B);
+	true
+> provable(A <-> B);
+	true
+
+If a formula contains equivalencies, the result of  nnf  can be very long 
+compared to the original formula.
+
+> C := dia p0 <-> dia p1 <-> dia p2 <-> dia p3 <-> dia p4 <-> dia p5 <-> dia p6;
+	dia p0 <-> dia p1 <-> dia p2 <-> dia p3 <-> dia p4 <-> dia p5 <-> dia p6
+> length(C);
+	20
+> length(nnf(C));
+	664
+

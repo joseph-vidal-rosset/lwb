@@ -1,0 +1,28 @@
+
+lu
+==
+
+latches until
+
+SYNTAX
+- lu(A, B) 
+
+PARAMETERS
+- A, B: formulae
+
+RESULT:  formula
+
+SYNOPSIS
+
+- lu  is the  `latches until'  connective, where  lu(p0,p1)  is defined as  
+  ~p0 W (p0 W p1) ) , i.e.  p0  is not allowed to turn from  true  to  false 
+  before a  p1 .
+
+EXAMPLE
+
+> lu(p0,q1);
+	~p0 W (p0 W q1)
+
+SEE ALSO
+  wu, lua
+

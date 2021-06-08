@@ -1,0 +1,30 @@
+
+randomfml
+=========
+
+random formula
+
+SYNTAX
+- randomfml(Depth, Vars) 
+
+PARAMETERS
+- Depth: integer,  0 <  Depth
+- Vars: list of variables
+
+RESULT:  formula
+
+SYNOPSIS
+
+- The constructed formula written in tree-shape has at most depth  Depth .
+- Only elements of  Vars  occur as variables in the result.
+
+EXAMPLE
+
+> randomfml(6, [p4,p5]);
+	~~dia (p4 v p5 v (p4 -> false) v true)
+> randomfml(6, [p4,p5]);
+	dia false -> false
+
+SEE ALSO
+  depth, vars, typek
+

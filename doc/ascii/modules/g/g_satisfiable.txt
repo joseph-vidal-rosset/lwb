@@ -1,0 +1,30 @@
+
+satisfiable
+===========
+
+formula satisfiable ?
+
+SYNTAX
+- satisfiable(A) 
+
+PARAMETERS
+- A: formula
+
+RESULT:  true  or  false 
+
+SYNOPSIS
+
+- satisfiable  tests whether the formula  A  is satisfiable in  g .
+- Choose an appropriate infolevel for additional information during the 
+  execution (e.g.  set("infolevel", 3); ). See  g::provable  for details.
+
+EXAMPLE
+
+> satisfiable(dia ~p0 & box box p0);
+	true
+> satisfiable(p0 & dia box p0);
+	true
+
+SEE ALSO
+  provable
+

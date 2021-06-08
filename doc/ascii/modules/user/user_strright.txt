@@ -1,0 +1,33 @@
+
+strright
+========
+
+tail of a string
+
+SYNTAX
+- strright(S, N) 
+
+PARAMETERS
+- S: strings
+- N: natural number,  N >= 0 
+
+RESULT:  string
+
+SYNOPSIS
+
+- strright  extracts the last  N  letters from the string  S .
+
+EXAMPLE
+
+> strright("abcdefgh", 3);
+	"fgh"
+> strright("abcdefgh", 1);
+	"h"
+> strright("abcdefgh", 0);
+	""
+> strright("cde", 5);
+	"cde"
+
+SEE ALSO
+  strindex, strleft, strlen, strmid
+

@@ -1,0 +1,40 @@
+
+dnf
+===
+
+disjunctive normal form
+
+SYNTAX
+- dnf(A) 
+- dnf(A, "nosimplify") 
+
+PARAMETERS
+- A: formula
+
+RESULT:  formula
+
+SYNOPSIS
+
+- dnf  computes a disjunctive normal form of the formula  A . The resulting 
+  formula  dnf(A)  is equivalent to  A , i.e.  A <-> dnf(A)  is provable in  
+  cpc , and all variables that occur in  dnf(A)  occur already in  A .
+- Option "nosimplify" : The result is not simplified.
+- A formula is in disjunctive normal form if it is either  true  or  false  
+  or an arranged disjunction of conjunctions of variables and negated 
+  variables.
+- If the formula  A  is long, then it can help to apply  simplify  first.
+- In general the result of the function  qmc  is shorter, but this function 
+  is only applicable if not too many variables occur in  A .
+
+EXAMPLE
+
+> dnf(p0 -> p2 & ~p1);
+	~p0 v p2 & ~p1
+> dnf((p1 v p0) & (p0 & ~p1), "nosimplify");
+	p0 & p0 & ~p1 v p0 & p1 & ~p1
+> dnf((p1 & p2) v (p3 v p0));
+	p0 v p3 v p1 & p2
+
+SEE ALSO
+  cnf, dnfp, nnf, qmc
+

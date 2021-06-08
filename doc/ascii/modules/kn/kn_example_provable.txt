@@ -1,0 +1,37 @@
+
+Typical provable formulas example
+=================================
+
+
+Typical provable formulas
+-------------------------
+
+All formulas that are provable in classical propositional logic are also 
+provable in the modal logic  kn .
+Therefore we concentrate on formulas typical for  kn .
+
+> provable( box2(p0 & p1)  <->  box2 p0 & box2 p1 );
+	true
+> provable( dia3(p0 v p1)  <->  dia3 p0 v dia3 p1 );
+	true
+> provable( ~ box7 ~ p0 <-> dia7 p0 );
+	true
+
+A famous example is the so-called wise men example. There  box1 p  means 
+`man 1 knows that p',  white1  means `man 1 has a white spot on his 
+forehead'. (The  wisemen  function computes these theories.)
+
+> T := [box1(white1 v white2 v white3),
+        box2(white1 v white2 v white3),
+        box3(white1 v white2 v white3),
+        ~white1 -> box2 ~white1, ~white1 -> box3 ~white1,
+        ~white2 -> box1 ~white2, ~white2 -> box3 ~white2,
+        ~white3 -> box1 ~white3, ~white3 -> box2 ~white3,
+        ~ box1 white1, ~ box2 white2 ];
+	[box1 (white1 v white2 v white3), box2 (white1 v white2 v white3), box3 
+(white1 v white2 v white3), ~white1 -> box2 ~white1, ~white1 -> box3 
+~white1, ~white2 -> box1 ~white2, ~white2 -> box3 ~white2, ~white3 -> box1 
+~white3, ~white3 -> box2 ~white3, ~box1 white1, ~box2 white2]
+> provable(box3 white3, T);
+	true
+

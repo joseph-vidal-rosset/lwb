@@ -1,0 +1,55 @@
+
+truthtable
+==========
+
+truthtable of a formula
+
+SYNTAX
+- truthtable(A) 
+- truthtable(A, Vars) 
+
+PARAMETERS
+- A: formula
+- Vars: list of variables, at least the variables in  A 
+
+RESULT:  a truthtable
+
+SYNOPSIS
+
+- One argument:  truthtable  computes a truthtable for the formula  A . The 
+  variables as computed by  cpc::vars  are used.
+- Two arguments: The variables in  Vars  are used in the given order. Note 
+  that each variable that occurs in the formula  A  must be an element of  
+  Vars .
+- Use the function  cpc::display  in order to display a truthtable in two 
+  dimensions. Choose a fixed-width font.
+- The result is exponential in the number of variables that occur in  A . 
+  Therefore it is advisable to simplify  A  first.
+
+EXAMPLE
+
+> t := truthtable((p0 v p1) & ~p0);
+	[[[p0, p1], (p0 v p1) & ~p0], [[[false, false], false], [[false, true], 
+true], [[true, false], false], [[true, true], false]]]
+> display( t );
+---------------------------------
+| p0    p1    | (p0 v p1) & ~p0 |
+---------------------------------
+| false false | false           |
+| false true  | true            |
+| true  false | false           |
+| true  true  | false           |
+---------------------------------
+> display(truthtable(p0 v false, [p1,p0]), "0", "1");
+----------------------
+| p1 p0 | p0 v false |
+----------------------
+| 0  0  | 0          |
+| 0  1  | 1          |
+| 1  0  | 0          |
+| 1  1  | 1          |
+----------------------
+
+SEE ALSO
+  display, provable, typek, vars
+

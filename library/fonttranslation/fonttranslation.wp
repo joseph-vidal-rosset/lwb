@@ -1,0 +1,115 @@
+
+Translations:
+  - Are pairs `string int' where :
+    `string' is to be mapped to the character with code `int' (and vice versa).
+
+  - Note that currently only codes for special characters are accepted:
+    i.e. :  127 < int < 256 
+
+  - Logical operators:
+    Use the inputformat of the operator as string; e.g. `and' for the classical
+    conjunction.
+
+  - Constants:
+    - Classical constants:  map `true' and `false' to the signs
+        `top' and `bottom' if supported by the font.
+    - Linear logic constants: do not map `top' and `bot' to the corresponding
+        signs. The translation will be dynamically changed if the linear logic
+        module `ll' is loaded (and `true' and `false' are mapped to the signs).
+
+  - Greek symbols:
+    Use the LaTeX symbols without the backslash; e.g. `alpha' for `\alpha'.
+
+Commments:
+  - Anything above the line `# ---- START OF TABLE ----' is ignored.
+  - Below the line, anything from `#' to the end of line is ignored.
+
+Use of this file:
+  - Uncomment the symbols for which the font provides a suitable special char.
+  - Replace the `1xx' by the corresponding codes.
+
+
+# ---- START OF TABLE ----
+
+# ---- operators 
+
+and	129
+v	130
+->	128	
+<->	132
+~	131
+
+box	133
+dia	134
+
+# (temporal operators)
+# tH	1xx
+# tP	1xx
+# tG	1xx
+# tF	1xx
+# tX	1xx
+# tU	1xx
+# tB	1xx
+# tA	1xx
+# tE	1xx
+
+# (linear logic operators)
+# !	1xx
+# qm 	1xx      # (question mark)
+times	138
+|   	139	 # (par)
+# with	1xx
+llplus	156
+-o 	140      # (lin. implication)
+# o-o	1xx
+
+
+# ---- constants
+
+true	141
+false	142
+
+
+# ---- greek symbols
+
+alpha	189
+beta	190
+gamma	191
+delta	192
+epsilon 	193
+# varepsilon 	1xx
+zeta 	194
+eta	195
+theta	196
+vartheta 	1xx
+iota 	197
+kappa	198
+lambda 	199
+mu 	200
+nu 	201
+xi	202
+pi	204
+# varpi	1xx 
+rho 	205
+# varrho	1xx 
+sigma 	206
+# varsigma	1xx
+tau 	207
+upsilon 	208
+phi 	209
+# varphi 	1xx
+chi 	210
+psi 	211
+omega	212
+Gamma 	167
+Delta 	168
+Theta 	172
+Lambda 	175
+Xi 	178
+Pi 	180
+Sigma 	182
+Upsilon 	184
+Phi 	185
+Psi 	187
+Omega	188
+

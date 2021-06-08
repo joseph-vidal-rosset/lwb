@@ -1,0 +1,48 @@
+
+proofoptions
+============
+
+options for proof display
+
+SYNTAX
+- proofoptions(S, L) 
+- proofoptions(S) 
+- proofoptions(L) 
+
+PARAMETERS
+- S: string
+- L: list of strings
+
+RESULT:  true 
+
+SYNOPSIS
+
+- S  is a string indicating the proof style: 
+  "proof_wish"  : separate tool called  LWBproof_wish . 
+  "indent"  : ASCII-display using indentation.
+  "tabular"  : ASCII-display, not indented, but still with labels.
+- L  is a list of strings, indicating restrictions of the proof display, 
+  which allow to reduce the output in different ways what is most useful for 
+  large proofs. The restricions can freely be combined although not all 
+  combinations are sensible. 
+  "branchings_only"  : restrict the output to the branching steps; the 
+  intermediate linear steps are combined in a single multi-rule (*).
+  "relevant_only"  : display only the `relevant' parts of a proof node 
+  (usually the principal and the side formulae).
+  "no_weak"  : omit weakenings. 
+  "no_labels"  : omit the labelling of lines (only for proof styles  
+  "indent" ,  "tabular" ). 
+  "no_emphasizing"  : omit all typographical features such as bold face 
+  etc.
+  "all"  : reset to no restrictions.
+
+EXAMPLE
+
+> proofoptions( [ "branchings_only" ] );
+	true
+> proofoptions( "indent", [ "relevant_only" ] );
+	true
+
+SEE ALSO
+  proofinfo, proof
+

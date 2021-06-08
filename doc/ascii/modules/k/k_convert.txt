@@ -1,0 +1,59 @@
+
+convert
+=======
+
+convert connectives
+
+SYNTAX
+- convert(A, S1) 
+- convert(A, "imp", S2) 
+- convert(A, S3, "all") 
+- convert(T, S1) 
+- convert(T, "imp", S2) 
+- convert(T, S3, "all") 
+
+PARAMETERS
+- A: formula
+- T: theory
+- S1: one of  "andimp" ,  "box" ,  "dia" ,  "eq" ,  "impimp" 
+- S2: one of  "eq" ,  "or" 
+- S3: one of  "box" ,  "dia" 
+
+RESULT:  formula resp. theory
+
+SYNOPSIS
+
+- convert  converts certain occurrences of connectives in the formula  A  
+  resp. in the theory  T . The result is equivalent to  A  resp. to  T  in  
+  k .
+- Two arguments: 
+  S1  is  "andimp" : Converts  B & C -> D  into  B -> C -> D . 
+  S1  is  "eq" : Converts  B <-> C  into  (B -> C) & (C -> B) . 
+  S1  is  "impimp" : Converts  B -> C -> D  into  B & C -> D .
+- Three arguments, second argument is  "imp" : 
+  S2  is  "eq" : Converts  (B -> C) & (B -> C) ,  (B <-> C) & (B -> C) , ... 
+  into  B <-> C . Conjunctions in  A  resp. the theory  T  is arranged if 
+  conversions are possible. 
+  S2  is  "or" : Converts  ~B -> C  into  B v C , and  B -> C  into  ~B v C .
+- Three arguments, third argument is  "all" : 
+  S3  is  "box" : Converts  box A  into  ~ dia ~A  and removes double 
+  negations in the neighbourhood. 
+  S3  is  "dia" : Converts  dia A  into  ~ box ~A  and removes double 
+  negations in the neighbourhood.
+
+EXAMPLE
+
+> convert(p0 & (p1 v p2) & p3 & p4 -> p5, "andimp");
+	p0 -> p1 v p2 -> p3 -> p4 -> p5
+> convert(box p0 -> ~ box ~ ~ ~p1, "box");
+	box p0 -> dia ~~p1
+> convert([dia p1, box p0 -> ~ box ~ ~ ~p1], "box", "all");
+	[dia p1, ~dia ~p0 -> dia ~~p1]
+> convert(p5 & (p0 -> p1) & ((p6 v p7) & (p1 -> p0)), "imp", "eq");
+	p5 & (p0 <-> p1) & (p6 v p7)
+> convert([p0 -> p1 v p2, ~p4, p5 & (p1 v p2 <-> p0)], "imp", "eq");
+	[~p4, p5, p1 v p2 <-> p0]
+
+SEE ALSO
+  remove
+

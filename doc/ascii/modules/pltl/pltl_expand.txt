@@ -1,0 +1,31 @@
+
+expand
+======
+
+expansion of temporal connectives
+
+SYNTAX
+- expand(A) 
+
+PARAMETERS
+- A: formula in negation normal form
+
+RESULT:  formula
+
+SYNOPSIS
+
+- expand  expands the temporal connectives of the formula  A  once, 
+  according to their respective fixpoint definition. The resulting formula 
+  is equivalent to the argument. By repeatedly applying  expand  you may 
+  unwind the connectives step by step.
+
+EXAMPLE
+
+> expand( p0 U p1 );
+	p1 v p0 & X (p0 U p1)
+> expand( (p0 B p1) & F p2 );
+	~p1 & (p0 v X (p0 B p1)) & (p2 v X F p2)
+
+SEE ALSO
+  nnf
+

@@ -1,0 +1,91 @@
+<TEXT>
+____________________________________________
+    
+   Simplification of Classical Formulae
+____________________________________________
+
+</TEXT>
+<INPUT>
+load(cpc);
+</INPUT>
+<OUTPUT>
+	cpc  user  
+
+</OUTPUT>
+<DELIMITER>
+
+</DELIMITER
+<TEXT>
+If you evaluate the following input region for a second time, then you will obtain new random formula.
+</TEXT>
+<INPUT>
+A1 := randomfml(9, [p0,p1,p2,p3,p4,p5]); 
+</INPUT>
+<OUTPUT>
+	¬(p0 v ((p5 v p4) & (p3 & p0) & (true <-> p1 <-> ¬p5) <-> (false & p1 <-> p3 -> p0 <-> ¬p0 -> false)) v ((((p5 <-> p1) -> p0 -> p4) -> true & false -> p4 & p0) & (p5 v (p4 v p1 v ¬p5)) <-> p4 & ¬¬¬p5) <-> ¬(¬(p1 v p2 v p4 & p3) & ¬(p3 v false v (p1 -> p5))) & ((((p2 <-> p4) -> p0 & p2) v (p3 & p0 <-> true) v (p2 & (p4 <-> p2) v ¬¬p2)) & ((((p1 <-> p4) -> p2 v p1) -> p5 v true v p3 & p1) -> ¬(p3 -> p0 <-> p2)))) -> ¬(false & (p0 <-> p0 v ((p3 <-> p5) v (¬p3 <-> p0 v p5))) v (¬((p1 v (true v p1)) & p5 & ((p0 <-> p5) & (p3 v p5) -> (true <-> p0) & (p1 v p5))) -> p2 & (¬(p2 <-> p5) & (p2 & p3 <-> p2 & p1) <-> ¬(false -> p4) -> ¬p2 -> ¬p2)))
+
+</OUTPUT>
+<TEXT>
+First we only remove the constants true and false.
+It can happen that the result is already completely simplified. In that case take another random formula by reevaluating the input region above.
+</TEXT>
+<INPUT>
+A2 := remove(A1); length(A2);
+</INPUT>
+<OUTPUT>
+	¬(p0 v ((p5 v p4) & (p3 & p0) & (p1 <-> ¬p5) <-> (¬(p3 -> p0) <-> ¬¬p0)) v (p5 v (p4 v p1 v ¬p5) <-> p4 & ¬¬¬p5) <-> ¬(¬(p1 v p2 v p4 & p3) & ¬(p3 v (p1 -> p5))) & ((((p2 <-> p4) -> p0 & p2) v p3 & p0 v (p2 & (p4 <-> p2) v ¬¬p2)) & ¬(p3 -> p0 <-> p2))) -> ¬(¬(p5 & ((p0 <-> p5) & (p3 v p5) -> p0 & (p1 v p5))) -> p2 & (¬(p2 <-> p5) & (p2 & p3 <-> p2 & p1)))
+	119
+
+</OUTPUT>
+<TEXT>
+Now we simplify the formula more and more, using stronger and stronger options.
+</TEXT>
+<INPUT>
+A3 := simplify(A2, "sort", 1); length(A3);
+</INPUT>
+<OUTPUT>
+	¬(p0 v ((p5 v p4) & (p3 & p0) & (p1 <-> ¬p5) <-> (¬(p3 -> p0) <-> p0)) v p4 & ¬p5 <-> ¬(¬(p1 v p2 v p4 & p3) & ¬(p3 v (p1 -> p5))) & ((((p2 <-> p4) -> p0 & p2) v p3 & p0 v (p2 & (p4 <-> p2) v p2)) & ¬(p3 -> p0 <-> p2))) -> ¬(¬(p5 & ((p0 <-> p5) & (p3 v p5) -> p0 & (p1 v p5))) -> p2 & (¬(p2 <-> p5) & (p2 & p3 <-> p2 & p1)))
+	104
+
+</OUTPUT>
+<INPUT>
+A4 := simplify(A3, "sort", 2); length(A4);
+</INPUT>
+<OUTPUT>
+	¬(¬((p5 v p4) & (p3 & p0) & (p1 <-> ¬p5) <-> ¬(p3 -> p0)) v p0 v p4 & ¬p5 <-> ¬(¬(p1 v p2 v p4 & p3) & ¬(p3 v (p1 -> p5))) & ((((p2 <-> p4) -> p0 & p2) v p3 & p0 v (p4 & p2 v p2)) & ¬(p3 -> p0 <-> p2))) -> ¬(¬(p5 & ((p0 <-> p5) & (p3 v p5) -> p0 & (p1 v p5))) -> p2 & (¬(p2 <-> p5) & (¬p2 v (p3 <-> p1))))
+	100
+
+</OUTPUT>
+<INPUT>
+A5 := simplify(A4, "sort", 3); length(A5);
+</INPUT>
+<OUTPUT>
+	¬(¬(¬p3 v p0 & ¬((p5 v p4) & (p1 <-> ¬p5))) v p0 v p4 & ¬p5 <-> ¬(¬(p1 v p2 v p4 & p3) & ¬(p3 v (p1 -> p5))) & ((p2 v p4 v p0 & (p2 v p3)) & ¬(p3 -> p0 <-> p2))) -> ¬(¬(p5 & ((p0 <-> p5) & (p3 v p5) -> p0 & (p1 v p5))) -> p2 & ¬p5 & (p3 <-> p1))
+	84
+
+</OUTPUT>
+<INPUT>
+A6 := simplify(A5, "provable", 3); length(A6);
+</INPUT>
+<OUTPUT>
+	¬(¬(¬p3 v p0 & ¬((p5 v p4) & (p1 <-> ¬p5))) v p0 v p4 & ¬p5 <-> (p2 v p4 v p0 & (p2 v p3)) & ¬(p3 -> p0 <-> p2)) -> ¬(¬p5 -> p2 & (p3 <-> p1))
+	50
+
+</OUTPUT>
+<INPUT>
+A6 := simplify(A5, "provable"); length(A6);
+</INPUT>
+<OUTPUT>
+	¬(p3 v p0 v p4 & ¬p5 <-> (p2 v p4 v p0 & (p2 v p3)) & ¬(p3 -> p0 <-> p2)) -> ¬(¬p5 -> p2 & (p3 <-> p1))
+	36
+
+</OUTPUT>
+<DELIMITER>
+
+</DELIMITER
+<INPUT>
+ 
+</INPUT>
+<OUTPUT>
+ 
+</OUTPUT>

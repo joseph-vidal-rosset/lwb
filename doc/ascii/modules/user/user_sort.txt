@@ -1,0 +1,29 @@
+
+sort
+====
+
+sort a list of expressions
+
+SYNTAX
+- sort(L) 
+
+PARAMETERS
+- L: list or array of expressions
+
+RESULT:  list or array of expressions
+
+SYNOPSIS
+
+- sort  sorts the list or array of expressions  L  according to the ordering 
+  given by  less .
+
+EXAMPLE
+
+> sort([f(a),[a],~a,a,b,aa,a & b, a v b, b & b]);
+	[a, aa, b, ~a, a & b, b & b, a v b, [a], f(a)]
+> sort([array(a,b,c), array(a,a,c), "abc", "aac", abc]);
+	[abc, "aac", "abc", [a, a, c], [a, b, c]]
+
+SEE ALSO
+  less
+

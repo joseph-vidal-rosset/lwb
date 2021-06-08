@@ -1,0 +1,38 @@
+
+cnf
+===
+
+conjunctive normal form
+
+SYNTAX
+- cnf(A) 
+- cnf(A, "nosimplify") 
+
+PARAMETERS
+- A: formula
+
+RESULT:  formula
+
+SYNOPSIS
+
+- cnf  computes a conjunctive normal form of the formula  A . The resulting 
+  formula  cnf(A)  is equivalent to  A , i.e.  A   <-> cnf(A)  is provable 
+  in  cpc , and all variables that occur in  cnf(A)  occur already in  A .
+- Option  "nosimplify" : The result is not simplified.
+- A formula is in conjunctive normal form if it is either  true  or  false  
+  or an arranged conjunction of disjunctions of variables and negated 
+  variables.
+- If the formula  A  is long, then it can help to apply  simplify  first.
+
+EXAMPLE
+
+> cnf(p0 -> p2 & ~p1);
+	(p2 v ~p0) & (~p0 v ~p1)
+> cnf(p1 v p0 & p1, "nosimplify");
+	(p0 v p1) & (p1 v p1)
+> cnf((p1 v p2) & (p0 v p3));
+	(p0 v p3) & (p1 v p2)
+
+SEE ALSO
+  cnfnv, cnfp, dnf, nnf
+

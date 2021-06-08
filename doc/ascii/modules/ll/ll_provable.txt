@@ -1,0 +1,47 @@
+
+provable
+========
+
+formula provable ?
+formula provable in theory ?
+
+SYNTAX
+- provable(A) 
+- provable(A, Cdnr) 
+- provable(A, T) 
+- provable(A, T, Cdnr) 
+
+PARAMETERS
+- A: formula
+- T: theory
+- Cdnr: integer
+
+RESULT:  true ,  false  or  fail 
+
+SYNOPSIS
+
+- provable  tests whether the formula  A  is provable in  ll . Since full 
+  linear logic is undecidable the search is limited to the depth  Cdnr , 
+  which denotes the maximum number of applications of the combined 
+  contraction-dereliction rule (premise  B,?B,Gamma , conclusion  ?B,Gamma 
+  ). If  Cdnr  is omitted it defaults to 3.
+- If the depth  Cdnr  is exhausted and the provability (result  true ) or 
+  the unprovability (result  false ) could not be established,  fail  is 
+  returned. In this case you can try to call  provable  with a higher  Cdnr .
+- If  A  contains no  ?  the provability is decidable and the algorithm 
+  returns always  true  or  false .
+- If the second argument is a theory,  provable  tests whether the formula  
+  A  is provable in  ll  plus  T .
+
+EXAMPLE
+
+> provable( (~p0 | p0) & (~p1 | ? p1) | ? p0 | bot );
+	true
+> provable( p0 | ?(~p0 X (p1 | ~p1) ), 0 );
+  provable( p0 | ?(~p0 X (p1 | ~p1) ), 1 );
+	fail
+	true
+
+SEE ALSO
+  nnf, canf, satisfiable
+

@@ -1,0 +1,253 @@
+<TEXT>
+_________________________________________________
+
+     Introduction to the Proof Display Options 
+_________________________________________________
+
+
+At present there are only proofs in the
+module cpc available.
+
+</TEXT>
+<INPUT>
+load(cpc);
+</INPUT>
+<OUTPUT>
+	cpc  user  
+
+</OUTPUT>
+<TEXT>
+Get two proofs without displaying them.
+</TEXT>
+<INPUT>
+pr1:== proof( (a & b v c) & (a v d) -> a v d );
+ph:== proof( pigeonhole( 2 ) );
+</INPUT>
+<OUTPUT>
+
+</OUTPUT>
+<TEXT>
+Display the first proof:
+
+The principal formulas are depicted in red, 
+the side formulas in blue and the rest in black.
+You may click on the rule label to pop up the
+corresonding rule.
+</TEXT>
+<INPUT>
+pr1;
+</INPUT>
+<OUTPUT>
+	
+
+</OUTPUT>
+<TEXT>
+... and the second one:
+</TEXT>
+<INPUT>
+ph;
+</INPUT>
+<OUTPUT>
+	
+
+</OUTPUT>
+<TEXT>
+There is a variety of proofoptions that restrict
+the proof output in different ways, which is
+most useful for large proofs.
+   
+E.g. we can restrict the output to the branching
+steps; the intermediate linear steps are combined
+under a single multi-rule (*).
+   
+The possible restrictions are given as a list
+of strings.
+</TEXT>
+<INPUT>
+proofoptions( [ "branchings_only" ] );
+pr1; 
+</INPUT>
+<OUTPUT>
+	true
+	
+
+</OUTPUT>
+<TEXT>
+Another restriction is to display only the
+'relevant' parts of the proofnodes, which are
+in this case the principal and the side formulas
+</TEXT>
+<INPUT>
+proofoptions( ["relevant_only"] );
+pr1;
+</INPUT>
+<OUTPUT>
+	true
+	
+
+</OUTPUT>
+<TEXT>
+In large proofs there are often many weakenings.
+These can be suppressed:
+</TEXT>
+<INPUT>
+proofoptions( ["no_weak"] );
+pr1;
+</INPUT>
+<OUTPUT>
+	true
+	
+
+</OUTPUT>
+<TEXT>
+It is possible to combine the options, e.g.
+</TEXT>
+<INPUT>
+proofoptions( ["relevant_only", "no_weak" ] );
+pr1;
+</INPUT>
+<OUTPUT>
+	true
+	
+
+</OUTPUT>
+<TEXT>
+Set the option "all" to see again the full proof:
+</TEXT>
+<INPUT>
+proofoptions( ["all"] );
+pr1;
+</INPUT>
+<OUTPUT>
+	true
+	
+
+</OUTPUT>
+<TEXT>
+If no graphical proof display (called
+'LWBproof_wish' is available, the proof
+can be displayed in an 'indented' form or
+in a 'tabular' form:
+</TEXT>
+<INPUT>
+proofoptions( "indent" );
+pr2:= proof( a -> b  <->  ~a v b );
+</INPUT>
+<OUTPUT>
+	true
+	Proof of:  ==> a -> b <-> ~a v b
+
+Module: cpc
+Steps: 8, Depth: 5
+Branchings: 3, Branchingdepth: 2
+Axioms: 4
+Formulae: 30
+Output option(s): all
+
+(r <->)		==> a -> b <-> ~a v b  [1.1,1.2]
+(r v)	1.1	  a -> b ==> ~a v b
+(r ~)		  a -> b ==> ~a, b
+(l ->)		  a, a -> b ==> b  [2.1,2.2]
+(id)	2.1	    a ==> a, b
+
+(id)	2.2	    a, b ==> b
+
+(r ->)	1.2	  ~a v b ==> a -> b
+(l v)		  a, ~a v b ==> b  [2.1,2.2]
+(w)	2.1	    a, ~a ==> b
+(l ~)		    a, ~a ==> 
+(id)		    a ==> a
+
+(id)	2.2	    a, b ==> b
+
+</OUTPUT>
+<TEXT>
+Tabular is the same, except that the steps are
+not indented:
+</TEXT>
+<INPUT>
+proofoptions( "tabular" );
+pr2;
+</INPUT>
+<OUTPUT>
+	true
+	Proof of:  ==> a -> b <-> ~a v b
+
+Module: cpc
+Steps: 8, Depth: 5
+Branchings: 3, Branchingdepth: 2
+Axioms: 4
+Formulae: 30
+Output option(s): all
+
+(r <->)		==> a -> b <-> ~a v b  [1.1,1.2]
+(r v)	1.1	a -> b ==> ~a v b
+(r ~)		a -> b ==> ~a, b
+(l ->)		a, a -> b ==> b  [2.1,2.2]
+(id)	2.1	a ==> a, b
+
+(id)	2.2	a, b ==> b
+
+(r ->)	1.2	~a v b ==> a -> b
+(l v)		a, ~a v b ==> b  [2.1,2.2]
+(w)	2.1	a, ~a ==> b
+(l ~)		a, ~a ==> 
+(id)		a ==> a
+
+(id)	2.2	a, b ==> b
+
+</OUTPUT>
+<TEXT>
+To save room it may be useful to omit the
+number labels in the indented version:
+</TEXT>
+<INPUT>
+proofoptions( "indent", [ "no_labels" ] );
+pr2;
+</INPUT>
+<OUTPUT>
+	true
+	Proof of:  ==> a -> b <-> ~a v b
+
+Module: cpc
+Steps: 8, Depth: 5
+Branchings: 3, Branchingdepth: 2
+Axioms: 4
+Formulae: 30
+Output option(s): no_labels
+
+(r <->)	==> a -> b <-> ~a v b
+(r v)	  a -> b ==> ~a v b
+(r ~)	  a -> b ==> ~a, b
+(l ->)	  a, a -> b ==> b
+(id)	    a ==> a, b
+
+(id)	    a, b ==> b
+
+(r ->)	  ~a v b ==> a -> b
+(l v)	  a, ~a v b ==> b
+(w)	    a, ~a ==> b
+(l ~)	    a, ~a ==> 
+(id)	    a ==> a
+
+(id)	    a, b ==> b
+
+</OUTPUT>
+<TEXT>
+Return again to the proof_wish version:
+</TEXT>
+<INPUT>
+proofoptions( "proof_wish", ["all"] );
+pr2;
+</INPUT>
+<OUTPUT>
+	true
+	
+
+</OUTPUT>
+<INPUT>
+ 
+</INPUT>
+<OUTPUT>
+ 
+</OUTPUT>

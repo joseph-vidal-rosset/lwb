@@ -1,0 +1,36 @@
+
+index
+=====
+
+index of a symbol or an indexed connective
+
+SYNTAX
+- index(X) 
+- index(A) 
+
+PARAMETERS
+- X: symbol that ends with digits
+- A: expression with indexed main connective
+
+RESULT:  integer
+
+SYNOPSIS
+
+- Argument  S :  index  returns the integer formed by the digits at the end 
+  of  X .
+- Argument  A :  index  returns the index of the main connective of  A .
+
+EXAMPLE
+
+> index(p1);
+	1
+> index(ball42);
+	42
+> index(box3(p & q));
+	3
+> index(dia12 false);
+	12
+
+SEE ALSO
+  boxnr, dianr
+

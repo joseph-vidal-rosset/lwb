@@ -1,0 +1,55 @@
+
+Normal forms example
+====================
+
+
+Normal forms
+------------
+
+In classical propositional logic there exists a conjunctive, a disjunctive 
+and a negation normal form.
+
+> A := ~(p0 v p1) v p0 & (p1 -> p2);
+	~(p0 v p1) v p0 & (p1 -> p2)
+> cnf(A);
+	(p0 v ~p1) & (p2 v ~p1) & (p2 v ~p0 v ~p1)
+> dnf(A);
+	p0 & p2 v p0 & ~p1 v ~p0 & ~p1
+> nnf(A);
+	~p0 & ~p1 v p0 & (~p1 v p2)
+
+All these normal forms are not unique. We give just an example for the case 
+of the disjunctive normal form, where the function  qmc  often returns a 
+shorter result.
+
+> B := qmc(A);
+	~p1 v p0 & p2
+> dnfp(B);
+	true
+> provable(A <-> B);
+	true
+
+The result of  cnf  can be much longer than the result of  nnf . But if a 
+formula contains equivalencies, already the result of  nnf  can be very 
+long.
+
+> C :=   p0  & p1  v p2  & p3  v p4  & p5  v p6  & p7  v p8  & p9
+       v p10 & p11 v p12 & p13 v p14 & p15 v p16 & p17;
+	p0 & p1 v p2 & p3 v p4 & p5 v p6 & p7 v p8 & p9 v p10 & p11 v p12 & p13 v 
+p14 & p15 v p16 & p17
+> length(cnf(C));
+	9215
+> length(nnf(C));
+	35
+> urquhart(6);
+	p1 <-> p2 <-> p3 <-> p4 <-> p5 <-> p6 <-> p1 <-> p2 <-> p3 <-> p4 <-> p5 
+<-> p6
+> length(nnf(urquhart(6)));
+	15354
+
+In order to get a shorter conjunctive normal form one can use the function  
+cnfnv . However, this function introduces new variables.
+
+> length(cnfnv(C, "p"));
+	299
+

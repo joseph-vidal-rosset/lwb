@@ -1,0 +1,19 @@
+
+Normal forms example
+====================
+
+
+Normal forms
+------------
+
+In  ll  we have a negation normal form ( nnf ) and a 
+`commutative-associative normal form' ( canf ). The latter rearranges a 
+formula (which must be in negation normal form).
+
+> C := ~?!?!( ~(p0 + p1) X (~(p0 & p1 & p0)) & p2);
+	~?!?!(~(p0 + p1) X ~(p0 & p1 & p0) & p2)
+> D := nnf(C);
+	!?!?(p0 + p1 | p0 & p1 & p0 + ~p2)
+> canf(D);
+	!?!(?(p1 + p0 | p1 & p0) | ?~p2)
+

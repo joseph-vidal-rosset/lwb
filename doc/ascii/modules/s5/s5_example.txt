@@ -1,0 +1,142 @@
+
+s5 example
+==========
+
+
+Language
+--------
+
+At first we load the module  s5 .
+
+> load(s5);
+	s5  user  
+
+Formulas of  s5  are built from the connectives  box  and  dia , from the 
+connectives of classical propositional logic, namely  &  (conjunction),  v  
+(disjunction),  ->  (implication),  <->  (equivalence),  ~  (negation), the 
+two constants  true  and  false , and from variables.
+Theories are lists of formulas.
+
+> a := (p & dia false <-> box(true -> q) & p) v ~p;
+	(p & dia false <-> box (true -> q) & p) v ~p
+> b := p11 & dia ww;
+	p11 & dia ww
+> t := [a, b];
+	[(p & dia false <-> box (true -> q) & p) v ~p, p11 & dia ww]
+> typek(a, "fml");
+	true
+> typek(b[1], "var");
+	true
+> typek(t, "theory");
+	true
+
+You can also use  and ,  or ,  imp ,  eq ,  not  instead of  & ,  v ,  -> ,  
+<-> ,  ~ .
+
+> a1 := p & q v r -> s <-> p; 
+	p & q v r -> s <-> p
+> a2 := p and q or r imp s eq p; 
+	p & q v r -> s <-> p
+> a1 = a2;
+	true
+
+In the possible world semantics,  box p  means that  p  is true in all 
+accessible worlds, and  dia p  means that there is an accessible world where 
+p  is true. The accessibility relation must be reflexive, transitive and 
+symmetric.
+
+
+Normal forms
+------------
+
+In the modal logic  s5  there exists a negation normal form.
+
+> a := ~(box dia p -> ~r) & ~ dia ~q;
+	~(box dia p -> ~r) & ~dia ~q
+> nnf(a);
+	box dia p & r & box q
+
+This normal forms is not unique as the following example shows.
+
+> b := (dia p v r) & box q;
+	(dia p v r) & box q
+> nnfp(b);
+	true
+> provable(a <-> b);
+	false
+
+If a formula contains equivalencies, the result of  nnf  can be very long 
+compared to the original formula.
+
+> c := box p0 <-> box p1 <-> box p2 <-> box p3 <-> box p4 <-> box p5
+       <-> box p6 <-> box p7;
+	box p0 <-> box p1 <-> box p2 <-> box p3 <-> box p4 <-> box p5 <-> box p6 
+<-> box p7
+> length(c);
+	23
+> length(nnf(c));
+	1336
+
+
+Typical provable formulas
+-------------------------
+
+All formulas that are provable in classical propositional logic are also 
+provable in the modal logic  s5 .
+Therefore we concentrate on formulas typical for  s5 .
+
+> provable( box(p & q)  <->  box p & box q );
+	true
+> provable( dia(p v q)  <->  dia p v dia q );
+	true
+> provable( ~ box ~ p  <-> dia p );
+	true
+> provable( box p -> p );
+	true
+> fml("t");
+	box p1 -> p1
+> provable(fml("t"));
+	true
+> fml("5");
+	~box p1 -> box ~box p1
+> provable(fml("5"));
+	true
+
+In contrast to  k  and  kt , in  s5  the only non-equivalent sequences of  
+box  and  dia  are  box  and  dia .
+
+> provable( box box p  <->  box p );
+	true
+> provable( dia dia p  <->  dia p );
+	true
+> provable( dia box p  <->  box p );
+	true
+> provable( box dia p  <->  dia p );
+	true
+
+With the help of the distributivity law, the equivalencies above and the 
+following four equivalencies it is possible to transform every formula in an 
+equivalent formula without nested  box  and  dia ,
+
+> provable( box(p v box q)  <->  box p  v box q );
+	true
+> provable( box(p v dia q)  <->  box p  v dia q );
+	true
+> provable( dia(p v box q)  <->  dia p  v box q );
+	true
+> provable( dia(p v dia q)  <->  dia p  v dia q );
+	true
+
+
+Typical non-provable formulas
+-----------------------------
+
+In spite of the four equivalencies above we cannot move  box  and  dia  
+inwards and outwards in all cases. If this were possible,  s5  would be 
+equivalent to classical propositional logic  cpc .
+
+> provable( dia p & dia q  ->  dia(p & q) );
+	false
+> provable( box(p v q)  ->  box p v box q );
+	false
+

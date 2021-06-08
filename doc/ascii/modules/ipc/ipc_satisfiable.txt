@@ -1,0 +1,39 @@
+
+satisfiable
+===========
+
+formula satisfiable ?
+
+SYNTAX
+- satisfiable(A) 
+
+PARAMETERS
+- A: formula
+
+RESULT:  true  or  false 
+
+SYNOPSIS
+
+- satisfiable  tests whether the formula  A  is satisfiable in  ipc .
+- If  satisfiable  is too slow, you can try to apply the following fact: 
+  If  A  is satisfiable in  cpc , then  A  is satisfiable in  ipc .
+- Note that a formula  B  is satisfiable in  ipc  if and only if  ~B  is not 
+  provable in  ipc . However, it is possible that  ~B  is not satisfiable in 
+  ipc , but  B  is not provable in  ipc .
+- Choose an appropriate infolevel for additional information during the 
+  execution (e.g.  set("infolevel", 5); ).
+
+EXAMPLE
+
+> satisfiable((p0 v p1) & ~p0);
+	true
+> satisfiable(p1 & ~p1);
+	false
+> satisfiable(~(p0 v ~p0));
+  provable(p0 v ~p0);
+	false
+	false
+
+SEE ALSO
+  consistent, provable
+

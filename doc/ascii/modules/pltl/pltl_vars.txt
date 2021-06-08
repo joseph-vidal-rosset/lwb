@@ -1,0 +1,35 @@
+
+vars
+====
+
+occurring variables
+
+SYNTAX
+- vars(A) 
+- vars(T) 
+
+PARAMETERS
+- A: formula
+- T: theory
+
+RESULT:  list of variables
+
+SYNOPSIS
+
+- vars  computes the list of variables of  pltl  occurring in the formula  A 
+  or in the theory  T .
+- The resulting list is sorted according to the ordering given by  less , 
+  and no element occurs twice in it.
+
+EXAMPLE
+
+> vars(F(p1 & ~p3) U G p1 v ~p1);
+	[p1, p3]
+> vars(true);
+	[]
+> vars([G(X p0 v p1), G p0, G p2]);
+	[p0, p1, p2]
+
+SEE ALSO
+  less, sort, typek
+

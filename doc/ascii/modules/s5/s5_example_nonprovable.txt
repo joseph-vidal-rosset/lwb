@@ -1,0 +1,17 @@
+
+Typical non-provable formulas example
+=====================================
+
+
+Typical non-provable formulas
+-----------------------------
+
+In spite of the four equivalencies above we cannot move  box  and  dia  
+inwards and outwards in all cases. If this were possible,  s5  would be 
+equivalent to classical propositional logic  cpc .
+
+> provable( dia p0 & dia p1  ->  dia(p0 & p1) );
+	false
+> provable( box(p0 v p1)  ->  box p0 v box p1 );
+	false
+

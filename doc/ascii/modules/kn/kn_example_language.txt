@@ -1,0 +1,47 @@
+
+Language example
+================
+
+
+Language
+--------
+
+At first we load the module  kn .
+
+> load(kn);
+	kn  user  
+
+Formulas of  kn  are built from the connectives  box0 ,  box1 ,  box2 , ..., 
+dia0 ,  dia1 ,  dia2 , ..., from the connectives of classical propositional 
+logic, namely  &  (conjunction),  v  (disjunction),  ->  (implication),  <-> 
+(equivalence),  ~  (negation), the two constants  true  and  false , and 
+from variables.
+Theories are lists of formulas.
+
+> A := (box1 p0 -> p1) <-> dia2(p2 & true v box2 ~false);
+	box1 p0 -> p1 <-> dia2 (p2 & true v box2 ~false)
+> B := p7 -> p112;
+	p7 -> p112
+> T := [A, B];
+	[box1 p0 -> p1 <-> dia2 (p2 & true v box2 ~false), p7 -> p112]
+> typek(A, "fml");
+	true
+> typek(B[1], "var");
+	true
+> typek(T, "theory");
+	true
+
+You can also use  and ,  or ,  imp ,  eq ,  not  instead of  & ,  v ,  -> ,  
+<-> ,  ~ .
+
+> A1 := p0 & p1 v p2 -> p3 <-> p0; 
+	p0 & p1 v p2 -> p3 <-> p0
+> A2 := p0 and p1 or p2 imp p3 eq p0; 
+	p0 & p1 v p2 -> p3 <-> p0
+> A1 = A2;
+	true
+
+In the possible world semantics,  box p  means that  p  is true in all 
+accessible worlds, and  dia p  means that there is an accessible world where 
+p  is true.
+

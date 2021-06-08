@@ -1,0 +1,100 @@
+
+user example
+============
+
+
+Using  set("bracketmode", S) 
+-----------------------------
+
+set("infolevel", S)  changes the amount of displayed brackets.
+
+> a :== (p1 v ((p2 v p3) v p4)) & p5 -> p6 -> p7 -> p8;
+> set("bracketmode", "assoc");
+	true
+> a;
+	(p1 v (p2 v p3 v p4)) & p5 -> p6 -> p7 -> p8
+> set("bracketmode", "full");
+	true
+> a;
+	(((p1 v ((p2 v p3) v p4)) & p5) -> (p6 -> (p7 -> p8)))
+
+
+Using  set("infolevel", N) 
+---------------------------
+
+set("infolevel", i)  changes the amount of additional information that is 
+printed during the execution of some module functions. If such information 
+is available, then we say so in the corresponding function description.
+
+> load(cwa);
+	cwa  user  
+> t :== [p0 v p1, ~p2, p3];
+
+The higher the info level is, the more information about the algorithm is 
+printed.
+
+> set("infolevel", 0);
+	true
+> cwa(t);
+	[(p0 v p1), (~p2), p3, (~p0), (~p1), (~p2)]
+> set("infolevel", 1);
+	true
+> cwa(t);
+cwa::cwa( T = [(p0 v p1), (~p2)..., Vars = [p0, p1, p2, p3] )
+	[(p0 v p1), (~p2), p3, (~p0), (~p1), (~p2)]
+> set("infolevel", 2);
+	true
+> cwa(t);
+cwa::cwa( T = [(p0 v p1), (~p2), p3], Vars = [p0, p1, p2, p3] )
+1.Compute which of the variables in  Vars  are not provable in CPC plus
+the theory  T, and return  T  plus these variables.
+Result of cwa::cwa: [(p0 v p1), (~p2), p3, (~p0), (~p1), ... .
+	[(p0 v p1), (~p2), p3, (~p0), (~p1), (~p2)]
+> set("infolevel", 3);
+	true
+> cwa(t);
+cwa::cwa( T = [(p0 v p1), (~p2), p3], Vars = [p0, p1, p2, p3] )
+1.Compute which of the variables in  Vars  are not provable in CPC plus
+the theory  T, and return  T  plus these variables.
+Trying  p0.
+p0  not provable in CPC plus  T.
+Trying  p1.
+p1  not provable in CPC plus  T.
+Trying  p2.
+p2  not provable in CPC plus  T.
+Trying  p3.
+Result of cwa::cwa: [(p0 v p1), (~p2), p3, (~p0), (~p1), (~p2)] .
+	[(p0 v p1), (~p2), p3, (~p0), (~p1), (~p2)]
+
+
+Using  set("outputmode", S) 
+----------------------------
+
+set("outputmode", S)  changes the format of the output.
+
+> a :== p1 <-> p3 & p2;
+> set("outputmode", "ascii");
+	true
+> a;
+	(p1 <-> (p3 & p2))
+> set("outputmode", "inputformat");
+	true
+> a;
+	(p1 <-> (p3 and p2))
+> set("outputmode", "latex");
+	\hbox{\it true}
+> a;
+	(\hbox{\it p1} \leftrightarrow (\hbox{\it p3} \land \hbox{\it p2}))
+
+
+Using  set("percents", X) 
+--------------------------
+
+set("percents", X)  you can turn the percents information or slider on and 
+off.
+
+> set("percents", true);
+	\hbox{\it true}
+> set("percents", false);
+	\hbox{\it true}
+

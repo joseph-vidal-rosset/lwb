@@ -1,0 +1,48 @@
+
+remove
+======
+
+remove superfluous connectives and subformulas
+
+SYNTAX
+- remove(A) 
+- remove(A, "provable") 
+- remove(A, "unary") 
+- remove(T) 
+- remove(T, "provable") 
+- remove(T, "unary") 
+
+PARAMETERS
+- A: formula
+- T: theory
+
+RESULT:  formula resp. theory
+
+SYNOPSIS
+
+- One argument:  remove  removes  false  and  true  in the formula  A  resp. 
+  in the theory  T  (as far as possible without introducing new variables).
+- Option  "provable" :  remove  removes subformulas in  A  resp. in  T  that 
+  are equivalent to  true  or to  false  (as far as possible without 
+  introducing new variables).
+- Option  "unary" :  remove  removes superfluous negation symbols, i.e.  ~ 
+  ~A  is converted to  A , and in equivalences at most one  ~  occurs. No 
+  other connectives are changed.
+- Case  A : The result is equivalent to  A  (in  cpc ). 
+  Case  T : The same formulas are provable in  cwa(T)  and in the result. 
+  However, in general  cwa(T)  is not equal to  cwa(remove(T))  .
+
+EXAMPLE
+
+> remove((true v p0) & p1 -> false);
+	~p1
+> remove([true, ~(p0 -> ~p0) <-> true]);
+	[~(p0 -> ~p0)]
+> remove([true, ~(p0 -> ~p0) <-> true], "provable");
+	[~(p0 -> ~p0)]
+> remove(~ ~(p0 v ~(~p1 <-> ~ ~p2)), "unary");
+	p0 v (p1 <-> p2)
+
+SEE ALSO
+  provable
+

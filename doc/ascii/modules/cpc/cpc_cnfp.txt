@@ -1,0 +1,33 @@
+
+cnfp
+====
+
+in conjunctive normal form ?
+
+SYNTAX
+- cnfp(A) 
+
+PARAMETERS
+- A: formula
+
+RESULT:  true  or  false 
+
+SYNOPSIS
+
+- cnfp  tests whether the formula  A  is in conjunctive normal form.
+- A formula is in conjunctive normal form if it is either  true  or  false  
+  or an arranged conjunction of disjunctions of variables and negated 
+  variables.
+
+EXAMPLE
+
+> cnfp((~p1 v p2) & (~p3 v p5 v p7) & p0);
+	true
+> cnfp((~p1 v p2) & ((~p3 v p5 v p7) & p0));
+	false
+> cnfp((~p1 v p2) & (~p3 v (p5 v p7)) & p0);
+	false
+
+SEE ALSO
+  arrange, cnf
+

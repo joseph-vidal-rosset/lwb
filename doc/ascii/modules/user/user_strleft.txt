@@ -1,0 +1,33 @@
+
+strleft
+=======
+
+head of a string
+
+SYNTAX
+- strleft(S, N) 
+
+PARAMETERS
+- S: strings
+- N: natural number,  N >= 0 
+
+RESULT:  string
+
+SYNOPSIS
+
+- strleft  extracts the first  N  letters from the string  S .
+
+EXAMPLE
+
+> strleft("abcdefgh", 3);
+	"abc"
+> strleft("abcdefgh", 1);
+	"a"
+> strleft("abcdefgh", 0);
+	""
+> strleft("cde", 5);
+	"cde"
+
+SEE ALSO
+  strindex, strlen, strmid, strright
+

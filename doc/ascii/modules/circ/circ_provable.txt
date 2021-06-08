@@ -1,0 +1,37 @@
+
+provable
+========
+
+provable in circumscription theory ?
+
+SYNTAX
+- provable(A, T, Lp) 
+- provable(A, T, Lp, Lq) 
+
+PARAMETERS
+- A: formula
+- T: theory
+- Lp, Lq: disjunct lists of variables
+
+RESULT:  true  or  false 
+
+SYNOPSIS
+
+- provable  test whether the formula  A  is provable in the circumscription 
+  theory of the theory  T . The variables in  Lp  are minimized, the 
+  variables in  Lq  are varied.
+- Choose an appropriate infolevel for additional information during the 
+  execution (e.g.  set("infolevel", 6); ).
+
+EXAMPLE
+
+> provable(p0, [p0 v p1], [p0]);
+	false
+> provable(p0, [p0 v p1], [p0], [p1]);
+	false
+> provable(~p3, [p1 v p2 v (p1 & p3), q], [p1,p2,p3]);
+	true
+
+SEE ALSO
+  circ, consistent
+

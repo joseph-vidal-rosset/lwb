@@ -1,0 +1,33 @@
+
+dnfp
+====
+
+in disjunctive normal form ?
+
+SYNTAX
+- dnfp(A) 
+
+PARAMETERS
+- A: formula
+
+RESULT:  true  or  false 
+
+SYNOPSIS
+
+- dnfp  tests whether the formula  A  is in disjunctive normal form.
+- A formula is in disjunctive normal form if it is either  true  or  false  
+  or an arranged disjunction of conjunctions of variables and negated 
+  variables.
+
+EXAMPLE
+
+> dnfp(~p6 & p2 v p3 & p1 & ~p2 v p4);
+	true
+> dnfp(~p6 & p2 v p3 & (p1 & ~p2) v p4);
+	false
+> dnfp(~p6 & p2 v (p3 & p1 & ~p2 v p4));
+	false
+
+SEE ALSO
+  arrange, dnf, qmc
+

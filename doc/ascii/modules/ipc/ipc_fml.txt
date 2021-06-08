@@ -1,0 +1,36 @@
+
+fml
+===
+
+special formulas
+
+SYNTAX
+- fml(Name1) 
+- fml(Name1, S) 
+
+PARAMETERS
+- Name1: one of  "mints1" ,  "mints2" ,  "peirce" ,  "tatsuta" 
+- S: string
+
+RESULT:  formula
+
+SYNOPSIS
+
+- fml  constructs special formulas.
+- The variables occurring in the constructed formulas begin with the string  
+  S . The default value for  S  is  "p" .
+- "mints1" : provable in  ipc  
+  "mints2" : not provable in  ipc , but provable in  cpc  
+  "peirce" : not provable in  ipc , but provable in  cpc  
+  "tatsuta" : provable in  ipc 
+
+EXAMPLE
+
+> fml("mints1", "q");
+	((((q1 -> q2) -> q1) -> q1) -> q2) -> q2
+> fml("mints2");
+	((((p1 -> p2) -> p1) -> p1) -> p3) -> p3
+
+SEE ALSO
+  provable, provable
+

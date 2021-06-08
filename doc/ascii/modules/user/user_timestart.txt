@@ -1,0 +1,29 @@
+
+timestart
+=========
+
+start timing
+
+SYNTAX
+- timestart() 
+
+RESULT:  null expression
+
+SYNOPSIS
+
+- timestart  starts the timing of subsequent commands. The time passed is 
+  recorded until the timer is once again stopped with the  timestop  
+  comannd.
+
+EXAMPLE
+
+> timestart(); timestop(); 
+	0.00
+> timestart(); provable(pigeonhole(3)); timestop();
+	true
+	0.03
+> unload(cpc);
+
+SEE ALSO
+  clockticks, limitstart, limitstop, timestop
+

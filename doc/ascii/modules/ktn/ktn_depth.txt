@@ -1,0 +1,29 @@
+
+depth
+=====
+
+depth of a formula
+
+SYNTAX
+- depth(A) 
+
+PARAMETERS
+- A: formula
+
+RESULT:  integer,  >= 0 
+
+SYNOPSIS
+
+- depth  computes the depth of the formula  A  in  ktn .
+- Variables,  true  and  false  have depth  0 .
+
+EXAMPLE
+
+> depth(p1 v box2(p0 v ~p1) -> dia0 p2);
+	5
+> depth(p2);
+	0
+
+SEE ALSO
+  length
+

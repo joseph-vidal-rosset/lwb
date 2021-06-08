@@ -1,0 +1,28 @@
+
+randomize
+=========
+
+set random seed
+
+SYNTAX
+- randomize(N) 
+
+PARAMETERS
+- N: natural number,  N >= 0 
+
+RESULT:  true 
+
+SYNOPSIS
+
+- Sets a new random seed.
+- If you start the LWB twice and do not use  randomize , then you will get 
+  both times the same series of random numbers with the function  randomint  .
+
+EXAMPLE
+
+> randomize(8);
+	true
+
+SEE ALSO
+  randomint, randomfml
+

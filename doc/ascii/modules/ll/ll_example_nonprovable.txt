@@ -1,0 +1,22 @@
+
+Typical non-provable formulas example
+=====================================
+
+
+Typical non-provable formulas
+-----------------------------
+
+> provable( p0 | ~p0 | p1 );  
+	false
+> provable( p0 -o p0 X p0 );
+	false
+
+but,
+
+> provable( p0 | ~p0 );
+	true
+> provable( !p0 -o p0 X p0 ); 
+	true
+> provable( !p0 -o p0 X p0 X p0 X p0 X p0 );
+	true
+

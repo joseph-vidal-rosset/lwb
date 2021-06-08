@@ -1,0 +1,132 @@
+<TEXT>
+_____________________________________________________________
+
+   Demo for Embeddings:    classical -> intuitionistic -> linear
+_____________________________________________________________
+
+</TEXT>
+<INPUT>
+load( cpc );        # classical propositional calculus
+</INPUT>
+<OUTPUT>
+	cpc  user  
+
+</OUTPUT>
+<INPUT>
+s:= urquhart( 2 );
+</INPUT>
+<OUTPUT>
+	p1 <-> p2 <-> p1 <-> p2
+
+</OUTPUT>
+<INPUT>
+s1:= s { a/p1, b/p2 };  
+</INPUT>
+<OUTPUT>
+	a <-> b <-> a <-> b
+
+</OUTPUT>
+<DELIMITER>
+
+</DELIMITER
+<TEXT>
+We examine the formula in  intuitionistic logic:
+</TEXT>
+<INPUT>
+load(ipc);        # intuitionistic prop. calculus
+</INPUT>
+<OUTPUT>
+	ipc  cpc  user  
+
+</OUTPUT>
+<INPUT>
+cpc::provable( s1 );
+ipc::provable( s1 );
+</INPUT>
+<OUTPUT>
+	true
+	false
+
+</OUTPUT>
+<TEXT>
+Commutativity of '<->' holds in ipc, ...
+</TEXT>
+<INPUT>
+ipc::provable( (a <-> b) <-> (b <-> a) );  
+</INPUT>
+<OUTPUT>
+	true
+
+</OUTPUT>
+<TEXT>
+... but associativity does not:
+</TEXT>
+<INPUT>
+ipc::provable( (a <-> (b <-> c) )    <->
+                          ((a <-> b) <-> c)  );
+</INPUT>
+<OUTPUT>
+	false
+
+</OUTPUT>
+<INPUT>
+s2:= cpc::ipc( s1 );
+        cpc::ipc( s1, "goedel" );
+</INPUT>
+<OUTPUT>
+	¬¬(a <-> b <-> a <-> b)
+	¬¬a <-> ¬¬b <-> ¬¬a <-> ¬¬b
+
+</OUTPUT>
+<INPUT>
+ipc::provable( s2 );
+</INPUT>
+<OUTPUT>
+	true
+
+</OUTPUT>
+<DELIMITER>
+
+</DELIMITER
+<TEXT>
+We move to linear logic:
+</TEXT>
+<INPUT>
+load( ll );   # propositional linear logic
+</INPUT>
+<OUTPUT>
+	ll  ipc  cpc  user  
+Entering special mode for linear logic. 
+
+</OUTPUT>
+<INPUT>
+s3:= ipc::ll( s2 );
+</INPUT>
+<OUTPUT>
+	!(!((!((!((!a -o b) & (!b -o a)) -o a) & (!a -o (!a -o b) & (!b -o a))) -o b) & (!b -o (!((!a -o b) & (!b -o a)) -o a) & (!a -o (!a -o b) & (!b -o a)))) -o 0) -o 0
+
+</OUTPUT>
+<TEXT>
+Full propositional linear logic with exponentials is not decidable. 
+However, we can increase a search depth limit to establish provability.
+</TEXT>
+<INPUT>
+for i := 1 to 7 do
+      ll::provable( s3, i );
+</INPUT>
+<OUTPUT>
+	fail
+	fail
+	fail
+	fail
+	true
+	true
+	true
+
+</OUTPUT>
+<INPUT>
+ 
+</INPUT>
+<OUTPUT>
+ 
+</OUTPUT>

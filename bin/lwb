@@ -1,0 +1,49 @@
+#!/bin/sh
+
+# variables that need contents
+# $dir:   directory with the path to the executable (may contain relative 
+#         paths)
+# $fonts: directory with the path to the fonts (may NOT contain relative paths)
+# $lib:   directory with the library path of the lwb (may contain relative
+#         paths)
+#
+
+if test -h $0; then
+  echo "Sorry, the LWB cannot be started via a symbolic link !"
+  exit 1
+fi
+
+# determine the directory in which the current script is located
+if test `uname` = "Linux"; then
+  dir=`dirname $0`
+else
+  dir=`which $0`
+  dir=`dirname $dir`
+fi
+
+dir=`/bin/sh -c "cd $dir; pwd"`
+lib=`/bin/sh -c "cd $dir/../lib; pwd"`
+
+
+if test ! -f $dir/lwb.exec; then
+  echo "Executable $dir/lwb.exec not found, aborting !"
+  exit
+fi
+
+# set the LD_LIBRARY_PATH to the corresponding directory
+LD_LIBRARY_PATH=$LD_LIBRARY_PATH${LD_LIBRARY_PATH:+:}$lib
+export LD_LIBRARY_PATH
+
+echo "Starting the LWB, please wait..."
+
+# now start the lwb
+# if there is a configuration file, we use that as well
+if test -f .lwbrc; then
+  $dir/lwb.exec .lwbrc $*
+else
+  if test -f $dir/.lwbrc; then
+    $dir/lwb.exec $dir/.lwbrc $*
+  else
+    $dir/lwb.exec $*
+  fi  
+fi

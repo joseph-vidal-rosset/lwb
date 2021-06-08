@@ -1,0 +1,29 @@
+
+length
+======
+
+length of a formula
+
+SYNTAX
+- length(A) 
+
+PARAMETERS
+- A: formula
+
+RESULT:  integer,  >= 0 
+
+SYNOPSIS
+
+- length  computes the length of the formula  A  in  pltl .
+- Variables and connectives have length  1 . Brackets are not counted.
+
+EXAMPLE
+
+> length( X X (p1 U p1 B false) );
+	7
+> length(p3);
+	1
+
+SEE ALSO
+  depth
+

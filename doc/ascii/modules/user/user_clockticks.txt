@@ -1,0 +1,28 @@
+
+clockticks
+==========
+
+process time in clock ticks
+
+SYNTAX
+- clockticks() 
+
+RESULT:  integer
+
+SYNOPSIS
+
+- clockticks  returns the time consumed by the process in clockticks. The 
+  duration of a clocktick depends on the hardware the LWB is running on.
+
+EXAMPLE
+
+> s:== a;
+  ct:== clockticks();
+> for i:= 1 to 1000 do
+    s:== s & a;
+> clockticks() - ct;
+	285
+
+SEE ALSO
+  limitstart, limitstop, timestart, timestop
+

@@ -1,0 +1,26 @@
+
+string
+======
+
+convert a symbol into a string
+
+SYNTAX
+- string(X) 
+
+PARAMETERS
+- X: symbol or integer
+
+RESULT:  string
+
+SYNOPSIS
+
+- string  converts the symbol  X  into a string.
+
+EXAMPLE
+
+> string(p1);
+	"p1"
+
+SEE ALSO
+  index, symbol
+

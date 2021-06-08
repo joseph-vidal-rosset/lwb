@@ -1,0 +1,36 @@
+
+consistent
+==========
+
+closed world assumption theory consistent ?
+
+SYNTAX
+- consistent(T) 
+- consistent(T, Vars) 
+
+PARAMETERS
+- T: theory
+- Vars: list of variables
+
+RESULT:  true  or  false 
+
+SYNOPSIS
+
+- One argument:  consistent  tests whether the closed world assumption 
+  theory of the theory  T  is consistent (no restriction of variables).
+- Two arguments:  consistent  tests whether the closed world assumption 
+  theory restricted on the variables in  Vars  of the theory  T  is 
+  consistent.
+- Choose an appropriate infolevel for additional information during the 
+  execution (e.g.  set("infolevel", 3); ).
+
+EXAMPLE
+
+> consistent([p0, p1 v p2]);
+	false
+> consistent([p0, p1 v p2], [p0, p1]);
+	true
+
+SEE ALSO
+  provable
+

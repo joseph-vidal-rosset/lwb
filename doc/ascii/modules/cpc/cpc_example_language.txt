@@ -1,0 +1,41 @@
+
+Language example
+================
+
+
+Language
+--------
+
+At first we load the module  cpc .
+
+> load(cpc);
+	cpc  user  
+
+Formulas of  cpc  are built from the symbols for conjunction ( & ), 
+disjunction ( v ), implication ( -> ), equivalence ( <-> ), negation ( ~ ), 
+the two constants  true  and  false , and variables.
+Theories are list of formulas.
+
+> A := (p0 -> false) <-> ~(p2 & true v p0);
+	p0 -> false <-> ~(p2 & true v p0)
+> B := p17 -> p23;
+	p17 -> p23
+> T := [A, B];
+	[p0 -> false <-> ~(p2 & true v p0), p17 -> p23]
+> typek(A, "fml");
+	true
+> typek(B[1], "var");
+	true
+> typek(T, "theory");
+	true
+
+You can also use  and ,  or ,  imp ,  eq ,  not  instead of  & ,  v ,  -> ,  
+<-> ,  ~ .
+
+> A1 := p0 & p1 v p2 -> p3 <-> p0; 
+	p0 & p1 v p2 -> p3 <-> p0
+> A2 := p0 and p1 or p2 imp p3 eq p0; 
+	p0 & p1 v p2 -> p3 <-> p0
+> A1 = A2;
+	true
+

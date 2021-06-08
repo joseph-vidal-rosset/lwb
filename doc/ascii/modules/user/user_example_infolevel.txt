@@ -1,0 +1,52 @@
+
+Using  set("infolevel", N)  example
+===================================
+
+
+Using  set("infolevel", N) 
+---------------------------
+
+set("infolevel", i)  changes the amount of additional information that is 
+printed during the execution of some module functions. If such information 
+is available, then we say so in the corresponding function description.
+
+> load(cwa);
+	cwa  user  
+> T :== [p0 v p1, ~p2, p3];
+
+The higher the info level is, the more information about the algorithm is 
+printed.
+
+> set("infolevel", 0);
+	true
+> cwa(T);
+	[(p0 v p1), (~p2), p3, (~p0), (~p1), (~p2)]
+> set("infolevel", 1);
+	true
+> cwa(T);
+cwa::cwa( T = [(p0 v p1), (~p2)..., Vars = [p0, p1, p2, p3] )
+	[(p0 v p1), (~p2), p3, (~p0), (~p1), (~p2)]
+> set("infolevel", 2);
+	true
+> cwa(T);
+cwa::cwa( T = [(p0 v p1), (~p2), p3], Vars = [p0, p1, p2, p3] )
+1.Compute which of the variables in  Vars  are not provable in CPC plus
+the theory  T, and return  T  plus the negation of these variables.
+Result of cwa::cwa: [(p0 v p1), (~p2), p3, (~p0), (~p1), ... .
+	[(p0 v p1), (~p2), p3, (~p0), (~p1), (~p2)]
+> set("infolevel", 3);
+	true
+> cwa(T);
+cwa::cwa( T = [(p0 v p1), (~p2), p3], Vars = [p0, p1, p2, p3] )
+1.Compute which of the variables in  Vars  are not provable in CPC plus
+the theory  T, and return  T  plus the negation of these variables.
+Trying  p0.
+p0  not provable in CPC plus  T.
+Trying  p1.
+p1  not provable in CPC plus  T.
+Trying  p2.
+p2  not provable in CPC plus  T.
+Trying  p3.
+Result of cwa::cwa: [(p0 v p1), (~p2), p3, (~p0), (~p1), (~p2)] .
+	[(p0 v p1), (~p2), p3, (~p0), (~p1), (~p2)]
+

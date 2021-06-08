@@ -1,0 +1,32 @@
+
+convert2array
+=============
+
+convert an expression into an array
+
+SYNTAX
+- convert2array(E) 
+
+PARAMETERS
+- E: expression (typically a list)
+
+RESULT:  array
+
+SYNOPSIS
+
+- convert2array  converts the arguments/operands of the expression  E  into 
+  an array. The main purpose is to convert a list of expressions into an 
+  array.
+- If  E  has no operands (e.g. it is a symbol), then the empty array is 
+  returned.
+
+EXAMPLE
+
+> convert2array([p & q, true, ~q]);
+	[p & q, true, ~q]
+> convert2array(p & q);
+	[p, q]
+
+SEE ALSO
+  convert2list, makefunction
+

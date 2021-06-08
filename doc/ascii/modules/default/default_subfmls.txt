@@ -1,0 +1,35 @@
+
+subfmls
+=======
+
+subformulas
+
+SYNTAX
+- subfmls(A) 
+- subfmls(T) 
+- subfmls(Td) 
+
+PARAMETERS
+- A: formula
+- T: theory
+- Td: default theory
+
+RESULT:  list of variables
+
+SYNOPSIS
+
+- subfmls  computes the list of the subformulas that occur in the argument.
+- The resulting list contains no duplicate elements.
+
+EXAMPLE
+
+> subfmls(p0 & p1 -> ~ ~p1);
+	[p0 & p1 -> ~~p1, p0 & p1, p0, p1, ~~p1, ~p1]
+> subfmls([p0 & p1 & p2, p0 & p1 & p3, ~p2]);
+	[p0 & p1 & p2, p0 & p1, p0, p1, p2, p0 & p1 & p3, p3, ~p2]
+> subfmls([ [p0,p1], [[p0,p2,p2],[p0,~p2,~p2],[p1 & p2,[p3,~p4],p4 -> p4]] ]);
+	[p0, p1, p2, ~p2, p1 & p2, p3, ~p4, p4, p4 -> p4]
+
+SEE ALSO
+  sort, typek, vars
+

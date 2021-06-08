@@ -1,0 +1,28 @@
+
+consistent
+==========
+
+theory consistent ?
+
+SYNTAX
+- consistent(T) 
+
+PARAMETERS
+- T: theory
+
+RESULT:  true  or  false 
+
+SYNOPSIS
+
+- consistent  tests whether the theory  T  is consistent in  pltl .
+
+EXAMPLE
+
+> consistent([p0, X ~p0, X X G p0]);
+	false
+> consistent([G(p0 -> G p1), X p0, G F ~p1]);
+	false
+
+SEE ALSO
+  provable, satisfiable
+

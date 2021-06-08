@@ -1,0 +1,60 @@
+
+gentzen2tait
+============
+
+proof conversion to Tait style
+
+SYNTAX
+- gentzen2tait(GP) 
+
+PARAMETERS
+- GP: proof in Gentzen style
+
+RESULT:  proof in Tait style
+
+SYNOPSIS
+
+- gentzen2tait  converts the proof  GP  in Gentzen style into a proof in 
+  Tait style, i.e., a single sided calculus with two logical rules for  v  
+  and  & . Formulae on the left side are negated and inserted according to 
+  the position of their principal formula.
+- The connectives  <->  and  ->  as well as negations that are not in front 
+  of variables should be seen as abbreviations. To avoid this, first compute 
+  the negation normal form of the formula.
+
+EXAMPLE
+
+> gp := proof(nnf(~p0 v p1 -> p0 -> p1));
+	Proof of:  ==> p0 & ~p1 v (~p0 v p1)
+Module: cpc
+Steps: 6, Depth: 6
+Branchings: 1, Branchingdepth: 1
+Axioms: 2
+Formulae: 19
+Output option(s): no_emphasizing
+(r v)		==> p0 & ~p1 v (~p0 v p1)
+(r v)		==> p0 & ~p1, ~p0 v p1
+(r ~)		==> p0 & ~p1, ~p0, p1
+(r &)		p0 ==> p0 & ~p1, p1  [1.1,1.2]
+(id)	1.1	  p0 ==> p0, p1
+(w)	1.2	  p0 ==> ~p1, p1
+(r ~)		  ==> ~p1, p1
+(id)		  p1 ==> p1
+> gentzen2tait(gp);
+	Proof of:  p0 & ~p1 v (~p0 v p1)
+Module: cpc
+Steps: 4, Depth: 4
+Branchings: 1, Branchingdepth: 1
+Axioms: 2
+Formulae: 14
+Output option(s): no_emphasizing
+(v)		p0 & ~p1 v (~p0 v p1)
+(v)		p0 & ~p1, ~p0 v p1
+(&)		p0 & ~p1, ~p0, p1  [1.1,1.2]
+(&)	1.1	  p0, ~p0, p1
+(w)	1.2	  ~p1, ~p0, p1
+(w)		  ~p1, p1
+
+SEE ALSO
+  gentzen2tableaux, nnf, proof
+

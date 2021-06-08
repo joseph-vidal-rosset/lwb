@@ -1,0 +1,59 @@
+
+gentzen2tableaux
+================
+
+proof conversion to tableaux style
+
+SYNTAX
+- gentzen2tableaux(GP) 
+
+PARAMETERS
+- GP: proof in Gentzen style
+
+RESULT:  proof in two-sided tableaux style
+
+SYNOPSIS
+
+- gentzen2tableaux  converts the proof  GP  in Gentzen style into a proof in 
+  two-sided tableaux style, i.e., a proof where in each branch at least one 
+  variable occurs on the left side of a sequent and on the right side of a 
+  (possibly other) sequent. In tableaux style, only the newly created 
+  formulas are listed.
+- A similar result can be obtained by choosing the proof output option  
+  "relevant_only" .
+
+EXAMPLE
+
+> gp := proof(~p0 v p1 -> p0 -> p1);
+	Proof of:  ==> ~p0 v p1 -> p0 -> p1
+Module: cpc
+Steps: 5, Depth: 5
+Branchings: 1, Branchingdepth: 1
+Axioms: 2
+Formulae: 16
+Output option(s): no_emphasizing
+(r ->)		==> ~p0 v p1 -> p0 -> p1
+(r ->)		~p0 v p1 ==> p0 -> p1
+(l v)		p0, ~p0 v p1 ==> p1  [1.1,1.2]
+(w)	1.1	  p0, ~p0 ==> p1
+(l ~)		  p0, ~p0 ==> 
+(id)		  p0 ==> p0
+(id)	1.2	  p0, p1 ==> p1
+> gentzen2tableaux(gp);
+	Proof of:  ~p0 v p1 -> p0 -> p1 ==> 
+Module: cpc
+Steps: 4, Depth: 4
+Branchings: 1, Branchingdepth: 1
+Axioms: 2
+Formulae: 8
+Output option(s): no_emphasizing
+(l ->)		~p0 v p1 -> p0 -> p1 ==> 
+(l ->)		p0 -> p1 ==> ~p0 v p1
+(r v)		p1 ==> p0  [1.1,1.2]
+(r ~)	1.1	  ==> ~p0
+(id)		  p0 ==> 
+(id)	1.2	  ==> p1
+
+SEE ALSO
+  gentzen2tait, proof, proofoptions
+

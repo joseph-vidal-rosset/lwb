@@ -1,0 +1,38 @@
+
+consistent
+==========
+
+all extensions consistent ?
+
+SYNTAX
+- consistent(Td) 
+
+PARAMETERS
+- Td: default theory
+
+RESULT:  true  or  false 
+
+SYNOPSIS
+
+- consistent  tests whether all extensions of the default theory  Td  are 
+  consistent.
+- If there is no default with an empty justification, then  Td  has an 
+  inconsistent extension iff the theory of  Td  (i.e. the first element of  
+  Td ) is inconsistent in  cpc .
+- If  Td  has an inconsistent extension, then this is the only extension of 
+  Td .
+
+EXAMPLE
+
+> consistent([ [p0,p1 v ~p0], [[p0,~p1,~p1],[p0,p2,p2]] ]);
+	true
+> consistent([ [p0,p1 v ~p0,~p1], [[p0,p2,p2]] ]);
+	false
+> consistent([ [p0], [[p0,[],p1],[p0,[],~p1],[p2,p3,p3]] ]) = false;
+	true
+> consistent([ [p5], [[p5,p0,p0],[p0,[],p1],[p0,[],~p1],[p2,p3,p3]] ]) = true;
+	true
+
+SEE ALSO
+  provable
+

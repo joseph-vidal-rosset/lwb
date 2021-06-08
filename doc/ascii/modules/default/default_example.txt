@@ -1,0 +1,130 @@
+
+default example
+===============
+
+
+Language
+--------
+
+At first we load the module  default .
+
+> load(default);
+	default  user  
+
+Formulas of  default  are built from the symbols for conjunction ( & ), 
+disjunction ( v ), implication ( -> ), equivalence ( <-> ), negation ( ~ ), 
+the two constants  true  and  false , and variables.
+Theories are list of formulas.
+
+> a := (p v false) & ~(q -> p2) <-> true;
+	(p v false) & ~(q -> p2) <-> true
+> b := q2 v q22;
+	q2 v q22
+> t := [a, b];
+	[(p v false) & ~(q -> p2) <-> true, q2 v q22]
+> typek(a, "fml");
+	true
+> typek(b[1], "var");
+	true
+> typek(t, "theory");
+	true
+
+You can also use  and ,  or ,  imp ,  eq ,  not  instead of  & ,  v ,  -> ,  
+<-> ,  ~ .
+
+> a1 := p & q v r -> s <-> p; 
+	p & q v r -> s <-> p
+> a2 := p and q or r imp s eq p; 
+	p & q v r -> s <-> p
+> a1 = a2;
+	true
+
+Defaults are triples, built from a formula, a list of formulas and a 
+formula. A normal default is a triple of three formulas.
+
+> d1 := [q, [p, r v s], p];
+	[q, [p, r v s], p]
+> typek(d1, "default");
+	true
+> normalp(d1);
+	false
+> d2 := [p1 v q, ~p2, ~p2];
+	[p1 v q, ~p2, ~p2]
+> typek(d2, "default");
+	true
+> normalp(d2);
+	true
+
+The intended meaning of  d2  is the following: If we can prove  p1 v q  in 
+our theory, and if we can add  ~p2  to our theory without obtaining an 
+inconsistent theory, then we add  ~p2  to our theory.
+
+A default theory is a pair built from a theory and a list of defaults.
+
+> td := [ [p v r, q], [d1,d2] ];
+	[[p v r, q], [[q, [p, r v s], p], [p1 v q, ~p2, ~p2]]]
+> typek(td, "dtheory");
+	true
+
+
+Normal default theories
+-----------------------
+
+t ,  t2  and  t3  are normal default theories.
+
+> t := [ [p,q], [ [p,r,r],[p2,s,s] ] ];
+	[[p, q], [[p, r, r], [p2, s, s]]]
+> normalp(t);
+	true
+> t2 := [ [p], [ [p,r1,r1],[p,~r1,~r1],[p,r2,r2],[p,~r2,~r2] ] ];
+	[[p], [[p, r1, r1], [p, ~r1, ~r1], [p, r2, r2], [p, ~r2, ~r2]]]
+> normalp(t2);
+	true
+> t3 := [ [p], [ [p,r1,r1],[p,~r1,~r1],
+                 [p,r2,r2],[p,~r2,~r2],
+                 [p,r3,r3],[p,~r3,~r3] ] ];
+	[[p], [[p, r1, r1], [p, ~r1, ~r1], [p, r2, r2], [p, ~r2, ~r2], [p, r3, r3], 
+[p, ~r3, ~r3]]]
+> normalp(t3);
+	true
+
+The number of extensions of a normal default theory is at most one, but 
+there is no upper limit.
+
+> nops(extensions(t));
+	1
+> nops(extensions(t2));
+	4
+> nops(extensions(t3));
+	8
+
+With  extensionp  we can test whether a list of formulas is an extension of 
+a certain default theory.
+
+> extensionp(extensions(t2)[1], t2);
+	true
+> extensionp(extensions(t2)[2], t2);
+	true
+> extensionp([p,r1], t2);
+	false
+
+The provability test can be used in two ways.
+
+> provable(r1, t2, "all");
+	false
+> provable(r1, t2, "one");
+	true
+
+
+Non-normal default theories
+---------------------------
+
+There are non-normal default theories with no extension.
+
+> t := [ [p], [[p,q,~q]] ];
+	[[p], [[p, q, ~q]]]
+> normalp(t);
+	false
+> extensions(t);
+	[]
+

@@ -1,0 +1,34 @@
+
+satisfiable
+===========
+
+formula satisfiable ?
+
+SYNTAX
+- satisfiable(A) 
+
+PARAMETERS
+- A: formula
+
+RESULT:  true  or  false 
+
+SYNOPSIS
+
+- satisfiable  tests whether the formula  A  is satisfiable in  pltl .
+- The implementation of  pltl::satisfiable  is an efficient version of the 
+  tableau graph expansion method with a strongly connected components 
+  analysis for the eventuality checking. It is due to Geert Janssen, Formal 
+  Verification Group, Eindhoven University of Technology.
+
+EXAMPLE
+
+> satisfiable( (p0 v p2) & G (~p0 v X p0) & G F ~p0 );
+	true
+> satisfiable( p0 U p1 & G ~p1 );
+	false
+> satisfiable( G F p0 & G F p1 & G(p1 -> G ~p0) );
+	false
+
+SEE ALSO
+  provable, model
+

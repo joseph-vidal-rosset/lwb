@@ -1,0 +1,30 @@
+
+strlen
+======
+
+length of a string
+
+SYNTAX
+- strlen(S) 
+
+PARAMETERS
+- S: string
+
+RESULT:  integer
+
+SYNOPSIS
+
+- strlen  computes the length of the string  S .
+
+EXAMPLE
+
+> strlen("test string");
+	11
+> strlen("123");
+	3
+> strlen("");
+	0
+
+SEE ALSO
+  strconcat, strindex, strleft, strmid, strright
+

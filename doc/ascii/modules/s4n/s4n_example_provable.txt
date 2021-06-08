@@ -1,0 +1,25 @@
+
+Typical provable formulas example
+=================================
+
+
+Typical provable formulas
+-------------------------
+
+All formulas that are provable in classical propositional logic are also 
+provable in the modal logic  s4n .
+Therefore we concentrate on formulas typical for  s4n .
+
+> provable( box2(p0 & p1)  <->  box2 p0 & box2 p1 );
+	true
+> provable( dia7(p0 v p1)  <->  dia7 p0 v dia7 p1 );
+	true
+> provable( ~ box15 ~ p0  <-> dia15 p0 );
+	true
+> provable( box2(r1 & r2) -> box2 r1 -> box2 r2 );
+	true
+> provable( box3 p0 -> p0 );
+	true
+> provable( box4 p0 -> box4 box4 p0 );
+	true
+

@@ -1,0 +1,29 @@
+
+modaldepth
+==========
+
+modal depth of a formula
+
+SYNTAX
+- modaldepth(A) 
+
+PARAMETERS
+- A: formula
+
+RESULT:  integer,  >= 0 
+
+SYNOPSIS
+
+- modaldepth  computes the modal depth of the formula  A  in  kt .
+- Formulas without  box  and without  dia  have modal depth  0 .
+
+EXAMPLE
+
+> modaldepth(p0 -> dia ~ box(p1 v dia p2));
+	3
+> modaldepth((p1 v p0) & ~p1);
+	0
+
+SEE ALSO
+  depth
+

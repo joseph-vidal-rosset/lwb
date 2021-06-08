@@ -1,0 +1,55 @@
+
+display
+=======
+
+display truthtables
+
+SYNTAX
+- display(TT) 
+- display(TT, S1, S2) 
+- display(TT, S1, S2, SA) 
+
+PARAMETERS
+- TT: a truthtable
+- S1, S2, SA: strings
+
+RESULT:  formula
+
+SYNOPSIS
+
+- display  displays a truthtable using two dimensions. Choose a fixed-width 
+  font.
+- With the strings  S1  and  S2  you can choose what should be printed 
+  instead of  false  and  true . This is especially helpful in the case of 
+  larger truthtables.
+- The string  SA  is printed instead of the formula in the top right table 
+  element. This is helpful if the formula in the truthtable is too long.
+
+EXAMPLE
+
+> display(truthtable(p0 & p1));
+-------------------------
+| p0    p1    | p0 & p1 |
+-------------------------
+| false false | false   |
+| false true  | false   |
+| true  false | false   |
+| true  true  | true    |
+-------------------------
+> display(truthtable(p0 <-> (p1 <-> p2) & ~p1 v p2), "0", "1", "...");
+------------------
+| p0 p1 p2 | ... |
+------------------
+| 0  0  0  | 0   |
+| 0  0  1  | 0   |
+| 0  1  0  | 1   |
+| 0  1  1  | 0   |
+| 1  0  0  | 1   |
+| 1  0  1  | 1   |
+| 1  1  0  | 0   |
+| 1  1  1  | 1   |
+------------------
+
+SEE ALSO
+  truthtable, typek
+

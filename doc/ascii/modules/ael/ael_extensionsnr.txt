@@ -1,0 +1,26 @@
+
+extensionsnr
+============
+
+number of autoepistemic extensions of a theory
+
+SYNTAX
+- extensionsnr(T) 
+
+PARAMETERS
+- T: theory
+
+RESULT:  integer,  >= 0 
+
+SYNOPSIS
+
+- extensionsnr  computes the number of autoepistemic extensions of the 
+  theory  T .
+
+EXAMPLE
+
+> extensionsnr([box p0]);
+	0
+> extensionsnr([~ box p0 -> p1, ~ box p1 -> p0]);
+	2
+

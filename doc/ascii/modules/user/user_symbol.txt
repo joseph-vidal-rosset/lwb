@@ -1,0 +1,33 @@
+
+symbol
+======
+
+convert a string into a symbol
+
+SYNTAX
+- symbol(S) 
+- symbol(S, N1, N2, ...) 
+
+PARAMETERS
+- S: string or symbol
+- N1, N2, ...: integers
+
+RESULT:  symbol
+
+SYNOPSIS
+
+- symbol  converts the string  S  into a symbol. If integer arguments are 
+  given, then they are appended to the symbol name.
+- The string must begin with a letter which can be followed by any 
+  combination of letters, digits, and underscores.
+
+EXAMPLE
+
+> symbol("p");
+	p
+> symbol("p", 12, 44);
+	p1244
+
+SEE ALSO
+  index, string
+

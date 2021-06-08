@@ -1,0 +1,29 @@
+
+lua
+===
+
+latches until after
+
+SYNTAX
+- lua(A, B) 
+
+PARAMETERS
+- A, B: formulae
+
+RESULT:  formula
+
+SYNOPSIS
+
+- lua  is the  `latches until after'  connective, where  lua(p0,p1)  is 
+  defined as  ~p0 W ( p0 W (p0 & p1) ) , i.e.  p0  is allowed to turn from  
+  true  to  false  only after a  p1 , or: once  p0  is  true , it may only 
+  become  false  after a  p1 .
+
+EXAMPLE
+
+> lua(p0,q1); 
+	~p0 W (p0 W p0 & q1)
+
+SEE ALSO
+  wu, lu
+

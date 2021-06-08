@@ -1,0 +1,31 @@
+
+convert2list
+============
+
+convert an expression into a list
+
+SYNTAX
+- convert2list(E) 
+
+PARAMETERS
+- E: expression (typically an array)
+
+RESULT:  list
+
+SYNOPSIS
+
+- convert2list  converts the arguments/operands of the expression  E  into a 
+  list. The main purpose is to convert an array of expressions into a list.
+- If  E  has no operands (e.g. it is a symbol), then the empty list is 
+  returned.
+
+EXAMPLE
+
+> convert2list(array(p & q, true, ~p));
+	[p & q, true, ~p]
+> convert2list(p & q);
+	[p, q]
+
+SEE ALSO
+  convert2list, makefunction
+

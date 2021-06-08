@@ -1,0 +1,35 @@
+
+subfmls
+=======
+
+subformulas
+
+SYNTAX
+- subfmls(A) 
+- subfmls(T) 
+
+PARAMETERS
+- A: formula
+- T: theory
+
+RESULT:  list of formulas
+
+SYNOPSIS
+
+- subfmls  computes the list of the subformulas that occur in the formula  A 
+  resp. in the theory  T .
+- The resulting list contains no duplicate elements.
+
+EXAMPLE
+
+> subfmls((dia1 p0 & ~p1) -> box2 dia1 p0);
+	[dia1 p0 & ~p1 -> box2 dia1 p0, dia1 p0 & ~p1, dia1 p0, ~p1, p1, box2 dia1 
+p0]
+> subfmls(~true);
+	[~true, true]
+> subfmls([(~p2 v p1) -> dia1 p0, dia2 p0]);
+	[~p2 v p1 -> dia1 p0, ~p2 v p1, ~p2, p2, p1, dia1 p0, dia2 p0]
+
+SEE ALSO
+  sort, typek, vars
+

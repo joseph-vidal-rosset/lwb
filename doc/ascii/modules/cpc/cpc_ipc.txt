@@ -1,0 +1,33 @@
+
+ipc
+===
+
+embedding in  ipc 
+
+SYNTAX
+- ipc(A) 
+- ipc(A, "goedel") 
+
+PARAMETERS
+- A: formula
+
+RESULT:  formula
+
+SYNOPSIS
+
+- ipc  computes an embedding in  ipc , returning simply  ~ ~A  if the option 
+  "goedel"  is omitted.
+- If the option  "goedel"  is given, Goedel's non-non-interpretation is 
+  returned with unnecessary  ~  removed. The result contains no  v .
+- The result is provable in  ipc  iff  A  is provable in  cpc .
+
+EXAMPLE
+
+> ipc(p0 v ~p0);
+	~~(p0 v ~p0)
+> ipc(p0 v ~p0, "goedel");
+	~(~p0 & ~~p0)
+
+SEE ALSO
+  provable, provable
+

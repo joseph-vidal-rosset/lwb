@@ -1,0 +1,28 @@
+
+satisfiable
+===========
+
+formula satisfiable ?
+
+SYNTAX
+- satisfiable(A) 
+
+PARAMETERS
+- A: formula
+
+RESULT:  true  or  false 
+
+SYNOPSIS
+
+- satisfiable  tests whether the formula  A  is satisfiable in  tk .
+
+EXAMPLE
+
+> satisfiable(H ~p1 & p1 & G ~p1);
+	true
+> satisfiable(P(p1 & p2) & H ~p1);
+	false
+
+SEE ALSO
+  provable
+

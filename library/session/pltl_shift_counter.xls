@@ -1,0 +1,198 @@
+<TEXT>
+_________________________________________________
+
+    Propositional Linear Time Logic
+   
+         3-bit  'shift'-counter
+ _________________________________________________
+
+</TEXT>
+<INPUT>
+load(pltl);
+</INPUT>
+<OUTPUT>
+	pltl  user  
+
+</OUTPUT>
+<TEXT>
+Temporal operators:
+       X p  :  neXttime p
+       G p  :  always p, p is Going to be
+       F p  :  sometimes p,  there is a Future where p
+</TEXT>
+<INPUT>
+counter:== G( (X q1 <-> q2) &
+                         (X q2 <-> q3) &
+	       (X q3 <-> ~q1) );
+</INPUT>
+<OUTPUT>
+
+</OUTPUT>
+<INPUT>
+start  :==    ~q1 & ~q2 & ~q3;     # 0 0 0
+
+  # There are two (= 8-6) illegal states:
+
+illegal1:==    ~q1 &  q2 & ~q3;     # 0 1 0
+illegal2:==      q1 & ~q2 &  q3;     # 1 0 1
+
+full_cycle:==      X(~q1 & ~q2 &  q3) &   # 0 0 1 
+                        X X(~q1 &  q2 &  q3) &    # 0 1 1
+                    X X X( q1 &  q2 &  q3) &      # 1 1 1
+                 X X X X( q1 &  q2 & ~q3) &    # 1 1 0
+              X X X X X( q1 & ~q2 & ~q3) &  # 1 0 0
+          X X X X X X(~q1 & ~q2 & ~q3);    # 0 0 0
+
+</INPUT>
+<OUTPUT>
+
+</OUTPUT>
+<TEXT>
+
+______  prove correctness  ____________________
+
+</TEXT>
+<INPUT>
+  provable( counter & start -> full_cycle ); 
+</INPUT>
+<OUTPUT>
+	true
+
+</OUTPUT>
+<TEXT>
+
+______  check liveness properties _____________
+    
+</TEXT>
+<INPUT>
+provable( counter & start -> F (q1 & q2 & q3) );
+provable( counter & start -> G F(q1 & q2 & q3));
+</INPUT>
+<OUTPUT>
+	true
+	true
+
+</OUTPUT>
+<TEXT>
+ 
+______  check safety properties _______________
+
+</TEXT>
+<INPUT>
+provable( counter & start -> G ~illegal1 ); 
+provable( counter & start -> G ~illegal2 );
+</INPUT>
+<OUTPUT>
+	true
+	true
+
+</OUTPUT>
+<TEXT>
+
+______  recovery from illegal state ?  ________
+   
+</TEXT>
+<INPUT>
+provable( counter & illegal1 -> F start );  
+</INPUT>
+<OUTPUT>
+	false
+
+</OUTPUT>
+<TEXT>
+Why not? Get a counter model!
+</TEXT>
+<INPUT>
+proc: pltl::countermodel(fml)
+begin
+    return model(~fml);
+end;
+
+proc: pltl::printmodel(statelist)
+local i;
+begin
+    for i:= 1 to nops(statelist) do
+        print(i," :  ", sort(statelist[i][1]));
+    print("Return to state ", statelist[i][2][1],".");
+end;
+</INPUT>
+<OUTPUT>
+
+</OUTPUT>
+<INPUT>
+printmodel( countermodel( counter & illegal1 -> F start ) );
+</INPUT>
+<OUTPUT>
+	1 :  [q2, ~q1, ~q3]
+	2 :  [q1, q3, ~q2]
+	Return to state 1.
+
+</OUTPUT>
+<TEXT>
+Oh, the illegal states are looping!
+ `Repare' the counter:
+</TEXT>
+<INPUT>
+rcounter:== G( (X q1 <-> q2) &
+                          (X q2 <-> q3) &
+                          (X q3 <-> ~q1 & (~q2 v q3)) );
+
+    provable( rcounter & illegal1 -> F start );
+    provable( rcounter & illegal2  -> F start );
+ 
+</INPUT>
+<OUTPUT>
+	true
+	true
+
+</OUTPUT>
+<TEXT>
+A simple procedure which counts the number of states that
+rcounter needs to recover from the given illegal state to the 
+given legal state.
+</TEXT>
+<INPUT>
+proc: countrecover( illegal, legal ) 
+local i;
+begin
+    i:= 0;
+    while ~provable( rcounter & illegal -> legal )   do  begin
+        legal := X legal;
+        inc(i);
+    end;
+    return i;
+end;
+
+    countrecover( illegal1, start );
+    countrecover( illegal2, start );
+  
+</INPUT>
+<OUTPUT>
+	2
+	3
+
+</OUTPUT>
+<INPUT>
+repeats:==   G( q1 & q2 & q3 ->
+                           X F (q1 & q2 & q3) );
+
+repeats6:==  G ( (q1 <-> X X X X X X q1) &
+                             (q2 <-> X X X X X X q2) &
+                             (q3 <-> X X X X X X q3) );
+
+    provable( counter & ~illegal1 & ~illegal2 ->
+                      repeats );
+    provable( counter & ~illegal1 & ~illegal2 ->
+                      repeats6 );
+</INPUT>
+<OUTPUT>
+	true
+	true
+
+</OUTPUT>
+<INPUT>
+
+</INPUT>
+<OUTPUT>
+
+</OUTPUT>

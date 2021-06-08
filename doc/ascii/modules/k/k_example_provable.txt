@@ -1,0 +1,29 @@
+
+Typical provable formulas example
+=================================
+
+
+Typical provable formulas
+-------------------------
+
+All formulas that are provable in classical propositional logic are also 
+provable in the modal logic  k .
+Therefore we concentrate on formulas typical for  k .
+
+> provable( box(p0 & p1)  <->  box p0 & box p1 );
+	true
+> provable( dia(p0 v p1)  <->  dia p0 v dia p1 );
+	true
+> provable( ~ box ~ p0  <-> dia p0 );
+	true
+> provable( box(p0 -> p1) -> box p0 -> box p1 );
+	true
+
+Although the formula  dia(p v ~p)  is not provable, it is provable in  k  
+plus the theory with  dia q  as its only element. The formula  dia q  
+guarantees that there exists an accessible world, and as soon as such a 
+world exists  dia(p v ~p)  is true.
+
+> provable(dia(p0 v ~p0), [dia p1]);
+	true
+

@@ -1,0 +1,96 @@
+
+The demo_sessions directory may contain three types of files:
+
+1.  Extension "xls": 
+    
+    These files are XLWB-sessions which can be loaded into a started XLWB
+    by clicking on the menu entry <file> - <load session>.
+
+    A session can be re-executed step by step by hitting <CR> on each input
+    region or in one shot by choosing the menu entry <edit> - <reevaluate all>.
+
+
+2.  Extension "lwb":
+
+    These files contain parsable LWB statements (e.g. procedure definitions).
+    They can be read in by entering 
+
+       > read("name.lwb");
+
+    or (XLWB) via the menu entry <file> - <read file>.
+
+
+3.  Extension "xlr":
+
+    These files contain exemplary resource settings (fonts, colors).
+
+
+
+
+============================================================================
+Sessions:
+============================================================================
+
+
+Classical Logic:
+  cpc_cnf.xls      :   complexity of conjunctive normal form
+  cpc_proofs.xls   :   simple proofs (command cpc::proof, proof display tool)
+  cpc_proofoptionsintro.xls :  introduction to the proof display options 
+  cpc_simplify.xls :   simplification of classical formulae
+
+  See also:   ipc_intro.xls  
+              embeddings.xls
+
+Intuitionistic Logic:
+  ipc_intro.xls    :   introduction to intuitionistic logic (compared to cpc)
+  
+  See also:   embeddings.xls
+              ipc_fmls.lwb
+
+Linear Logic:
+  ll_intro.xls
+
+  See also:   embeddings.xls
+
+
+Modal Logics:
+  kt5s5.xls        :    equivalence of  KT5 and S5
+
+
+Non-Monotonic Logics:
+  nonmono.xls      :    typical properties (cwa, circ, default).
+
+  See also:   default_extensions_in.lwb
+
+
+Propositional Linear Time Logic:
+  pltl_counter.xls :    a looping 3-bit counter
+  pltl_flip.xls    :    a simple 2-bit flip-machine
+  pltl_intro.xls   :    introduction to pltl
+  pltl_peterson.xls:    Peterson's algorithm for the mutual exclusion problem
+  pltl_shift_counter.xls:  3-bit  'shift'-counter (linear feedback register)
+
+
+Programming:
+  programming.xls  :    introduction to the LWB programming language
+  
+  See also:
+    diagram.lwb
+    default_extensions_in.lwb
+
+
+============================================================================
+LWB files:
+============================================================================
+
+
+percents.lwb   :    formulae to demonstrate the percentage information
+
+diagram.lwb    :    computation/display of a maximal set of 
+                    non-equivalent formulae
+
+default_extensions_in.lwb :  computation of extensions of a default theory
+
+
+
+

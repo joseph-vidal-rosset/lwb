@@ -1,0 +1,25 @@
+
+pretty
+======
+
+print a sequence of expressions
+
+SYNTAX
+- pretty(E1, E2, ...) 
+
+PARAMETERS
+- E1, E2, ...: expressions
+
+RESULT:  null expression
+
+SYNOPSIS
+
+- pretty  displays the sequence of expressions  E1 ,  E2 , .... The function 
+  is used in connection with a font that contains special symbols e.g. for 
+  connectives. For more information see the WWW page on the graphical user 
+  interface you are using (e.g. XLWB, MacLWB).
+- Each expression is written on one line.
+
+SEE ALSO
+  ascii, inputformat, latex, set
+

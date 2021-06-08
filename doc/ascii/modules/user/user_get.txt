@@ -1,0 +1,60 @@
+
+get
+===
+
+get configuration values
+
+SYNTAX
+- get(S) 
+- get() 
+
+PARAMETERS
+- S: one of  "bracketmode" ,  "helpmode" ,  "infolevel" ,  "outputmode" , 
+      "percents" ,  "percentsdelay" 
+
+RESULT:  see below
+
+SYNOPSIS
+
+- get  returns the configuration values. These are either the default values 
+  or the values set by the user with the function  set  .
+- The type of the result depends on  S .
+- S  is  "bracketmode" : The result is one of  "assoc" ,  "full" .
+- S  is  "helpmode" : The result is one of  "ascii" ,  "www" .
+- S  is  "infolevel" : The result is a natural number.
+- S  is  "outputmode" : The result is one of  "ascii" ,  "inputformat" ,  
+  "latex" .
+- S  is  "percents" : The result is one of  true ,  false .
+- S  is  "percentsdelay" : The result is a natural number (time in 1/100 
+  seconds).
+- No arguments: All configuration values are displayed. The result is the 
+  null expression.
+
+EXAMPLE
+
+> get("bracketmode");
+	"assoc"
+> get("helpmode");
+	"www"
+> get("infolevel");
+	0
+> get("outputmode");
+	"ascii"
+> get("percents");
+	false
+> get("percentsdelay");
+	100
+> get();
+	bracketmode:   assoc
+	helpbrowser:   
+	helppage:      http://www.lwb.unibe.ch
+	helpmode:      www
+	homedir:       /home/til/lwb/1.1
+	infolevel:     0
+	outputmode:    ascii
+	percents:      false
+	percentsdelay: 100
+
+SEE ALSO
+  ascii, inputformat, latex, pretty, set
+

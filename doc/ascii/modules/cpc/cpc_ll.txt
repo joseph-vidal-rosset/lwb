@@ -1,0 +1,32 @@
+
+ll
+==
+
+embedding in  ll 
+
+SYNTAX
+- ll(A) 
+
+PARAMETERS
+- A: formula
+
+RESULT:  formula of  ll 
+
+SYNOPSIS
+
+- ll  embeds the formula  A  in linear logic, or, more precisely, in MALL, 
+  the Multiplicative-Additive fragment of Linear Logic (i.e., the result 
+  contains no exponentials).
+- The result is provable in  ll  iff the original formula is provable in  
+  cpc  (if the variables of  A  in  cpc  are also variables in  ll ).
+
+EXAMPLE
+
+> ll( p0 -> p0 v p1 );
+	p0 & 1 -o p0 + bot | (p1 + bot)
+> ll( p0 & p0 -> p0 );
+	p0 & 1 X (p0 & 1) -o p0 + bot
+
+SEE ALSO
+  provable, provable
+

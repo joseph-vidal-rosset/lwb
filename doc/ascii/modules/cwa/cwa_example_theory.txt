@@ -1,0 +1,52 @@
+
+Closed world assumption theory example
+======================================
+
+
+Closed world assumption theory
+------------------------------
+
+If we compute the Closed World Assumption theory of a theory  T , then for 
+every variable that occurs in  T  and is not provable in  t  we add its 
+negation.
+
+> T := [p0 -> p1, p1, p2 & p3];
+	[p0 -> p1, p1, p2 & p3]
+> cwa(T);
+	[p0 -> p1, p1, p2 & p3, ~p0]
+
+The resulting theory can be inconsistent. The simplest consistent theory 
+with a non-consistent closed world assumption theory is the theory  p0 v p1 .
+Neither  p0  nor  p1  are provable in this theory, thus the closed world 
+assumptions contains the negations of both of these variables.
+
+> load(cpc); topmod(cwa);
+	cpc  cwa  user  
+cwa  cpc  user  
+> cpc::consistent([p0 v p1]);
+	true
+> cwa([p0 v p1]);
+	[p0 v p1, ~p0, ~p1]
+> consistent([p0 v p1]);
+	false
+
+If we use a restriction on a list of variables that contains at most one of  
+p0  or  p1 , then the closed world assumption is consistent.
+Attention: If no restriction is given, the list of the variables occurring 
+in the theory is taken as restriction. We must use this implicit restriction 
+because the closed world assumption theory of every finite consistent theory 
+is infinite.
+
+> cwa([p0 v p1], [p0]);
+	[p0 v p1, ~p0]
+> consistent([p0 v p1], [p0]);
+	true
+> cwa([p0 v p1], [p1,p2,p3]);
+	[p0 v p1, ~p1, ~p2, ~p3]
+> consistent([p0 v p1], [p1,p2,p3]);
+	true
+> cwa([p0 v p1], [p4,p5,p6,p7]);
+	[p0 v p1, ~p4, ~p5, ~p6, ~p7]
+> consistent([p0 v p1], [p4,p5,p6,p7]);
+	true
+

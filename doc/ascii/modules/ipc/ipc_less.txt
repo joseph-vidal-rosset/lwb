@@ -1,0 +1,37 @@
+
+less
+====
+
+ordering of formulas
+
+SYNTAX
+- less(A, B) 
+
+PARAMETERS
+- A, B: formulas
+
+RESULT:  true  or  false 
+
+SYNOPSIS
+
+- less  tests whether the formula  A  is less than the formula  B  in  ipc .
+- At first we look at the main connective of the formulas:  false   <   true 
+  <  variables  <  negations  <  conjunctions  <  disjunctions  <  
+  implications  <  equivalencies. If  A  and  B  have the same main 
+  connective, we compare the first operands with  less , and if these are 
+  equal we compare the second operands with  less .
+- To compare variable symbols we use a lexicographic ordering that treats 
+  successive digits as one number.
+
+EXAMPLE
+
+> less((p2 -> p1) & (p2 v p3), p0 v true);
+	true
+> less((p2 v p1) <-> p2, (p4 v p1) <-> p2);
+	true
+> less(p7, p61);
+	true
+
+SEE ALSO
+  sort
+

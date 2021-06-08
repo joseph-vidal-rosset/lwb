@@ -1,0 +1,13 @@
+
+Typical non-provable formulas example
+=====================================
+
+
+Typical non-provable formulas
+-----------------------------
+
+> provable(box2 p0 -> box2 box2 p0);
+	false
+> provable(~ box3 p1 -> box3 ~ box3 p0);
+	false
+

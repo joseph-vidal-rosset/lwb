@@ -1,0 +1,199 @@
+<TEXT>
+_____________________________________________
+
+Intuitionistic Propositional Logic (IPC)
+_____________________________________________
+   
+Syntax, operators:  the same as in CPC
+
+</TEXT>
+<INPUT>
+load(cpc, ipc);  
+</INPUT>
+<OUTPUT>
+	ipc  cpc  user  
+
+</OUTPUT>
+<TEXT>
+Intuitionistic logic may be viewed as 'logic
+of problems', whereas classical logic may be
+viewed as 'logic of truth'.
+</TEXT>
+<INPUT>
+a -> b;   
+</INPUT>
+<OUTPUT>
+	a -> b
+
+</OUTPUT>
+<TEXT>
+is interpreted as: 'if we can solve problem a,
+we can also solve problem b';
+</TEXT>
+<DELIMITER>
+
+</DELIMITER
+<TEXT>
+A fundamental difference to classical logic is
+that the law of the excluded middle does not
+hold any more:
+In general we do neither have a solution for
+a nor a solution for ~a.
+</TEXT>
+<INPUT>
+proc : excl_middle( x ) begin return x v ~x; end;
+excl_middle( a );
+</INPUT>
+<OUTPUT>
+	a v ~a
+
+</OUTPUT>
+<INPUT>
+cpc::provable( excl_middle( phi ) );
+ipc::provable( excl_middle( phi ) );
+</INPUT>
+<OUTPUT>
+	true
+	false
+
+</OUTPUT>
+<TEXT>
+IPC has the 'disjunction property':
+if  a v b is supposed to hold, there must be
+a solution for a or for b (or possibly for both).
+</TEXT>
+<DELIMITER>
+
+</DELIMITER
+<TEXT>
+This is the reason why many classical valid
+formulae involving disjunctions do not hold:
+</TEXT>
+<INPUT>
+s:= [  ( a -> b )  ->  (~a v b) ,    # implication
+          ~( a & b ) ->  (~a v ~b) ,   # De Morgan
+          (~~a -> a) -> (a v ~a)        
+       ];
+</INPUT>
+<OUTPUT>
+	[(a -> b) -> ¬a v b, ¬(a & b) -> ¬a v ¬b, (¬¬a -> a) -> a v ¬a]
+
+</OUTPUT>
+<INPUT>
+proc : cpc_ipc_test(  L ) 
+local x, res;
+begin
+    res:= [ ];
+    foreach x in L do
+         append( res ,
+             [ cpc::provable( x ), ipc::provable( x ) ] );
+    return res;
+end;                     
+ 
+</INPUT>
+<OUTPUT>
+
+</OUTPUT>
+<INPUT>
+cpc_ipc_test( s );
+</INPUT>
+<OUTPUT>
+	[[true, false], [true, false], [true, false]]
+
+</OUTPUT>
+<TEXT>
+This can be explained as follows:
+e.g.  s[1] :  ( a -> b )  ->  (~a v b)
+Knowing how to transform a solution of 'a' to a
+solution of 'b' , does not imply that you have a           
+solution of b or one of ~a.
+
+The converse implications, however, do hold:
+</TEXT>
+<INPUT>
+proc : converse( L ) 
+local res;
+begin
+   res:= [ ];
+   foreach x in L do
+       if type(x) = IMP then
+         append( res, x[2]  ->  x[1] );
+   return res;
+end;
+     
+converse( s );
+</INPUT>
+<OUTPUT>
+	[~a v b -> a -> b, ~a v ~b -> ~(a & b), a v ~a -> ~~a -> a]
+
+</OUTPUT>
+<INPUT>
+cpc_ipc_test( converse( s ) );
+</INPUT>
+<OUTPUT>
+	[[true, true], [true, true], [true, true]]
+
+</OUTPUT>
+<TEXT>
+Two other typically not provable formulae are
+the stability- and the 'Peirce'-formulae.
+</TEXT>
+<INPUT>
+proc: stability( x ) begin return ~~x -> x; end;
+stability( a );
+pierce:= fml( "peirce", "a" ){ p/a1, a/a2} ; 
+</INPUT>
+<OUTPUT>
+	~~a -> a
+	((p -> a) -> p) -> p
+
+</OUTPUT>
+<INPUT>
+provable( stability( a ) );
+provable( pierce );
+</INPUT>
+<OUTPUT>
+	false
+	false
+
+</OUTPUT>
+<TEXT>
+Adding particular instances of the stability
+often helps to prove the formulae again.
+</TEXT>
+<INPUT>
+provable( pierce, [ stability(p) ] );
+</INPUT>
+<OUTPUT>
+	true
+
+</OUTPUT>
+<INPUT>
+s:= ~~(a ->b) -> (a -> b);
+provable( s );
+provable( s, [stability( b ) ] );
+</INPUT>
+<OUTPUT>
+	~~(a -> b) -> a -> b
+	false
+	true
+
+</OUTPUT>
+<TEXT>
+Stability is 'weaker' than the excluded middle:
+</TEXT>
+<INPUT>
+provable( stability( p ) -> excl_middle( p ) );
+provable( excl_middle( p )  -> stability( p ) );
+</INPUT>
+<OUTPUT>
+	false
+	true
+
+</OUTPUT>
+<INPUT>
+
+</INPUT>
+<OUTPUT>
+
+</OUTPUT>

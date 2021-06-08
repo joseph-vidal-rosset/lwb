@@ -1,0 +1,40 @@
+
+cnfnv
+=====
+
+conjunctive normal form with new variables
+
+SYNTAX
+- cnfnv(A) 
+- cnfnv(A, S) 
+
+PARAMETERS
+- A: formula
+- S: string
+
+RESULT:  formula
+
+SYNOPSIS
+
+- cnfnv  computes a formula in conjunctive normal form. This formula is 
+  satisfiable iff the formula  A  is satisfiable (if none of the created 
+  variables occurs already in  A ).
+- In general the result contains new variables. These variables consists of 
+  the string  S  and a counter. The default value for  S  is  "p" .
+- In contrast to  cnf , the length of the conjunctive normal form is bounded 
+  by a linear function in the length of  A .
+- A formula is in conjunctive normal form if it is either  true  or  false  
+  or an arranged conjunction of disjunctions of variables and negated 
+  variables.
+
+EXAMPLE
+
+> cnfnv(p0 -> p1 & ~p2);
+	p0 & (p0 v p0) & (p0 v ~p1) & (p1 v ~p1) & (~p1 v ~p2) & (p1 v p2 v ~p1) & 
+(p1 v ~p0 v ~p0)
+> cnfnv(~p1, "q");
+	~p1
+
+SEE ALSO
+  cnf, cnfp
+

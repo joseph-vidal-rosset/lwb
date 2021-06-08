@@ -1,0 +1,33 @@
+
+debruijn
+========
+
+formula of de Bruijn
+
+SYNTAX
+- debruijn(N) 
+- debruijn(N, S) 
+
+PARAMETERS
+- N: integer,  N > 0 
+- S: string
+
+RESULT:  formula
+
+SYNOPSIS
+
+- debruijn  constructs the formula of de Bruijn for the parameter  N .
+- The formulas are provable in  ipc  iff  N  is odd.
+- The variables occurring in the constructed formulas begin with the string  
+  S . The default value for  S  is  "p" .
+
+EXAMPLE
+
+> debruijn(2);
+	((p1 <-> p2) -> p1 & p2) -> ((p2 <-> p1) -> p1 & p2) -> p1 & p2
+> debruijn(2, "r");
+	((r1 <-> r2) -> r1 & r2) -> ((r2 <-> r1) -> r1 & r2) -> r1 & r2
+
+SEE ALSO
+  provable
+

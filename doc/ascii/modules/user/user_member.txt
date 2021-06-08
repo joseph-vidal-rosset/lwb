@@ -1,0 +1,30 @@
+
+member
+======
+
+member function
+
+SYNTAX
+- member(E, L) 
+
+PARAMETERS
+- E: expression
+- L: list or array
+
+RESULT:  true  or  false 
+
+SYNOPSIS
+
+- member  checks whether the expression  E  is a member of  L .
+
+EXAMPLE
+
+> member(p0 & p1, [p3, p0 & p1, ~p2] );
+	true
+> member(p0 & p1, [p3, p1 & p0, ~p2] );
+	false
+> member(3, array(1,5,2,7,7));
+	false
+> member(3, array(1,5,2,3,3,7));
+	true
+

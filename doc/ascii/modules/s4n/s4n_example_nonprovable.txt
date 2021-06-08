@@ -1,0 +1,18 @@
+
+Typical non-provable formulas example
+=====================================
+
+
+Typical non-provable formulas
+-----------------------------
+
+One axiom of  s5  is not provable in  s4 .
+
+> provable( ~ box3 p1 -> box3 ~ box3 p0 );
+	false
+
+The indizes of the modal connectives are essential.
+
+> provable( box4 p0 -> box4 box3 p0 );
+	false
+
